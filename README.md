@@ -18,12 +18,12 @@ Pre-requisite: A first course in statistics (MATH 102, MATH 229, MATH 329, ECON 
 General Education Requirement:  W
 
 LEARNING OUTCOMES: Upon completion of this course, students will
-〈	Recall and apply statistical terms, notation, and concepts, including the use statistical models.
-〈	Recall how to identify the individuals and variables in the context of an existing or new study.
-〈	Develop suitable strategies for data collection and critique others’ data collection.
-〈	Decide which methods and procedures are appropriate when conducting a statistical analysis, and understand how to state the analysis within the framework of a statistical model(s).
-〈	Apply the appropriate statistical inference process correctly in various settings and contexts.
-〈	Produce and interpret the output from statistical software.  
-〈	Effectively communicate the results of statistical analysis using appropriate terminology.
-〈	Critique published statistical results and reports.
+- Recall and apply statistical terms, notation, and concepts, including the use statistical models.
+- Recall how to identify the individuals and variables in the context of an existing or new study.
+- Develop suitable strategies for data collection and critique others’ data collection.
+- Decide which methods and procedures are appropriate when conducting a statistical analysis, and understand how to state the analysis within the framework of a statistical model(s).
+- Apply the appropriate statistical inference process correctly in various settings and contexts.
+- Produce and interpret the output from statistical software.  
+- Effectively communicate the results of statistical analysis using appropriate terminology.
+- Critique published statistical results and reports.
 
