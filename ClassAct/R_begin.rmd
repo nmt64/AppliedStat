@@ -1,0 +1,432 @@
+---
+title: "Getting Started with R and R Markdown"
+author: "Tam Nguyen"
+output: html_document
+---
+
+(Adapted from ``Start teaching with R," created by R Pruim, N J Horton, and D Kaplan, 2013.)
+
+I recommend keeping this handy throughout the course, to act as a quick-reference guide when working with R.  Feel free to add to this file with other information you think is important!  I also recommend the [Mosaic Team's Student Guide](https://cran.r-project.org/doc/contrib/Horton+Pruim+Kaplan_MOSAIC-StudentGuide.pdf), which is full of useful code and examples.
+
+A. Accessing RStudio
+--------------------------------------------
+Hopefully you already have R and RStudio downloaded.  If not, do that tonight!
+
+As you can see, the RStudio environment contains four quadrants: the upper-left contains the files (including data sets) you're working on; the lower-left contains the **Console**, where you can run R code; the lower-right contains several tabs including Plots, Packages, and Help; and the upper-right contains your History, including a list of loaded data sets.
+
+B. R Markdown
+---------------------- 
+The thing you are reading right now is an **R Markdown** document. R Markdown runs *inside* R Studio.  Markdown is a simple formatting syntax for authoring web pages, word documents, and pdfs. On Moodle, you can find the link to a useful R Markdown guide.  You can also click the **?** toolbar button for more details on using R Markdown.  
+
+When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. Not only can you imbed the R *code*, you can imbed the *output* produced by the R code.  In this way, your analysis is fully reproducible and updatable.  **All of your homework assignments must be prepared using R Markdown, and submitted as a pdf, Word, or html document**. 
+
+The nice thing about R Markdown is that you can write prose (as I am doing now), mathematical equations using LaTeX syntax (like $y_i = a + b x_i$), and R code/output/plots all in one synthesized document.  This makes it approximately 10,000 times easier to use than doing the same thing in Word or LaTeX  As you go through this introduction, I recommend that you look also at the .Rmd file and .html file side-by-side, to get an idea of how R Markdown works.  (Since you're going to have to use R Markdown this semester, you might as well start learning it now!)
+
+In the future, when you want to start a new R Markdown document, click "File > New File > R Markdown..."  Put yourself as author, and make sure to give it a descriptive title!
+
+C. Using R as a Calculator
+-----------------------------
+With R by your side, you will never need your TI-84 again. Consider the following simple arithmetic:
+
+```{r}
+5 + 3
+
+5.3 * 23.4
+
+sqrt(16)
+```
+Look closely at how R Markdown denotes the R code and the output. Also note in the .Rmd file how I include R code as separate from  prose.  These are called "chunks".  There are two ways to add a new chunk: (1) click on "Chunks > Insert Chunk" in the upper-right corner of the .Rmd window; (2) type the chunk header (like line 31 above), then your R code, then the chunk footer (like line 37).  R code that is not inside of a chunk *will not* be run by R Markdown!
+
+You can also save values to named variables, to be used later: 
+```{r}
+product <- 15.3 * 23.4 #save result
+```
+If you save something like this, R will not show the output unless you expressly ask for it:
+```{r}
+product #show result
+```
+Alternatively, I could use "=" instead of "<-":
+```{r}
+product = 15.3 * 23.4  #save result
+product #show result
+```
+
+The symbol "<-" is the *assignment operator*.  It's essentially the same as "=" in this instance.  When we get into more complicated work, there are cases where <- works and = doesn't, so it's good to get into the habit of using <- now.
+
+Once variables are defined, they can be referenced with other operators and functions.
+```{r}
+.5 * product # half of the product
+product^(1/4) # fourth root of the product
+```
+You can also use in-line R code in R Markdown, which can be useful when calling defined variables.  Did you know that the natural log of `r product` is `r log(product)`?
+
+The semi-colon can be used to place multiple commands on one line. One frequent use of this is to save and print a value all in one go:
+```{r}
+product <- 15.3 * 23.4 ; product  # save result and show it
+```
+
+*Only R code (and comments) should be inside chunks.*  Prose (interpretations/explanations/descriptions) should never be put inside a chunk; prose should be below or above the chunk, as I have done above (and continue to do throughout this document).  You should also never cut-and-paste output or graphs into the chunks.  The whole point of code chunks is that they contain the code *and* they'll run the code (resulting in the output and/or graphs).
+
+
+If you want to run something in R but don't want it to appear in the R Markdown document, simply run it in the **Console** in the lower-left quadrant of RStudio.  Type the last line of R code above into the Console and see what happens.
+
+D. Six Things to Know About R and RStudio
+---------------------------------------
+
+1. R is case-sensitive. 
+If you mis-capitalize something, it won't do what you want.
+
+2. Functions in R use the following syntax: *functionname( argument1, argument2, ... )*
+
+  a. The arguments are always surrounded by (round) parentheses and separated by commas. Some functions (like `data()`) have no required arguments, but you still need the parentheses.
+
+  b. If you type a function name without the parentheses, you will see the code for that function.  (This probably isn't what you want at this point, although it may be helpful in the future.)
+
+3. TAB completion and arrows can improve typing speed and accuracy.
+If you begin a command and hit the TAB key, R will show you a list of possible ways to complete the command. If you hit TAB after the opening parenthesis of a function, it will show you the list of arguments it expects. The up and down arrows can be used to retrieve past commands.
+
+4. If you see a `+` prompt, it means R is waiting for more input.
+Often this means that you have forgotten a closing parenthesis or made some other syntax error. If you have completely messed up and just want to get back to the console, hit the ESC key and start the command fresh.
+
+5. The Console and the Markdown document are *separate entities*.  Suppose you've run something, saved something, opened a data set, or opened loaded a package in the Console.  It exists *only* in the Console, not in the R Markdown document.  Think of the Console as a "practice area" -- a place where you can play around and try stuff.  Once you've settled on a piece of code and you want it to appear in the "official" document (that you'll turn in to me), put it into the Markdown document (within a "chunk", of course).
+
+6. **R packages:**
+In addition to its core features, R provides many more features through a (large) number of packages. To use a package, it must be installed (one time), and loaded (each session). You install the package by clicking the "Packages" tab in the lower-right quadrant, then clicking "Install" and type the name of the package.  To load the package in the Console, you can type `library(package)`, or just click the button next to the package in the "Packages" tab. However, if you are going to use a package within an R Markdown document, you must "call" the package within your particular R Markdown document. (Why?  Because the Console and the Markdown document are separate entities!)
+
+For example: We will be using the "mosaic" package a lot this term.  Install the package now, then load it in the Console by typing `library(mosaic)` in the Console.  Now we still need to load it *in this R Markdown document*.  
+```{r}
+library(mosaic) #this loads the mosaic package into this R Markown document
+#We could also use the code require("mosaic") to do this
+```
+The "mosaic" package is now loaded.  But it sure takes up a lot of space on the html file, doesn't it?  If we wanted to supress the output from this particular chunk on the html file, we could use `include=FALSE` in the chunk header, as below.  (Note that the chunk still runs; but the code and the output is supressed when it knits to html.)
+```{r include=FALSE}
+library(mosaic) 
+```
+There are other useful chunk headers that we will see as we continue learning R Markdown...
+
+**Remember!** The Markdown document (.Rmd) and the Console are *separate* entities.  Just because you've done something (run some code, loaded some data, etc.) in one place, it **does not** transfer to the other place.
+
+E. Getting Help
+-------------------------------
+If something doesn't go quite right, or if you can't remember something, it's good to know where to turn for help. In addition to asking your friends and neighbors, you can use the R help system.
+
+1. To get help on a specific function or data set, simply precede its name with a `?`. Type "?histogram" into the Console and see what happens.  Alternatively, you can type "histogram" into the search bar in the Help tab in the lower-right quadrant.
+
+2. If you don't know the exact name of a function, you can give part of the name to "apropos" and R will find all functions that match. Quotation marks inside the `apropos()` function (single or double) are mandatory here.  Type "apropos('hist')" into the Console and see what happens.  Alternatively, you can type "hist" into the search bar in the Help tab in the lower-right quadrant.
+
+3. If that fails, you can do a broader search using `??` or `help.search()`, which will find matches not only in the names of functions and data sets, but also in the documentation for them. Quotations marks are optional here.  Try typing "??histogram" and/or "help.search('histogram')" into the Console.
+
+4. Examples and Demos. Many functions and data sets in R include example code demonstrating typical uses. For example, "example(histogram)" will generate a number of example plots (and provide you with the commands used to create them). Examples such as this are intended to help you learn how specific R functions work. These examples also appear at the end of the documentation for functions and data sets.  
+
+  The mosaic package (and some other packages as well) also includes demos. Demos are bits of R code that can be executed using the `demo()` command with the name of the demo.  Type "demo(lattice)" into the Console.
+
+  Demos are intended to illustrate a concept, a method, or some such thing, and are independent of any particular function or data set.  You can get a list of available demos using "demo()", or demos from just the mosaic package using "demo(package='mosaic')".
+
+5. The Internet. One of the great things about R is how well-documented it is online.  Since it's free and open-source and people across disciplines use it, there is an astounding amount of information available on the web.  If you get stuck on something, Google it: I can almost guarantee you will find someone who has posted a solution to either your exact problem, or something close to it.
+
+F. Data 
+-----------------------------
+### Loading Data 
+As long as they are in the right format, data sets can be loaded from files saved on your computer, or straight from webpages.  Data sets can be whitespace-delimited, comma-delimited, or tab-delimited.  RStudio is smart enough that it can *usually* tell which kind of delimiter is being used.
+
+Most the data sets that we will be using in class this semester are in the `Stat2Data` package.  Install this package now by clicking the "Packages" tab in the lower-right quadrant, then clicking "Install" and type the name of the package.  Once installed, load the package by clicking the box next to "Stat2Data" in the Packages tab.  
+
+Today, we're going to play around with the `Day1Survey` dataset, within the Stat2Data package.  To load this data set, type `data(Day1Survey)` in the Console.  Note that as you type, R will start to auto-complete with the appropriate data set!
+```{r}
+library(Stat2Data)
+data(Day1Survey)
+```
+
+
+Data can also be loaded from files on your computer (.txt, .xls, .csv), or from the internet.  We'll see this as the semester goes on, but generally you just click "Import Dataset" in the "Environment" tab in the upper-right quadrant.
+
+### Data Frames
+In R, data sets are usually stored in a structure called a *data frame*, which are (usually) 2-dimensional.
+
+- Rows correspond to observational units (people, animals, plants, or other objects we are collecting data about).
+
+- Columns correspond to variables (measurements collected on each observational unit).
+
+(This is not any different than how data is stored in Excel or even your TI calculator.)
+
+To learn about our `Day1Survey` dataset, type `?Day1Survey` into the Console.  Information will appear in the "Help" tab in the lower-right quadrant.  We see that `Day1Survey` contains 13 variables measured for each student on the first day of an introductory statistics class at a small liberal arts college. Explanations of these variables are below:
+
+Variable | Description
+-------- | --------------------------------------------------------------------
+Section  | Section: 1 or 2 
+Class    | Year in school: Freshman, Sophomore, Junior, or Senior 
+Sex      | F=female or M=male 
+Distance | Distance (in miles) to get to campus from hometown 
+Height   | Height (in inches) 
+Handedness | Left, Right, or Ambidextrous 
+Coins | Value of coins student has (in class)
+WhiteString | Estimated length of a white string held up in class (in inches)
+BlackString | Estimated length of a black string held up in class (in inches)
+Reading | Expected amount of reading during the semester (pages/week) 
+TV Hours | Hours of TV watched per week 
+Pulse | Resting pulse rate (beats per minute) 
+Texting | Number of text messages in past 24 hours
+
+We can gain access to a single variable in a data frame using the `$` operator using the syntax *dataframe $ variable*.  For example, type `Day1Survey$Height` in the Console to show the contents of the Height variable in the Day1Survey data set.  
+
+You can also ask for one or more particular rows, columns, or individual cells by using the square brackets.  Numbers before the comma correspond to rows, and numbers after the comma correspond to columns.  So if you want to see the 5th column of the Day1Survey data set, type  
+```{r}
+Day1Survey[,5]  
+```
+which gives you the same output as  
+```{r}
+Day1Survey$Height  
+```
+that we used above.  Similarly,  
+```{r}
+Day1Survey[2, ]  
+```
+returns the 2nd row of the Day1Survey data set (the data for the 2nd student).    
+You can combine these to get a particular cell:  
+```{r}
+Day1Survey[2, 5]  
+```
+gives you the height of the 2nd student.
+
+To get more than one row or column, you include a range of rows or columns, using a colon.  For example, to look at columns 5 and 6 (Height and Handedness), type  
+```{r}
+Day1Survey[ ,5:6]  
+```
+We could also get this output using the `cbind()` function on the variables Height and Handedness:  
+```{r}
+cbind(Day1Survey$Height, Day1Survey$Handedness)  
+```
+`cbind()` means "column bind"; it binds columns together.  Similarly,  
+```{r}
+Day1Survey[1:10, ]  
+```
+returns the first 10 rows of the Day1Survey data set (the data for first ten students). As you might have guessed,  
+```{r}
+Day1Survey[1:10, 5:6] 
+```
+give you the heights and handedness of the first ten students.
+
+Remember: If you don't want something inside the R Markdown document, just run it in the Console in the lower-left quadrant.  The Console is a good place to "try out" code, or to run stuff that you don't want to be in your final document.
+
+Of course, listing the entire set of values -- or even a subset of values -- for a particular variable isn't very useful for a most data sets. We would prefer to compute numerical or graphical summaries...
+
+G. Summarizing Data
+-----------------------
+### Numerical Summaries
+The basic descriptive statistics have obvious names, like `mean, median, sd, IQR, quantile`, etc.  To calculate them we use the syntax *statistic(dataframe\$variable)*, which means "find the statistic of this variable from this data frame."  For example,
+```{r}
+mean(Day1Survey$Height) #mean of the Height variable
+mean(~Height, data=Day1Survey) #mean of the Height variable
+```
+
+Two handy shortcuts are the `favstats()` or `summary()` functions, which compute several numerical summaries all at once: 
+```{r}
+favstats(Day1Survey$Height)
+favstats(~Height, data=Day1Survey)
+summary(Day1Survey$Height)
+```
+You can get a summary of every variable in Day1Survey by using `summary()` for the entire data frame:
+```{r}
+summary(Day1Survey)
+```
+You can also calculate the statistics within groups by including a grouping variable, like this:
+```{r}
+favstats(Height~ Sex, data=Day1Survey) 
+favstats(~ Height | Sex, data=Day1Survey) 
+```
+
+__*Hey!  What's with the tilde?!?*__
+
+The `~` (tilde) symbol is extremely important and you will be using it *a lot* this semester, so let's take a closer look at it...
+
+In R, a **formula** is an expression involving `~` that provides slots for laying out how you want to relate variables: $y$ `~` $x$ means "$y$ versus $x$", "$y$ depends on $x$", or "break down $y$ by $x$".
+
+In both cases above, you're saying "break Height down by Sex," or "perform this function on the Heights, conditioned on Sex."
+
+**Example 1: Day 1 Survey**
+
+Insert an R code Chunk below.  In it, calculate the mean, SD, and five-number summary for the variable Pulse.  Then calculate the same statistics, broken down by Sex.  Remember that when you Knit the document, the output from the code will *automatically* be included in the Knitted file.
+
+```{r}
+favstats(~Pulse, data=Day1Survey)
+favstats(Pulse~Sex, data=Day1Survey)
+```
+
+
+
+[Before you move on to Graphical Summaries, click "Knit".  Make sure the output from Example 1 looks the way you want it to!]
+
+### Graphical Summaries
+
+The syntax we learned at the end of previous section becomes especially useful when producing graphs.  All the plots we need can be created with essentially the same syntactic structure:
+*plotname( y~ x | z, data=dataframe, groups=grouping_variable, ...)*
+
+  - x is the name of the variable that is plotted along the horizontal ($x$) axis.
+
+  - y is the name of the variable that is plotted along the vertical ($y$) axis. For some plots, such as histograms, this slot is empty because R computes these values from the values of $x$.  However, `~` is still required.
+  
+  - z is a (optional) conditioning variable used to split the plot into multiple subplots called *panels*.
+  
+  - *grouping\_variable* is used (optional) to display different groups differently (different colors or symbols, for example) *it within the same panel*.
+  
+  - ... There are many additional arguments to these functions that let you control just how the plots look. (But we'll focus on the basics for now.)
+  
+Within any R function, the parts separated by commas are called **arguments**.  So the formula (`y ~ x|z`) is one argument, the `data` statement is another argument, the `groups` statement is another argument, etc.
+
+The names of various familiar plots are:
+
+  - `histogram()` for histograms
+
+  - `bwplot()` or `boxplot()`  for boxplots (box-and-whisker plots)
+
+  - `xyplot()` or `plot()` for scatter plots
+
+  - `qqmath()` or `qqnorm()` for quantile-quantile (normal probability) plots
+
+These plots can be imbedded in the R Markdown document:
+```{r fig.width=5, fig.height=5}
+#fig.width and height specify the size of the graph
+plot(x=Day1Survey$WhiteString, y=Day1Survey$BlackString, main="Comparing String Length Guesses")  
+xyplot(BlackString~WhiteString, data=Day1Survey)
+```
+
+**Example 2: Day 1 Survey**
+
+1. Insert an R code Chunk below.  In it, write the code for a histogram and a boxplot for the variable Pulse.  Below the chunk (outside the chunk), describe the distribution.
+```{r}
+histogram(x=Day1Survey$Pulse, data = Day1Survey)  #Histogram for Pulse
+boxplot(x=Day1Survey$Pulse, data = Day1Survey)#Boxplot for Pulse
+```
+
+Describe the distribution: 
+Students's pulse vary from 50 - 80, and 65-73 is the most common range for their pulse. 
+Almost no student has pulse range from 80 - 100.
+
+2. The code below will make two histograms of Pulse broken down by Sex, using the two different methods of grouping.  Below the code chunk, describe how they are different.
+```{r fig.width=5, fig.height=5}
+  histogram(~ Pulse | Sex, data=Day1Survey)
+
+  histogram(~ Pulse, groups=Sex, auto.key=TRUE, data=Day1Survey)
+```
+  (`auto.key=TRUE` includes a legend in the graph.)
+  
+  Describe: 
+  - In the first graph, we use a two-way table to describe the relationship between Sex and Pulse. We then can see both male and female's pulse mostly ranges from 50-80. Male mostly has pulses from 60-70, and female's pulse more vary but 70-80 range has the highest density. 
+  - In the second graph, we use a one-way table to describe the relationship between Sex and Pulse. This graph doesn't give a good sense of how density of pulse in each group compares to the previous one. 
+3. Insert an R Chunk below and run the same code as in #2 using `bwplot()` instead of `histogram()`.  (You do not need to comment on these boxplots, just make them.)
+```{r}
+bwplot(~ Pulse | Sex, data=Day1Survey)
+bwplot(~ Pulse, groups=Sex, auto.key=TRUE, data=Day1Survey)
+```
+
+
+Notice that neither of these plots in #3 are what we think of as "side-by-side" boxplots.  When using groups with boxplots, we use the fact that the category "Sex" should be on the y-axis, and the numerical variable "Pulse" should be on the x-axis.  So, using the syntax from the top of this subsection...
+```{r fig.width=5, fig.height=5}
+bwplot(Sex ~ Pulse, data=Day1Survey)
+```
+
+
+[Before you move on to Summarizing Categorical Data, click "Knit".  Make sure the output from Example 2 looks the way you want it to!]
+
+
+### Summarizing Categorical Data
+Of course, dealing with categorical variables is a little different, since we don't summarize them in the same way as numerical variables.  Instead of calculating descriptive statistics, we create tables.  And instead of making histograms or boxplots, we make bar charts and pie charts.
+
+#### Tables
+You can summarize how many people are in each category of a qualitative variable several ways.  To tabulate Handedness, try: 
+```{r}
+summary(Day1Survey$Handedness)
+table(Day1Survey$Handedness)
+tally(~ Handedness, format="proportion", data=Day1Survey)
+xtabs(~ Handedness, data=Day1Survey)
+```
+Notice that the first two methods use the *data$variable* language, and the second two methods use the `~` (formula) language. There are other differences between these methods, and situations where one or the other is easier or better to use; I'll leave you to investigate these on your own.
+
+
+**Two-way (contingency) tables**: We want R to create a two-way table to determine the number of males and females in this data set who are left-handed, right-handed, and ambidextrous. 
+
+As you might guess from the previous paragraph, there are many ways to do this.  
+```{r}
+table(Day1Survey$Handedness, Day1Survey$Sex)
+xtabs(~ Sex+Handedness, data=Day1Survey)
+tally(~ Sex+Handedness, data=Day1Survey)
+tally(Sex~ Handedness, data=Day1Survey) 
+tally(Sex~ Handedness,format='count', data=Day1Survey) 
+tally(~ Sex | Handedness, data=Day1Survey)
+tally(~ Sex | Handedness,format='count', data=Day1Survey)
+```
+
+**Example 3: Day 1 Survey**
+
+Insert an R Chunk below.  In it, make a table displaying the number of students in each class level (senior, junior, etc.).  Now break this down by Section.  (You may use any of the methods above.)  Below the code chunk, discuss: Do you see a difference in the class makeup of the two sections?  
+
+```{r}
+#Number of students
+summary(Day1Survey$Class) # table displaying the number of students in each class level
+tally(~ Class | Section, data=Day1Survey) # break this down by Section. 
+```
+
+The difference in the class makeup of the two sections: 
+
+In the second graph, we can easily compare the number of student in each class verses to section. In the first graph, we can only see the number of students in each class level, which is somewhere useless than the first one. 
+
+[Before you move on to Graphs, click "Knit".  Make sure the output from Example 3 looks the way you want it to!]
+
+#### Graphs
+
+In graphing categorical variables, you may need:
+
+  - `bargraph()` for bar charts from untabulated (raw) data
+
+  - `barchart()` for bar charts from tabulated data
+
+  - `pie()` for pie charts from tabulated data
+
+Note that `barchart` and `pie` require the data to be already tabulated; that is, the data must be in table form, either from running one of the table functions discussed above, or because the data was input as a table to begin with.  
+
+A basic pie chart:
+```{r fig.width=5, fig.height=5}
+pie(xtabs(~ Handedness, data=Day1Survey))
+```
+
+Notice that I made the table *within* the `pie()` function; but I didn't have to do it this way.  I could have made the table first (using `tally`, `table`, or `xtabs`), then fed it to the pie chart: 
+```{r fig.width=5, fig.height=5}
+table1 <- xtabs(~ Handedness, data=Day1Survey)
+pie(table1)
+```
+
+Barcharts are similar, and have a lot of options to make them look however you like:
+```{r fig.width=5, fig.height=5}
+barchart(table1,data=Day1Survey)
+barchart(table1,horizontal=FALSE)
+```
+
+Using two-way tables makes it slightly more complicated but you can do more cool stuff.  (Make sure what you understand what the first line below does!)
+```{r fig.width=5, fig.height=5}
+table2 <- tally(Sex ~ Handedness,format='proportion', data=Day1Survey)
+barchart(table2)
+barchart(table2, stack=FALSE, horizontal=FALSE, auto.key=TRUE, ylab='proportion')
+```
+(`auto.key` adds a key/legend; `ylab` labels the y-axis.)
+
+`Bargraph` is nice if you have untabulated data, but it doesn't have the flexibility of `barchart`.  Specifically, it won't change the y-axis to proportions; it always plots the frequencies.  This is fine when one variable is being tabulated, but once you have two variables (Handedness vs. Sex, for example), the frequencies are unhelpful. 
+```{r fig.width=5, fig.height=5}
+bargraph(~ Handedness, data=Day1Survey) #one variable
+bargraph(~Handedness,groups=Sex,auto.key=TRUE, data=Day1Survey) #two variables
+```
+
+**Example 4: Day 1 Survey**
+
+Insert an R Chunk below.  In it, use `barchart()` to make graphical displays of the tables you created in Example 3.  Make sure the bar chart including both Class and Section has proportions on the y-axis, and an appropriate key.
+```{r}
+table2 = tally(~ Class | Section, data=Day1Survey) #Assign table in E3 to a var
+barchart(table2,data = Day1Survey) #Bar chart
+```
+
+
+
+H. Congratulations!  
+---------------------------
+You have successfully navigated some of the basics of R and RMarkdown.  I want to reiterate that this document will be *extremely* useful to you as you go through the semester, and as you prepare for your first R Quiz!  You should also use it to help you as you learn to put together your own RMarkdown documents.  
+
+Also, don't forget about all the resources that I have posted on Moodle; plus the resources that are available through the Help menu, YouTube, and elsewhere.  Learn from them and from each other!

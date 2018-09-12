@@ -1,0 +1,151 @@
+---
+title: "Chapter 1: Simple Linear Regression"
+author: "Tam Nguyen"
+date: "August 30, 2018"
+output: html_document
+---
+
+Put your group member's names next to the author line above.  Answer the questions below; make sure you include all graphs and R code where appropriate.
+
+Using our choice of two variables from "HighPeaks", work through the sections below.  (See the Porsche prices examples in Sections 1.1-1.3 if you need a guide.)
+
+Today, we're going to play around with the `HighPeaks` dataset, within the Stat2Data package.  The code below loads the mosaic package (always useful) the Stat2Data package, and the HighPeaks data set into the RMarkdown document.  By pressing the "play" button to the right of the code chunk, the code will also run in the Console.
+```{r}
+library(mosaic)
+library(Stat2Data)
+data(HighPeaks)
+```
+
+
+A. Choose
+--------------------
+1. Make a scatterplot of the two variables of interest using `plot`.
+```{r fig.width=5, fig.height=5}
+#plot(variable~variable, data=HighPeaks)
+plot(Time ~ Length, data = HighPeaks)
+```
+
+
+2. Describe the relationship between the two variables; make sure you mention form, strength, and direction.
+
+Form: Linear line
+
+Strength: It looks like points are compacted into a linear line
+
+Direction: Positive
+
+
+3. Do you think a simple linear model is a good idea here?  Why or why not?
+
+Yes, since the strength and direction of points seems be fitted into a simple linear model 
+  *Even if the answer to the question above is ``No", continue with the activity.*
+
+4. Write the theoretical model relating the two variables (using $\beta_0, \beta_1, \epsilon$, and the two variables).
+
+Time = $\beta_0$Length + $\epsilon$
+
+B. Fit
+-------------
+
+Calculating the least squares line using R is very simple, and the syntax should look familiar from last week.  The new function is `lm()`, which stands for "linear model".
+
+_**lm(response ~ explanatory, data=dataset)**_ will calculate the estimated regression line between the variables "response" (the $y$ variable) and "explanatory" (the $x$ variable).
+
+```{r}
+lm(Time ~ Length, data=HighPeaks)
+```
+
+Once you have the estimated regression line, you can ask for various pieces of information about it, do predictions, etc.
+
+1. Use R to find the estimated regression line (the least squares line), and use the assignment operator to call it `simplereg`.  So your R code will look something like...  
+```{r}
+simplereg <- lm(Time~Length, data=HighPeaks)
+```
+
+
+2. Interpret the slope in the context of the problem.
+Slope coefficient: 2.0482 
+
+3. Interpret the intercept in the context of the problem.  Does the intercept make sense here?  That is, does it have a practical interpretation?
+
+Yes since we need a postive intercept.
+
+4. What is the residual value for peak #1? 
+
+-2.175427207
+
+### Regression Summary:
+
+Notice that if you type just
+```{r}
+simplereg
+```
+you don't get much information.  But `simplereg` is an **object** that *contains* lots of information within it.  For something more informative, type
+```{r}
+summary(simplereg)
+```
+
+You can also ask for the residuals (for each person) and the fitted $\hat y$ values (for each person) with
+```{r}
+residuals(simplereg)
+fitted(simplereg)
+```
+
+### Graphing the Least Squares Line:
+
+To add the fitted line to your scatterplot from A.1, use the function `abline()`:
+```{r fig.width=5, fig.height=5}
+plot(Time ~ Length, data = HighPeaks) #paste in the code for the plot from A.1
+abline(reg=simplereg) #add the regression line contained within simplereg
+```
+
+C. Assess
+----------------
+A simple linear regression model can be useful for three things: 
+  - as a summary of the relationship between two numerical variables;
+  - as a guide for predicting a future value of $y$ based on a particular value of $x$;
+  - as a basis for making a decision about the statistical significance of the slope or correlation.
+
+The first bullet point is part of *exploratory data analysis*; i.e., using data to summarize.  The only condition required is that the relationship between the two variables must be linear.  The last two bullet points fall under the heading of *statistical inference*; i.e., using sample data to make a claim about the population.  In this case, we require additional conditions about the residuals to be true.
+
+1. *Based only on the graph with fitted line above*, does it appear that the line is good summary of the relationship between these two variables? 
+
+- It is pretty good for summary the relationship between Time and Length. However, it appears a little bad in the last few points.
+
+2. What is the regression standard error ($\hat \sigma_{\epsilon}$)?  How is this quantity labelled by R?  What is the interpretation of this quantity?
+- Residual standard error: 1.449 on 44 degrees of freedom
+- It is lablled as Residual Standard Error
+- It is somewhere likely to be the average of residual error for all points
+
+3. List the conditions for inference with simple linear model, and what graph(s) you will make to assess the validity of these conditions.
+
+- Linearity– The overall relationship between the variables has a linear pattern. The average values of the response Y for each value of X fall on a common straight line. The other conditions deal with the distribution of the errors. 
+- Zero Mean– The error distribution is centered at zero. This means that the points are scattered at random above and below the line. (Note: By using least squares regression, we force the residual mean to be zero. Other techniques would not necessarily satisfy this condition.) 
+- Constant Variance– The variability in the errors is the same for all values of the predictor variable. This means that the spread of points around the line remains fairly constant. 
+- Independence– The errors are assumed to be independent from one another. Thus, one point falling above or below the line has no influence on the location of another point. 
+
+
+Graph: We need Normal Q-Q and Residual vs Fitted graph to see these conditions. 
+
+4. Do you think the conditions for inference are satisfied?  Use the code below to make the appropriate graphs (from above) to answer this question.  (See Example 1.5 if you need a guide for this question.)  (Note that `plot(simplereg)` gives you more plots than you need!  Just ignore the extraneous ones for now.)
+- The Normal Q-Q graph show that this model is a long-tailed residuals. It looks questionalble about the normality of the relationship between the model and data. The reason it looks nonormal maybe because of the sample is lack of randomness. 
+
+```{r fig.width=5, fig.height=5}
+plot(simplereg)
+```
+
+
+D. Use
+--------
+1. As a pair/group, discuss the generalizability of this data set: Where did it come from?  How were peaks selected?  Can we generalize to all mountain peaks?  ...to all peaks in NY?  Make some notes here, then we'll have a class discussion about this issue.
+
+- Description: Adirondack High Peaks
+
+- Format: A dataset with 46 observations on the following 6 variables.
+
+
+- Details:
+Forty-six mountains in the Adirondacks of upstate New York are known as the High Peaks with elevations near or above 4000 feet (although modern measurements show a couple of the peaks are actually slightly under 4000 feet). A goal for hikers in the region is to become a "46er" by scaling each of these peaks. This dataset give infomation about the hiking trails up each of these peaks.
+
+- Discussion: These data are collected in New York only so it is hard to generlize them to a bigger group, for example, every high peaks in the world. However, with places that have the same geography conditions, it can be a valuable sample. 
+

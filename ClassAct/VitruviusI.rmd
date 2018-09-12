@@ -1,0 +1,182 @@
+---
+title: "Simple Linear Regression: Vitruvius I"
+author: "Tam Nguyen"
+output: html_document
+---
+
+A. Research Question
+------------------------------------
+Marcus Vitruvius, an architect in Rome, wrote in De Architectura:
+
+“For if we measure the distance from the soles of the feet to the top of the head, and then apply that measure to the outstretched arms, the breadth will be found to be the same as the height, as in the case of plane surfaces which are completely square.”
+(Marcus Vitruvius, De Architectura, Book III, Chapter 1, p 3)
+
+Using Vitruvius’ claim, this is our research question: Do people have heights (X) that are in a linear relationship with their wingspan (Y)?
+
+(We're probably specifically interested in whether the slope of this linear relationship is equal to 1, but for now let's just see if there's *any* linear relationship...)
+
+B. Data Definition and Collection
+------------------------------------
+We will use a convenience sample (the students in this class) to assess the validity of Vitruvius’ claim.
+
+1. Clearly describe an individual in our study.
+
+- Student's in this class
+
+2. The response variable is: Wingspan
+
+the explanatory variable is: Height 
+
+
+3. Clearly describe how we collected/measured the data, including the measuring device used.  (The idea here is to be specific enough that another person could repeat your study exactly.)
+
+[*I have done this for you, since I was the one who did the measuring!*]
+Mark units of measure on the wall using tape measures.  One will start at the bottom and be taped up the wall to measure height (in cm).  The other will start in a corner and be taped horizontally in order to measure wingspan (in cm).  When measuring the wingspan measure middle finger to middle finger with arms outstretched.  When measuring height, measure form soles of heels to crown of head, with shoes on (unless wearing a significant heel). 
+
+Here's the data:
+```{r}
+Height <- c(169, 174, 159, 164, 183, 192, 192, 160, 167, 179, 188, 178, 185, 184, 157)
+Wingspan <- c(163, 170, 160, 173, 185, 198, 197, 159, 168, 184, 193, 181, 184, 184, 153)
+
+```
+
+C. Exploratory Data Analysis
+------------------------------------
+1. Distribution of Response Variable.
+Construct an appropriate visual display of the distribution of the response variable, describe its main features, and note anything unusual.
+```{r}
+hist(x = Wingspan)
+favstats(Wingspan)
+```
+
+
+- The frequency of wingspan in the range of 170-180 is significantly lower than other ranges. Also, there are more people has wingspans in the range 180-190. Otherwise, the number of people have wingspans in other ranges is equal. 
+
+2. Distribution of Explanatory Variable.
+Construct an appropriate visual display of the distribution of the explanatory variable, describe its main features, and note anything unusual.
+
+```{r}
+hist(x = Height)
+```
+
+- The graph above shows the prequency of height. 
+- We can see that the amount of people that have height under 160cm is equal to the amount of people that have height ~ 180cm. 
+- The distribution of height is normal a random.
+
+3. Construct a scatterplot and describe the form, direction, and strength of the relationship between the two variables.
+```{r}
+plot(x = Height, y = Wingspan)
+```
+```{r}
+favstats(Height)
+```
+
+- Main features: The data distrubutes simply linearly along the graph. 
+- Unsual: According to Vitruvious' clam, the slope of equation between a person's height and wingspan should equal to 1. Which means that the linear line should create a 45 degrees angle to the x-axis. However, the angle that we saw in the graph above is somewhere smaller than 45 degrees. 
+
+D. Model Fitting
+----------------------------
+1. Obtain the equation of the least-squares regression line and draw it on the scatterplot.
+```{r}
+reg = lm(Wingspan~Height)
+plot(x = Height, y = Wingspan)
+abline(reg = reg)
+summary(reg)
+```
+
+
+2. Diagnostics: Conduct a residual analysis to verify the model assumptions.
+```{r}
+par(mfrow=c(2,2))
+plot(reg)
+```
+
+- The Normal Q-Q graph show that this model is a normal plot of residuals.
+- The variance of residual is constant and the relationship is linear
+
+3. Based on your plots in D.1 and 2, are any transformations necessary?  If so, make those transformations and repeat your analysis.
+- According to residual graphs above, we don't need to make any further transformations. 
+
+E. Inference
+----------------------------
+For significance tests, be sure to state the hypotheses and state your conclusion in context.  You do not need to check the conditions because you already did that in D.2.
+
+1. Construct a 95% confidence interval for the slope of the regression line.  Interpret this CI in context.
+
+
+```{r}
+confint(reg)
+```
+- The slope of the regression line in the 97.5% interval is 10.77
+
+2. Test the claim that the correlation coefficient is not 0.
+```{r}
+cor.test(~Wingspan+Height)
+```
+
+- The p-value is ~ 0.000
+- There is 95 % confidence interval of  [0.8889619, 0.9878452] 
+- The correlation coefficient is not 0.
+
+3. ANOVA table:
+```{r}
+#Remember: the code is anova(model.lm), where model.lm is the model you fit in part D
+anova(reg)
+```
+
+
+4. Using the ANOVA table, test if the model explains a significant amount of the variability in the response variable.
+```{r}
+SSModel = 2545.92
+SSE = 208.48
+
+R_squared <- SSModel /
+            (SSModel + SSE)
+
+R_squared
+```
+
+- We then can conclude that 92.4\% of variability in Wingspan is explained by the model. 
+
+5. We want to calculate a 90% interval for the mean Wingspan of people whose Height is 170 cm (67"). We haven't talked about this in class, but it's in Section 2.4.
+
+```{r}
+#Code for confidence interval:
+predict.lm(reg, data.frame("Height"=170), interval="confidence", level=0.9)
+#Code for prediction interval:
+predict.lm(reg, data.frame("Height"=170), interval="prediction", level=0.9)
+```
+
+a. Do we want a prediction interval or a confidence interval? 
+- Confidence interval
+
+b. Calculate the interval. 
+- From 168.6348 to 172.6703 (cm)
+
+c. Interpret the interval.
+- Our level of certainty about the true mean is 90% in predicting that the true mean is within the interval between 168.6348 and 172.6703 assuming that the original random variable is normally distributed, and the samples are independent.
+
+7. We want to calculate 90% interval for a person's Wingspan when his/her Height is 170 cm (67"). 
+
+a. Do we want a prediction interval or a confidence interval? 
+- Prediction interval
+
+b.  Will this interval be wider or narrower than the interval in \#10b?
+- The prediction interval is wider (has a larger SE) than the confidence interval.
+
+c. Calculate the interval. 
+
+- From 163.2791 to 178.0259
+d.  Interpret the interval.
+
+- Our level of certainty about the true mean is 90% in predicting that the true mean is within the interval between 163.2791 and 178.0259 assuming that the original random variable is normally distributed, and the samples are independent.
+
+### Conclusion: 
+Based on your analysis, Do people have heights that are in a linear relationship with their wingspan?
+
+Yes, people do have heights that are in a linear relationship with their wingspan based on conditions for inferences, t-test, and f-test. 
+
+Do you concur with Vitruvius’ claim about the specific relationship between height and wingspan?
+
+The arm-span measurement and height relationship is significantly different for some reasons. However, in our data, we only have height and wingspan, which is hard to conclude which is significant explanatory factor. Vitruvios' claim is still true with most of the population, but not all of them.
+

@@ -1,0 +1,160 @@
+---
+title: "Homework 1 template"
+author: "Tam Nguyen"
+date: "Thursday 6th, 2018"
+output: html_document
+---
+```{r include=FALSE}
+library(mosaic); library(Stat2Data)
+```
+
+## 1.27
+```{r}
+#load data set
+data("BaseballTimes")
+```
+
+### a. 
+Your answer to the question should be here.
+```{r fig.width=8, fig.height=8}
+par(mfrow=c(2,2))
+#Here you should have the plot(s) and code for summary statistics that you use to answer the question.
+#Distribution of Response variable (Time In minute)
+
+#Dot plot
+plot(BaseballTimes$Time, main = "Dotplot")
+#Histogram plot
+hist(BaseballTimes$Time, main = "Histogram")
+#Box plot
+boxplot(BaseballTimes$Time, main = "Boxplot")
+```
+
+- From Histogram and Boxplot we can say that distribution of time is positively skewed.
+- From Boxplot and dotplot we observe that outlier is present for NYM-PHI game. The best method to dealing with outlier is that it is replaced with median value of data.
+
+### b.
+Your answer to the question should be here.
+```{r fig.width=8, fig.height=8}
+par(mfrow=c(2,2)) #This puts plots in a 2x2 grid, which takes up less space.  You don't need to use it, but you may find it useful!
+#Here you should have the plot(s) that you use to answer the question.
+
+#Scatterplots
+simplereg = lm(Time~Runs, data=BaseballTimes) # Create linear line to see the relationship between runs and time variable
+plot(Time~Runs,data=BaseballTimes, main="Scatterplot Time vs Runs ")  #Draw scatter points
+abline(reg=simplereg) #Draw linear line into graph
+
+
+
+simplereg_2 = lm(Time~Pitchers, data=BaseballTimes) # Create linear line to see the relationship between pitchers and time variable
+plot(Time~Pitchers, data = BaseballTimes, main="Scatterplot Time vs Pitchers ")  #Draw scatter points
+abline(reg=simplereg_2) #Draw linear line into graph
+
+
+simplereg_3 = lm(Time~Margin, data=BaseballTimes) # Create linear line to see the relationship between margin and time variable
+plot(Time~Margin, data = BaseballTimes, main="Scatterplot Time vs Margin ")  #Draw scatter points
+abline(reg=simplereg_3) #Draw linear line into graph
+
+simplereg_4 = lm(Time~Attendance, data=BaseballTimes) # Create linear line to see the relationship between attendance and time variable
+plot(Time~Attendance,data = BaseballTimes, main="Scatterplot Time vs Attendance ")  #Draw scatter points
+abline(reg=simplereg_4) #Draw linear line into graph
+```
+
+- From above graphs we can say that time and pitchers have strong and postive correlation since we see that all points are mostly compacted into the linear line. 
+
+- Also time variable is not related with margin variable since the patterns of points...
+### c.
+```{r}
+#Linear Regression summary of Pitcher ~ Time
+summary(simplereg_2)
+```
+ - Slope coefficient:  94.843. It makes sense since we need a positive slope
+ - Hence from the equation above, we can say that if 1 unit change in pitchers then nearly 11 unit changes in time.
+
+### d.
+Analyze appropriate residual plots and comment on what they reveal about whether the conditions for inference appear to be met here.
+```{r fig.width=8, fig.height=8}
+par(mfrow=c(3,2))
+plot(simplereg_2)
+plot(simplereg_2$residuals,main="residual Plot")
+```
+
+- From above residual plot we can say that variance of residuals is constant.
+
+## 1.28
+
+### a. 
+- NYM-PHI game have largest residual nearly equal to 51.This the same game that is identified as an outlier based on my analysis of the time variable alone.
+
+### b. 
+```{r fig.width=8, fig.height=8}
+new_BaseballTimes = BaseballTimes[-15,] #New table with omitted NYM-PHI row. 
+
+par(mfrow=c(2,2))#This puts plots in a 2x2 grid, which takes up less space.  You don't need to use it, but you may find it useful!
+#Here you should have the plot(s) that you use to answer the question.
+
+#Scatterplots
+nsimplereg = lm(Time~Runs, data=new_BaseballTimes) # Create linear line to see the relationship between runs and time variable
+plot(Time~Runs, data = new_BaseballTimes, main="Scatterplot Time vs Runs ")  #Draw scatter points
+abline(reg=nsimplereg) #Draw linear line into graph
+
+nsimplereg_2 = lm(Time~Pitchers, data=new_BaseballTimes) # Create linear line to see the relationship between pitchers and time variable
+plot(Time~Pitchers,data = new_BaseballTimes, main="Scatterplot Time vs Pitchers ")  #Draw scatter points
+abline(reg=nsimplereg_2) #Draw linear line into graph
+
+
+nsimplereg_3 = lm(Time~Margin, data=new_BaseballTimes) # Create linear line to see the relationship between margin and time variable
+plot(Time~Margin, data = new_BaseballTimes, main="Scatterplot Time vs Margin ")  #Draw scatter points
+abline(reg=nsimplereg_3) #Draw linear line into graph
+
+nsimplereg_4 = lm(Time~Attendance, data=new_BaseballTimes) # Create linear line to see the relationship between attendance and time variable
+plot(Time~Attendance, data = new_BaseballTimes, main="Scatterplot Time vs Attendance ")  #Draw scatter points
+abline(reg=nsimplereg_4) #Draw linear line into graph
+```
+
+- From above graph we can say that time and pitchers still have strong and postive correlation since we see that most of the points are really close to the line, and there are some points belong to the line. 
+- Runs is a another good factor but it isn't good as Pitcher since there are many points stay far away from the line. 
+- Margin and Attendance are two bad factors since the linear regression line cannot present the relationship between factors and Time. 
+
+```{r}
+#summary information about linear regression model
+summary(nsimplereg_2)
+```
+
+- We can see that the new coefficient is 113.869, which is ~ 20% higher than the old coefficient 94.843. It means that this new model has changed a lot by omitting the outliner. 
+
+
+```{r fig.width=6, fig.height=6}
+#residual Plot
+par(mfrow=c(3,2))
+plot(nsimplereg_2)
+plot(nsimplereg_2$residuals,main="residual Plot")
+```
+
+- The Normal Q-Q graph show that this model is a long-tailed residuals. It looks questionalble about the normality of the relationship between the model and data. The reason it looks nonormal maybe because of the sample is lack of randomness and data (there are only 14 objects).
+
+### c. 
+Comment on the extend to which omitting the outlier changed the analysis and your conclusion
+
+```{r fig.width=10, fig.height=10}
+par(mfrow=c(4,2))
+plot(new_BaseballTimes$Time, main = "Dotplot without outliner")
+plot(BaseballTimes$Time, main = "Dotplot")
+hist(new_BaseballTimes$Time, main = "Histogram without outliner")
+hist(BaseballTimes$Time, main = "Histogram")
+boxplot(new_BaseballTimes$Time, main = "Boxplot without outliner")
+boxplot(BaseballTimes$Time, main = "Boxplot")
+
+plot(residuals(simplereg), main = "Dotplot of residuals")
+plot(residuals(nsimplereg_2), main = "Dotplot of residuals without outliner")
+
+```
+```{r}
+summary(new_BaseballTimes)
+summary(BaseballTimes)
+```
+
+- In the new model, the Pitchers is still a good factor to predict Time.
+- Simply by comparing dotplot, histogram and boxplot, we can see that without the outliner, the data set has a normal distribution pattern. 
+- Without the ouliner, the dotplot of the residuals without the outliner has a significant change in range. At the graph that includes the outliner, residuals range from -40 to almost 100. The residuals without the outliner range from -20 to ~30. This shows that the error of prediction of the new model reduces comparing to that of the first one. 
+- The mean value has significant change: Mean of Pitchers increases without the outlier.
+
