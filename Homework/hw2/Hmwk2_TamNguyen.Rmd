@@ -7,14 +7,15 @@ output: html_document
 ```{r include=FALSE}
 library(mosaic); library(Stat2Data)
 ```
-##2.37(a-c) 
+
+## 2.37(a-c) 
 
 ```{r}
 #load data set
 data("BaseballTimes")
 ```
 
-###a. 
+### a. 
 
 Calculate the correlations of each predictor var with length of a game (Time). Identify which is strongly correlated.
 ```{r}
@@ -31,7 +32,7 @@ cor(duration, waiting_5)
 
 - Pitchers var has the strongest correlation to the Time variable. 
 
-###b.
+### b.
 
 Choose the best var. Find regression eq for time. Interpret the slope coefficient of this equations
 ```{r}
@@ -45,7 +46,7 @@ abline(reg=simplereg) #Draw linear line into graph
 summary(simplereg)
 ```
 - Slope coefficient: 94.843. It makes sense since we need a positive slope
-- Hence from the equation above, we can say that if 1 unit change in pitchers then nearly 11 unit changes in time.
+- Hence from the equation above, we can say that if 1 person changes in pitchers then nearly 11 minutes changes in time.
 
 ### c.
 
@@ -53,11 +54,11 @@ Perform the appropriate significant test of whether this predictor is really cor
 ```{r}
 cor.test(~Time+Pitchers, data = BaseballTimes)
 ```
-- Our hypothesis is that the number of pages in a textbook has a positive linear relationship with the price of the textbook. In particular, we are testing $H_0:\β1=0$ and $H1:\β1 \neq 0$. From our summary command, we see that the t-statistic is 7.2063 with a statistically significant p-value ~ 0.000. These calculations mean that the number of pages is a useful predictor of textbook price.
+- Our hypothesis is that the number of pages in a textbook has a positive linear relationship with the price of the textbook. In particular, we are testing correlation = 0 (the Null) and correlation \neq 0 (not the null). From our summary command, we see that the t-statistic is 7.2063 with a statistically significant p-value ~ 0.000. These calculations mean that the number of pages is a useful predictor of textbook price.
 
 ##1.26
 
-###a.
+### a.
 
 Produce the relevant scatterplot to investigate the students’ question. Comment on what the scatterplot reveals about the question.
 
@@ -70,7 +71,7 @@ plot(Price~Pages, data = TextPrices)
 - The scatterplot shows the relationship between Price and Page.
 - In the graph, we can see that points mostly compact into a linear line. Howver, there are still many outliners that need further investigation. 
 
-###b. 
+### b. 
 
 Regression line to predicting price from number of pages
 
@@ -81,7 +82,7 @@ abline(reg = reg)
 
 ```
 
-###c. 
+### c. 
 
 Produce and examine relavant residual plots, and comment on what they reveal about whether the conditions for inference are met with these data
 ```{r}
@@ -104,9 +105,9 @@ Inference Conditions:
 
 
 
-##2.14
+## 2.14
 
-###a. 
+### a. 
 
 Perform significant test to address the student's question of whetther the number of pages is useful predictor of textbook's price. Report the hypothesis, test statistic, and p-value, along with conclusion.
 ```{r}
@@ -114,9 +115,9 @@ anova(reg)
 ```
 
 
-- Our hypothesis is that the number of pages in a textbook has a positive linear relationship with the price of the textbook. In particular, we are testing $H_0:\β1=0$ and $H1:\β1 \neq 0$. From our summary command, we see that the t-statistic is 7.653 with a statistically significant p-value~0.000. These calculations mean that the number of pages is a useful predictor of textbook price.
+- Our hypothesis is that the number of pages in a textbook has a positive linear relationship with the price of the textbook. In particular, we are testing the model is useful or not. From our summary command, we see that the t-statistic is 7.653 with a statistically significant p-value~0.000. These calculations mean that the number of pages is a useful predictor of textbook price.
 
-###b. 
+### b. 
 
 Determine a 95% confidence interval for the population slope coefficient. Explain what slope coefficient means in the context of these data.
 
@@ -128,7 +129,7 @@ confint(reg, level = 0.95)
 
 ## 2.15
 
-###a.
+### a.
 
 Dertermine a 95% confidence interval for the mean price of a 450-page texbook in the population
 ```{r}
@@ -136,7 +137,7 @@ predict.lm(reg,data.frame("Pages"=450),interval="confidence")
 ```
 - The 95% confidence interval for the mean price of a 450-page textbook in the population: 51.73074 ~ 74.02024
 
-###b. 
+### b. 
 
 Dertermine a 95% cofidence interval for the price of a particular 450-page texbook in the population.
 ```{r}
@@ -145,26 +146,26 @@ predict.lm(reg,data.frame("Pages"=450),interval="prediction")
 - The 95% confidence interval for the individual price of a particular 450-age textbook in the population is: [.90, 124.85].
 
 
-###c. 
+### c. 
 
 How do the midpoints of these two intervals compare? Exlain why this makes sense
 
 - The midpoints of these two interval are equal.
 - This makes sense because the two types of intervals are essentially the same except that the prediction interval has a larger standard error. Moreover, both intervals are centered around the single predicted value calculated from the model. Thus, no matter how wide the intervals are, their centers must be equal.
  
-###d. 
+### d. 
 
 How do the widths of these two intervals compare? Explain why this make sense.
 
 - The prediction interval is wider than the confidence interval. Prediction intervals must account for both the uncertainty in knowing the value of the population mean, plus data scatter. So a prediction interval is always wider than a confidence interval.
 
-###e.
+### e.
 
 What value for number of pages would produce the narroest possible prediction interval for its price? Epxlain.
 
 - The mean number of pages, which is 464, would produce the narrowest possible prediction interval for its price because the mean minimizes the standard error in the model.
 
-###f.
+### f.
 
 Determine a 95% prediction interval for the price of a particular 1500-page textbook in the population. Do you really have 95% cofidence in this interval? Explain.
 ```{r}

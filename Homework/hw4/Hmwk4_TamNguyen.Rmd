@@ -1,0 +1,49 @@
+---
+title: "Homework 4 "
+author: "Tam Nguyen"
+date: "October 23th, 2018"
+output: html_document
+---
+```{r include=FALSE}
+library(mosaic); library(Stat2Data); data("Titanic")
+```
+
+### 9.17: Survival and age.
+
+## a. Use a plot to explore whether there is a relationship between survival and the passenger’s age. What do you conclude from this graph alone?
+
+```{r}
+
+```
+
+
+## b. Use software to fit a logistic model to the survival and age variables to decide whether there is a statistically significant relationship between age and survival, and if there is, what its direction and magnitude are. Write the estimated logistic model using the output and interpret the output in light of the question.
+
+
+
+
+### 9.18: Survival and sex.
+## a. Use a two-way table to explore whether survival is related to the sex of the passenger. What do you conclude from this table alone? Write a summary statement that interprets Sex as the explanatory variable and Survived as the response variable, and that uses simple comparisons of conditional proportions or percentages.
+
+
+## b. Use software to fit a logistic model to the survival and sex variables to decide whether there is a statistically significant relationship between sex and survival. If there is, what are the nature and magnitude of the relationship? Does the relationship found by the logistic model confirm the descriptive analysis? (Note: You will actually use SexCode as the predictor in the logistic model.)
+
+
+### 9.19
+## a. Present a calculation that compares the estimated slope coefficient of the model with SexCode as a predictor to the estimated odds ratio. Then give a sentence that interprets the odds ratio in the context of the Titanic tragedy. 
+
+
+## b. Write a sentence that interprets a 95% CI for the odds ratio discussed in (a). 
+
+## c. Present a calculation from the two-way table that leads to an estimated coefficient from the output for the model found in (b).
+
+## d. Use the model to estimate the probability that a female would have survived the sinking of the Titanic. 
+
+## e.Assess the model conditions for the model relating Survival to SexCode. Write a short summary of the assessment.
+
+
+
+### 9.20
+
+Write a short paragraph that summarizes your analysis of the relationships between the Sex and Age of a passenger and the passenger’s Survival.
+

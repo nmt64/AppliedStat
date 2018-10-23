@@ -1,0 +1,224 @@
+---
+title: "Logistic Regression Practice"
+author: "Tam Nguyen"
+output: html_document
+---
+
+
+### Part A: Using MedGPA to work with untabulated data
+
+## 1.	Open the MedGPA data set (from the Stat2Data) in R and use head(MedGPA) to investigate the data. 
+
+```{r}
+library(mosaic);
+library(Stat2Data);
+data(MedGPA);
+Tab = table(MedGPA$Sex,MedGPA$Acceptance)
+Tab
+```
+
+## 2.	Acceptance: M to F
+a.	Based on this sample of 55 students, what are the odds of a woman getting accepted to med school?  (xtabs(), tally(), or table() will be helpful here!)
+
+- 18/10 = 1.8
+
+b.	Based on this sample of 55 students, what are the odds of a man getting accepted to med school?
+
+- 12/15 = 0.8
+
+c.	What is the odds ratio of women to men?  
+
+- 0.8/1.8 = 2.25
+
+d.	Interpret the odds ratio.
+
+- The odds of picking a female student getting accepted to a med school is 225% of the odd of picking a male student getting accepted to a med school.
+
+## 3.	Acceptance: MCAT scores
+The variable “MCAT” contains the total MCAT scores for these 55 students.
+
+a.	The code below will calculate the proportion of successes within each MCAT score:
+```{r}
+tab <- xtabs(~MCAT+Acceptance,data=MedGPA)
+prop <- tab[,2]/(tab[,2] + tab[,1])
+	
+```
+
+
+b.	Now plot these proportions against the MCAT scores:
+```{r}
+xyplot(prop~sort(unique(MedGPA$MCAT)), xlab="MCAT")
+
+```
+
+c.	Does it look like a logistic regression model will be helpful here?  Why or why not?
+
+- The data points mostly follow an S-curve, which means a logistic regression model will be a good fit for this dataset. 
+
+## 4.	Checking Linearity
+
+Notice (from tab) that most of our cells contain 0, 1, or 2.  We could do the “trick” again and add 0.5 to all the successes and failures, but another way of dealing with it is the procedure described on p. 472- 474 (Example 9.12), which is what we’ll use below…
+
+a.	First, divide the range of MCAT scores into intervals with roughly equal numbers of cases.  I have made (what I think is) a judicious division below into 5 intervals (however, there is no “right” number of intervals in these cases!).    
+Fill in the rest of the table, using tab to help you.
+
+### The table is in .doc file
+```{r}
+slice1 = MedGPA[(MedGPA[,10]>17) & (MedGPA[,10]<33), ]
+summary(slice1)
+
+slice2 = MedGPA[(MedGPA[,10]>32) & (MedGPA[,10]<35), ]
+summary(slice2)
+
+slice3 = MedGPA[(MedGPA[,10]>34) & (MedGPA[,10]<37), ]
+summary(slice3)
+
+slice4 = MedGPA[(MedGPA[,10]>36) & (MedGPA[,10]<40), ]
+summary(slice4)
+
+slice5 = MedGPA[(MedGPA[,10]>39) & (MedGPA[,10]<49), ]
+summary(slice5)
+```
+
+a.	Interpret the odds ratio for an increase in MCAT score from the 35 – 36 range to the 37 – 39 range.
+
+-	The odds of picking a student who has MCAT in range 37-39 getting accepted to a med school is 106.7% of the odd of picking a student who has MCAT in range 35-36 getting accepted to a med school.
+
+b.	Looking at the odds ratios, does it look like the logistic model’s linearity constraint is reasonable?  Why or why not?
+
+- The odds ratio is greater than 1, it describes a positive relationship. The positive relationship means that as MCAT score “increases,” the odds of being accepted increases. 
+- However, even when there exist a positive relationship between the MCAT score and the acceptance into med school, the order of odds ratios does not have a constraint linearity. It ranges from 1.067 to 3.64
+
+c.	Create two vectors from the table above: “means”, that contains the range means; and “odds”, that contains the odds from each group.  You can create these vectors easily using (for example)
+
+```{r}
+means <- c(30, 33.89, 35.5, 38.46, 42.08)
+odds <- c(2/9,4/5, 6/4, 8/5,10/2)
+```
+
+d.	Use (plot(log(odds)~means, type="o")(
+to make a scatterplot of log(odds) vs. MCAT score.  What are we looking for in this plot?  Does it look like a logistic regression model is appropriate in this case?  Why or why not?
+```{r}
+plot(log(odds)~means, type="o")
+```
+
+- The plot above is linear so logistic regression is a good model for this dataset. 
+- There is a small deviation at the means 38~40(MCAT Score), but it doesn't show significant 
+
+## 5. Fitting a Logistic Regression Model in R: untabulated data
+
+a.	Fit a logistic regression model with Acceptance as the response variable and MCAT as the explanatory variable.  Save this model as “mcat.log” for future use.
+
+```{r}
+mcat.log = glm(Acceptance ~ MCAT, data=MedGPA, family=binomial)
+summary(mcat.log)
+```
+
+
+
+b.	What is the slope of the fitted model?
+
+- 0.24596
+
+c.	Compute e^(slope).  What is the interpretation of this quantity? 
+```{r}
+exp(0.24596)
+```
+- The odds ratio is 1.2789. 
+- With every one point MCAT increase, we expect the odds of an individual to be accapted into med school is 127.9% of the odds of an individual to be accepted into med school with an MCAT score of one point lower. 
+
+## 6.	Visualizing the Logistic Model: 2 ways
+
+a.	On the “linearized” plot of log(odds) vs. MCAT (from part #5a), you can plot the (straight-line) slope, as in Figures 9.12 and 9.13.  To do this,
+
+```{r}
+plot(log(odds)~means, xlab="MCAT")  #Note the use of plot, not xyplot!
+abline(reg=mcat.log)  #add the regression line from mcat.log to the plot
+```
+
+
+Does it look like this model is a good fit to the data?
+
+- This model is not a good fit to the data since there are some significant outliners. 
+
+
+b.	On the “original” plot of proportion vs. MCAT (from part a), you can plot the curvy logistic model, as in Figures 9.3 and 9.14 (upper-right corner).  To do this we use the function makeFun(): 
+```{r}
+xyplot(prop~sort(unique(MedGPA$MCAT)), xlab="MCAT") 
+fit <- makeFun(mcat.log)
+plotFun(fit(MCAT)~MCAT, add=TRUE)
+
+```
+
+
+Does it look like this model is a good fit to the data?
+- This model is a good fit to the data because all the points are compacted to the fitted S-curve.
+- There are some outliners in the range 30-35, but doesn't show significant. 
+### Part B: Using cancer data to work with tabulated data
+
+In the MCAT file, the data was in “long form”: one row for each individual.  We tabulated it just to visualize it and fill in our table.  What if the data is already tabulated into a table (“short form”), and we don’t have the long form?
+
+## 1.	Below is a table of various types of cancer, along with whether the patient survived at least a year.  Add a row to this table that gives the odds of survival for each type of cancer.
+
+
+
+## 2.	Linearity
+Linearity is irrelevant here.  What we have is a binary response variable (survival) and a categorical response variable (type of cancer).  We’re not fitting a line from “left” to “right” because there is no ordering of these cancer types!  (The ordering you see above is, of course, completely arbitrary.)  Because it’s categorical, the logistic regression model will fit individual “lines” to each cancer type, and two points always make a line.
+
+## 3.	Create the table in R
+```{r}
+
+cancer.tab <- matrix(data=c(2,9,14,3,8,9,3,3,9,4),nrow=2, ncol=5) #this creates the table, but without any variable labels
+rownames(cancer.tab) <-c("Died","Survived") #labels the rows
+colnames(cancer.tab) <-c("Breast", "Bronchus", "Colon", "Ovary", "Stomach") #labels the columns
+cancer.tab #check out the pretty table!
+```
+
+
+## 4.	Fitting the Logistic Model in R: tabulated data
+First, we need to change the tabulated data to what we call “semi-tabulated”: there is not a separate row for each individual, but there are separate rows for those who survived and those who died.  We do this using the ‘melt’ function, which lives in the ‘reshape2’ package.
+
+a.	Install and load the ‘reshape2’ package now.
+```{r}
+library(reshape2) ;
+```
+
+b.	To create the semi-tabulated version of the data, type
+```{r}
+melt(cancer.tab)
+```
+
+
+
+Make sure you understand what has been done here!  ‘Var1’ now contains information about survival (the response variable) and ‘Var2’ is the type of cancer (the explanatory variable).  The ‘value’ variable contains the frequencies (counts) within each of those sub-groups.
+
+
+So in our case, the code is:
+```{r}
+cancer.log <- glm(Var1~Var2, weights=value, data=melt(cancer.tab), family = binomial)
+```
+
+
+## 5.	Interpretation
+a.	Why are there so many different slope values?  And why is “breast” missing?
+
+- There are so many different slope values because each type of cancer is a categorical variable. These values are the slope of a type of cancer (not breast) compared to individuals with breast cancer. “Breast” variable is missing because this is the base case for the model. If all other variables were 0 then the model would be for breast cancer.
+
+
+b.	For Colon, e^(slope) = 0.25.  Interpret this quantity in context.
+
+
+- The odds of an individual surviving from colon cancer are 25% of the odds of an individual surviving from only breast cancer.
+
+c.	Calculate the odds ratio of survival for colon cancer vs breast cancer, using the table in #1.  What do you notice about this quantity compared to #5b?
+
+```{r}
+(9/8)/(9/2)
+
+```
+
+
+
+
+
+

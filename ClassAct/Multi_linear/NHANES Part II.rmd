@@ -1,0 +1,161 @@
+---
+title: "NHANES Part II"
+author: Tam Nguyen
+output: html_document
+
+---
+
+Quantitative Response, Quantitative Predictors: MULTIPLE LINEAR REGRESSION with INTERACTION
+-----------------------------------------
+
+Continue with the NHANES example (NHANES-body.csv) for modeling weight as a function of arm circumference and arm length.
+
+**Variables:**
+
+Y:  body weight in kg
+
+X1: upper arm circumference in cm
+
+X2: upper arm length in cm
+
+In Part I, we considered the model $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$, where $\epsilon_i$ are independent $N(0, \sigma_{\epsilon})$.
+
+A.  Interaction Model
+--------------------------
+
+Consider the bivariate model with interaction:
+$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \epsilon$, where $\epsilon_i$ are independent $N(0, \sigma_{\epsilon})$.
+
+The interaction term allows the slope with respect to one predictor to change for values of the second predictor.
+
+1. How many unknown parameters are in this model (which will need to be estimated)?
+
+- There are four unknown parameters in this model
+
+B. Interpretation in the Interaction Model
+----------------------------------------
+
+$\beta_1$ and $\beta_2$ do not have the same interpretation as in the bivariate linear model without interaction (Part I).  Let’s investigate why, and what that interpretation is...
+
+There are really two methods of discovering the meaning of the parameters.  They both lead to the same answer/interpretation, but one or the other may make more sense to you, so I present them both below.
+
+**Method 1:**
+
+1. Take the derivative of the interaction model with respect to $X_1$.
+
+
+2. Interpret this quantity in context (as you would any derivative).
+
+
+3. Given the interpretation in #2, what is the change in $Y$ (on average) when $X_1$ increases by 1 unit, holding $X_2$ constant?
+
+
+4. Take the derivative of the interaction model with respect to X2.
+
+
+5. Interpret this quantity in context (as you would any derivative).
+
+
+6. Given the interpretation in #5, what is the change in $Y$ (on average) when $X_2$ increases by 1 unit, holding $X_1$ constant?
+
+
+**Method 2:**
+
+1. Consider the generic model $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.  Increase $X_1$ by 1 unit by plugging in $(X_1+1)$ for $X_1$.  Expand and combine like terms; call this equation $Y_{new}$.
+
+$Y_new = \beta_0 + \beta_1(X_1+1) + \beta_2 X_2 + \beta_3( X_1+1) X_2$
+
+$Y_new = \beta_0 + \beta_1X_1 + \beta_2 X_2 + (\beta_3 X_1+\beta_3) X_2 +\beta_1$
+
+$Y_new = \beta_0 + \beta_1X_1 + \beta_2 X_2 + \beta_3 X_1X_2+\beta_3 X_2 +\beta_1$
+
+
+2. Subtract $Y$ from $Y_{new}$ and cancel terms.
+
+$Y_{new}$ - $Y$ = $\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$ - $\beta_0 - \beta_1X_1 - \beta_2 X_2 - \beta_3 X_1X_2-\beta_3 X_2 -\beta_1$ = $-\beta_3X_2 -\beta_1$
+
+3. So what is the change in $Y$ (on average) when $X_1$ increases by 1 unit, holding $X_2$ constant?
+- $X_1$ increases by 1 unit, $Y$ will change $-\beta_3X_2 -\beta_1$ with holding $X_2$ constant. 
+
+4. And similarly, the change in $Y$ (on average) when $X_2$ increases by 1 unit, holding $X_1$ constant?
+$Y_new = \beta_0 + \beta_1X_1 + \beta_2 (X_2+1) + \beta_3X_1(X_2+1)$
+
+$Y_new = \beta_0 + \beta_1X_1 + \beta_2 X_2 + \beta_3X_1X_2 +\beta_2+\beta_3X_2$
+
+$Y_new - Y$ = $-\beta_2-\beta_3X_2$
+- $X_2$ increases by 1 unit, $Y$ will change $-\beta_2-\beta_3X_2$ with holding $X_1$ constant. 
+
+
+
+C. Fitting the Model and Performing Inference
+-----------------------------------------------
+Load data set (call it `nhanes`) and the mosiac package here:
+```{r include=FALSE}
+library(mosaic); library(readr)
+nhanes <- read_csv("/Users/Tam/Documents/Junior1819/Fall2018/Stat/AppliedStat/ClassAct/Multi_linear/NHANES-body.csv") #replace this line with YOUR read_csv code
+```
+
+
+1. Fit the model using the `*` symbol to denote interaction.
+```{r}
+arm.inter <- lm(Weight~Arm.Circumference*Upper.Arm.Length, data=nhanes)
+summary(arm.inter)
+```
+
+2. Compare and contrast the model summary of the no-interaction model (in NHANES Part I) with the summary of the interaction model above.  
+```{r}
+confint(arm.inter, level = 0.95)
+```
+
+- In particular, we are testing correlation = 0 (the Null) and correlation \neq 0 (not the null). Both models have small p-values ~ 0, which means they are useful.
+
+
+3. Write the estimated regression function.
+$Weight = 106.70694 -2.62783*Arm.Circumference  -3.68822 *Upper.Arm.Length  + 0.16042 Arm.Circumference*Upper.Arm.Length$
+
+4. Use `plot(model)` to determine if the assumptions are valid.  Do you still have any concerns?  Do the model assumptions seem to be met better than they were in Part I?  Are there any additional remedial measures (transformations, outlier deletion) that you feel are necessary?  (Don't worry about actually taking any of those actions right now, just discuss any problems you see.)
+```{r}
+par(mfrow=c(1,2))
+plot(arm.inter)
+```
+
+- Normal Q-Q: Long-tailed
+- Residuals vs Fitted: non-constant, bunchy as fan.
+- Residuals vs Leverage: too bunchy and compact at one side of the graph
+- There are some outliners (#590, #235). We may want to delete them, since #590 extends the range of fitted values.
+- We may want to expand the y-axis by taking ln(weight), which can help the bunchy problem in "residuals vs fitted" graph. 
+
+5. Conduct an appropriate statistical inference to determine if the interaction term should be included in the model.  (Don’t worry about checking conditions, since you discussed them in #4).
+
+- The t-test for the interaction term is significant. Therefore, we should include these interactions in our model.
+
+6. Notice that because of the interaction term, the relationship between Weight and either of the two predictor variables is more complicated:
+
+  a. What is the relationship between weight and arm length, for those people with arm circumference of 30 cm?
+- Weight = 27.89 - 3.688 Upper.Arm.Length + 6.4.Upper.Arm.Length
+
+  b. What is the relationship between weight and arm length, for those people with arm circumference of 40 cm?
+- Weight = 1.62 - 3.688.Upper.Arm.Length + (6.4.Upper.Arm.Length)
+
+7. Suppose an individual has upper arm length of 35.6cm and upper arm circumference of 40.5cm.  Compare the estimates of weight for the linear model without interaction (NHANES Part I) and the interaction model.
+- Nhanes II: 
+$Weight = 106.70694 -2.62783*40.5  -3.68822*35.6  + 0.16042*40.5*35.6 = 100.272749 $
+- Nhanes I:
+$Weight = -80.06449 + 3.42556*40.5 + 1.29076*35.6 = 104.621746 $
+$ln(weight) = 2.274789 + 0.040324*40.5 + 0.020184*35.6; then weight = 102.1519489$
+
+- We can see that two models predict pretty similar weight result. 
+ 
+  a. There is, in fact, just such a person in this data set!  What is the residual for that person, using the no-interaction model?
+
+- The person's weight is 111.6, which has residual is: 111.6 - 102.1519489 = 9.448 using the no interaction model
+  b. What is the residual for that person, using the interaction model?
+- The person's residual is 111.6 - 100.272749 = 11.327251, using interaction model.
+
+D. Comparison of Models
+-----------------------
+
+Which model (bivariate linear without interaction or bivariate linear with interaction, or some transformed model you've discovered) do you think is "best"?  Explain why, including your criteria for "best".
+
+- Three models have small p-value ~ 0, which are usefull. 
+- However, I prefer the ln(weight) model since I see the residual is smaller than the interaction one. Additionally, the residuals vs fitted graph of ln(weight) model has a better variance, less bunchy than the weight model in part 1 and the interaction model in part 2. Normal Q-Q of ln(weight) model also has better performance than other. 

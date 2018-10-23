@@ -1,0 +1,215 @@
+---
+title: "Homework 3 template"
+author: "Tam Nguyen"
+date: "September 27th, 2018"
+output: html_document
+---
+```{r include=FALSE}
+library(mosaic); library(Stat2Data); data("Diamonds")
+```
+# Part 1: EDA
+
+a)    Create a matrix of scatterplots of the three variables TotalPrice, Carat, and Depth.  Do Carat and Depth appear to have a linear (or other) relationship with TotalPrice? 
+```{r}
+pairs(~TotalPrice+Carat+Depth,data=Diamonds)
+```
+
+- Carat and Total price appears to have a quadratic relationship since all points make a slighly curvy line. 
+- However, Depth with Total price doesn't appear to have a linear relationship. They make two packs of points that don't correlated to each other. 
+- Overall, we can't see an obvious linear relationship between Carat vs TotalTime and Depth vs TotalTime. 
+
+b)      Find a matrix of correlations among these three variables. Compare these results with your visual analysis in (a). Which explanatory variable (Carat or Depth) has the highest correlation with TotalPrice?  Is this consistent with your visual assessment?  
+```{r}
+cor(~cbind(Carat,Depth,TotalPrice),data=Diamonds)
+```
+
+- As we expected, the Carat does have higher correlation to TotalPrice than Depth variable. 
+
+c) Would you consider Carat and Depth to be “highly correlated” with each other?
+- The scatter plot above shows no linear relationship between Carat and Depth. 
+- There is no strong correlation between Carat and Depth, since r = 0.32, which is really weak. 
+
+# Part 2: Complete problems 3.23 - 3.26 
+
+## 3.23: Diamonds
+
+### a. 
+A quadratic model using Depth: 
+```{r}
+model.a <- lm(TotalPrice~Depth+I(Depth^2),data=Diamonds); summary(model.a)
+```
+- R-square = 4.7% 
+- Adj Rsq = 4.2%
+
+There is no significant in this model, so we exclude it in the comparision part. 
+
+### b. 
+Two predictor models: Carat and Depth
+```{r}
+model.b <- lm(TotalPrice~Depth+Carat, data = Diamonds);
+summary (model.b)
+```
+- R-square = 87.0%
+- Adj Rsq = 87.0%
+- Depth and Carat are significant variables in this model since the their p-value ~ 0.
+### c. 
+Three predictor model that adds interaction for Carat and Depth
+```{r}
+model.c <- lm(formula = TotalPrice ~Carat*Depth, data=Diamonds);
+summary(model.c);
+```
+
+- R-square = 89%
+- Adj Rsq = 88.9%
+- Carat*Depth, Carat, and Depth are three significant variables in this model since their p-value ~ 0.
+### d.
+Complete second-order model using Carat and Depth
+```{r}
+model.d <- lm(TotalPrice~I(Carat^2) + I(Depth^2) + Carat*Depth, data = Diamonds);
+summary(model.d)
+```
+
+- R-square: 93.13%
+- Adj Rsq: 93.04%
+- Carat (p-value ~ 0) and Carat^2 (p-value = 0.0132) are significant factor in this model. 
+
+#### Comparision with models in example 3.11
+a. Quadratic Regression Model :
+- R-square: 92.57% and Adj R-square: 92.53%
+- Caratsq and Carat are both significant variables since their p-value ~ 0.
+b.Polynomial Regression Model: 
+- R-square: 92.57% and Adj R-square: 92.51%
+- CaratSq is the most significant variable since its p-value ~ 0.
+
+c. Evaluation
+- Based on adjusted R-square, we see that the second model (part d) is the best one with adj Rsq equals to 93.04%. 
+- However, in this model, Depth is not a significant predictor for TotalPrice. It makes the model more complex compare to others. 
+- Consequently, the quadatic model in part a of Example 3.11 is the the best with highest adjusted R-square and all its factor are significant. 
+
+## 3.24: Diamonds (continued)
+### a.
+```{r}
+model.quad <- lm(TotalPrice~Carat+I(Carat^2),data=Diamonds); 
+par(mfrow=c(2,2))
+plot(model.quad)
+```
+
+- The normal Q-Q model doesn't look good. The tails of both sides look really messy with many outliners.
+- The residuals vs fitted values graph doesn't look good too, since all points compact to one side, which indicating non-constant variance in the residuals.
+
+### b. ln(TotalPrice)
+
+a. 
+```{r}
+logmod.a <- lm(log(TotalPrice)~Depth+I(Depth^2),data=Diamonds); summary(logmod.a)
+```
+
+- R-square: 6.26%
+- Adj R-square: 5.723%
+- No significant predictor.
+b. 
+```{r}
+logmod.b <- lm(log(TotalPrice)~Depth+Carat, data = Diamonds);
+summary (logmod.b)
+```
+- R-square: 85.83%
+- Adj-square: 85.74%
+- Significant factors: Carat, Depth (p-value ~ 0)
+c. 
+```{r}
+logmod.c <- lm(log(TotalPrice) ~Carat*Depth, data=Diamonds);
+summary(logmod.c)
+```
+
+- R-square: 88.08%
+- Adj square: 87.98%
+- Significant Factor: Carat, Depth, Carat*Depth (p-value ~ 0)
+d.
+```{r}
+logmod.d <- lm(log(TotalPrice)~I(Carat^2) + I(Depth^2) + Carat*Depth, data = Diamonds);
+summary(logmod.d)
+```
+
+- R-square: 93.02%
+- Adj R-square: 92.92%
+- Significant factors: Carat, $Carat^2$
+e.
+```{r}
+logmod.e <- lm(log(TotalPrice)~Carat+I(Carat^2),data=Diamonds); 
+summary(logmod.e)
+```
+
+- R-square: 92.5%
+- Adj R-square: 92.46%
+- Significant factors: Carat, $Carat^2$
+f.
+```{r}
+logmod.f <- lm(log(TotalPrice)~Carat+I(Carat^2)+I(Carat^3),data=Diamonds); 
+summary(logmod.f)
+```
+
+- R-square: 93.31%
+- Adj R-square: 93.25%
+- Significant factors: Carat, $Carat^2$, $Carat^3$
+
+#### Conclustion
+
+- With high adjusted $R^{2}$ value and small amount of variables, quadratic regression model still the best one. 
+
+### c.
+
+```{r}
+par(mfrow=c(2,2))
+plot(logmod.e)
+```
+
+- Normal Q-Q: does look better even there's still some taling off at the end of the graph.
+- The log transformation helps the residuals vs fitted values look random with constant variance.  
+
+
+## 3.25: Diamonds
+```{r}
+anova(model.quad, model.d, test="F")
+```
+
+- The p-value (~5.24e-06) ~0, which gives strong evidence that at least one of the terms involving Depth should be included in the model.
+- Therefore, eliminating all three Depth factor would badly affect the performance of model.
+
+
+## 3.26: Diamonds
+
+### a.
+```{r}
+predict.lm(model.quad, data.frame("Carat" = 0.5), interval = "confidence")
+```
+```{r}
+predict.lm(model.quad, data.frame("Carat" = 0.5), interval = "prediction")
+```
+- Our quadratic model predicts total price of a 0.5 carat diamond could be 1794.843$
+
+### b. 
+
+- We are 95% confident that the average price of all 0.5-carat diamonds is between $1424 and $2165. 
+- But this does not mean that your particular 0.5-carat diamond will be in this range. This only show the price average of all such diamonds will be in this range. 
+
+### c.
+
+- According to our model, 95% of all 0.5-carat diamonds will cost between $0 and $5994 (since the money should start from a positive number).
+- We are 95% confident say that your 0.5-carat diamon will be in this range. 
+
+### d.
+```{r}
+t_conf = predict.lm(logmod.e, data.frame("Carat" = 0.5), interval = "confidence");
+exp(t_conf)
+```
+- We are 95% confident that the average price of all 0.5-carat diamonds is between $1784.588 and $1938.908
+- However, it doesn't mean that your particular 0.5 carat diamond will be in this range. 
+
+
+```{r}
+t_pred = predict.lm(logmod.e, data.frame("Carat" = 0.5), interval = "prediction");
+exp(t_pred)
+```
+
+- According to our model, 95% of all 0.5-carat diamonds will cost between $1162.651 and $2976.09.
+- It means that your 0.5-carat diamond will 95% in the range $1162.651 and $2976.09.
