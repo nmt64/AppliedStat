@@ -1,0 +1,284 @@
+---
+title: 'Tam Nguyen One-Way ANOVA: Shapesplosion'
+output: html_document
+---
+
+**Background:**  When playing the Shapesplosion computer game, one can vary the sensitivity to which one can match one object to another.  We will call this sensitivity the “match proximity” (or MP).  In timed games, this match proximity can make a difference between winning or losing the game—if the MP is too restricted, players will spend more time in aligning the two objects than if the MP is less stringent.
+
+Over the past two years, I have conducted experiments similar to our Shapesplosion experiment from last week.  Using randomly-drawn poker chips, each student was assigned to one of four MP groups (exact, small, medium, large).   Each student then played one round of “Shapesplosion” with that MP and recorded his/her time.  The data is in "Shapesplosion-MP", which is on Moodle (load it now).  
+
+
+A.  CONTEXT. 
+-----------------
+1.	Explain why this study is an experiment. 
+
+- There is a test done in order to learn the match proximity of different students in our class. 
+- Students were asked to do two assignments, so it is an experiment. 
+
+
+2.	Clearly define an individual in this study.  In an experiment, an individual is called an *experimental unit* or a *subject* (if a person).
+
+- Subject: COW students in applied statistics class and present on November 15th.
+
+
+3. Clearly define the explanatory/predictor variable in this study.  In an experiment, an explanatory variable is called a *factor*.
+
+- The explanatory variable is the level of the Shapesplosion game.
+
+
+4. How many categories does the factor have?  In an experiment, the categories of a categorical explanatory variable (factor) are called *levels* or *factor levels*.
+- Factor levels: four group of students ((exact, small, medium, large))
+
+
+5. Clearly define the response variable in this study.  What is the unit of measure? 
+
+- The mean time it took a student to complete a designated match proximity.
+
+
+**RESEARCH QUESTION:** Is there a significant difference in average time to "win" Shapeplosion based on the MP level?  That is, does MP has a significant effect on performance?
+
+
+B. EXPLORATORY DATA ANALYSIS  
+-----------------------
+
+```{r include=FALSE}
+library(mosaic); library(readr);
+library(doMC)
+library(dplyr)
+library(purrr)
+library(caret)
+library(corrplot)
+library(knitr)
+library(plotly)
+library(readr);
+train = read_csv("/Users/Tam/Documents/Junior1819/Fall2018/Stat/AppliedStat/ClassAct/Slope/Shapesplosion-MP.csv");
+```
+
+```{r}
+train
+```
+
+1. Construct an appropriate plot(s) to visually compare the distributions of time by MP.
+```{r}
+boxplot(Time~MP, data = train)
+```
+
+
+2. Use R to obtain the numerical summaries of response time by MP level.  
+
+```{r}
+favstats(Time ~ MP, data= train)
+```
+
+
+3. **Comparing the means of four groups: By inspection**    
+Examine the visual display and numerical summaries.  Is there evidence that MP has an effect on performance?  Be specific about why or why not, talking about both the plot and the statistics.
+
+- Yes, there evidence that MP has an effect on performance. 
+- Xact has higher mean time than other groups (78).
+
+
+C. USING THE ANOVA MODEL
+---------------------------
+1. CHOOSE  
+Write the theoretical model symbolically: 
+
+$$Time = \mu + \alpha_k + \epsilon $$
+
+2. FIT
+
+  a. Use R to calculate the grand mean and the treatment means.
+
+```{r}
+#Grand Mean
+t_Large <- train[which(train$MP=='Large'),]
+t_Medium <- train[which(train$MP=='Medium'),]
+t_Small <- train[which(train$MP=='Small'),]
+t_Xact <- train[which(train$MP=='Xact'),]
+G_mean = (mean(t_Large$Time) + mean(t_Medium$Time) + mean(t_Small$Time) + mean(t_Xact$Time) )/4; G_mean
+```
+```{r}
+favstats(Time ~ MP, data= train)
+```
+
+  b. Compute estimates for the treatment effects.
+```{r}
+mean = mean(train$Time); mean
+#Treatment means
+t_Largetreat = mean(t_Large$Time) - mean  ; t_Largetreat
+t_Mediumtreat = mean(t_Medium$Time) - mean; t_Mediumtreat
+t_Smalltreat = mean(t_Small$Time) - mean; t_Smalltreat
+t_Xact = mean(t_Xact$Time) - mean  ; t_Xact 
+
+```
+
+
+
+
+You can fit the ANOVA model in R using the function `aov()`.  The syntax is exactly like `lm()`:  
+```{r}
+shapes.aov <- aov(Time ~ MP, data=train); summary(shapes.aov)
+```
+
+If you save this object (as `shapes.aov`, for example), all the same functions work on this object as worked on lm objects: `summary()` to see the ANOVA table (although that is dangerous, as you'll see below), `plot()` to look at the residual plots, etc.
+
+
+3. ASSESS: Diagnostics and Residual Analysis  
+Just like in the simple linear regression model, we can use the residuals to determine if the model assumptions are reasonably met. 
+
+  a. State the implicit model assumptions and indicate how you will use the residuals to determine if the model assumptions are met.
+  
+- Normal Q-Q: check the normality
+- Independence of error terms from the description of the data
+- Zero mean of error terms. This is given.
+- Representativeness from the description of the data.
+- Constance variances of error terms from the residuals vs fits plot.
+
+  b. Verify the model assumptions using the residuals. 
+```{r}
+par(mfrow=c(2,2))
+plot(shapes.aov)
+```
+
+```{r}
+summary(shapes.aov)
+```
+- Normality: looks good
+- Constance variances of error terms are met because SD(max)/SD(min) is less than or equal to 2.
+- Student completion times are independent of each other as well as students were randomly assigned to treatments. 
+- The dataset is a good representation of the students in the applied stats class at the College of Wooster; however, the results may not be a good representation of students at the College of Wooster since students in applied stats have higher background in mathematics than other students in COW.
+
+  c. Does it appear that the model conditions are satisfied?  Do you think we need to take any transformations?  If so, take them now and re-fit the model.
+
+```{r}
+par(mfrow=c(2,2))
+shapes.aov.1 <- aov(log(Time) ~ MP, data=train); plot(shapes.aov.1)
+```
+
+4. USE: Inference  
+Assuming the model conditions are satisfied...
+
+  a. The hypotheses of interest are:  
+$H_0$:  all groups have the same mean
+
+$H_a$:  at least one group has different mean 
+
+  b. The ANOVA table is given by:
+```{r}
+library(car)
+Anova(shapes.aov)
+```
+**NOTE:** You can also use `summary()` or `anova()` (instead of `Anova()`), but those will *not* work when we add more variables!  (So it's good to get into the habit of using `Anova()` now.)
+
+  c. Use the ANOVA table to conduct the appropriate test of significance and make a conclusion.  
+  
+- p-value ~ 0, so we rejuect the null. It means that at least one group mean completion time is different. Hence, there is a significant difference in average completion time between match proximity groups.
+
+D. MULTIPLE COMPARISONS.
+-----------------------------
+When the null hypothesis is "rejected", the conclusion is vague -- we simply have evidence that at least two of the means differ from each other.  The more important question is *which* of the means differ.  One approach to determining which means differ is called **multiple comparisons**.
+
+The idea is to construct multiple CI’s for all possible *differences* in means ($\mu_i − \mu_j$), where the form of the CI is 
+$$\bar y_i - \bar y_j \pm (multiplier * SE)$$
+
+ 
+The *multiplier* depends on the multiple comparisons method you’re using (but it always comes from a specified distribution), and *SE* is the standard error of the difference in sample means.   Usually,
+$$SE = \sqrt{MSE(1/n_i + 1/n_j)}$$
+  
+The interpretation is:  We are C% confident that each of the respective intervals contains the true difference of means *simultaneously*.  That is, the entire *family* of intervals are "correct".
+
+There are several multiple comparisons procedures out there, which we will learn about in Chapter 7.  For now, we’ll just use Fisher’s LSD:
+
+**Fisher’s LSD (Least Significant Difference)**
+
+In Fisher’s method, the multiplier is the C% t critical value from the distribution with df=n-K.  Except for the degrees of freedom (which comes from the SSE df), this is the same critical value that we would use in a regular 2-sample t-test, where only one interval is being constructed.  This results in a relatively large overall error rate, because we’re not controlling for the fact that we’re making several intervals instead of just one.
+
+The function for the LSD intervals is in the `agricolae` package, which you will need to install and load.  The function we'll use from that package, `LSD.test()`, takes two arguments: the name of the ANOVA model you've fit, and the treatment variable name (in quotes).
+
+1. Use Fisher’s method to compare the groups at an overall 90% confidence level.
+```{r}
+library(agricolae)
+out <- LSD.test(y=shapes.aov, trt="MP", alpha=0.1); out
+```
+
+2. Are any of the treatments signficantly different?  How do we know?  (Note that `LSD.test` does not report CIs for the differences in means, as I discussed above; they report the differences between groups in a different way.)
+
+- We are 90% confident that Exact match proximity is significantly different than the other groups.
+
+3. **Graphing**  Check out these two cool graphs!
+```{r}
+bar.err(out$means,variation="range",bar=FALSE,ylim=c(0,100))
+```
+
+This graph has bars with the height of each treatment group's mean, with error bars containing each group's range.
+
+```{r}
+bar.group(out$groups,ylim=c(0,100))
+```
+
+This graph has bars with the height of each group's mean, and labels the groups that are significantly different than one another.
+
+
+E. COMPARISON TO LINEAR REGRESSION.
+--------------------------------------
+Of course, there's another way to analyze this data.  
+
+We learned back in Unit A that categorical variables can be analyzed using linear regression, as well.  Let's investigate the similarities and differences of ANOVA and a linear regression model in this case...
+ 
+1. CHOOSE  
+Write the theoretical linear regresson model symbolically: 
+
+$$Time = \beta_0 + \beta_1MP + \epsilon $$
+
+
+2. FIT
+Fit the linear regression model, and call it `shapes.lm`. 
+```{r}
+shapes.lm = lm(Time~as.factor(MP), data = train)
+```
+
+
+
+3. ASSESS: Diagnostics and Residual Analysis  
+Verify the *regression* model assumptions using the residuals.  What do you notice about the residual plots for `shapes.aov` compared to `shapes.lm`?
+```{r}
+par(mfrow=c(2,2))
+plot(shapes.lm)
+```
+
+
+4. USE: Inference  
+
+a. Compare the ANOVA table from Section C to `anova(shapes.lm)`.  What do you notice?
+```{r}
+anova(shapes.lm)
+```
+
+- They have same results.
+
+
+b. What conclusion can you make about the variable `MP` using the `anova(shapes.lm)`?
+ 
+- MP has p-value ~ 0, so there is a statiscally significant relationship between MP and Time. 
+
+
+c. What additional information do you get from `summary(shapes.lm)` that you didn't get from `Anova(shapes.aov)`?
+```{r}
+summary(shapes.lm); Anova(shapes.aov)
+```
+
+- According to the regression model, Exact group's match proximity group is significant compared to the Large's group match proximity, while the anova table only shows that match proximity affects completion time. Anova table doesn't show which group is significant. 
+
+
+d. Make a conclusion about the differences between MP levels (large, medium, small, exact) from `summary(shapes.lm)`.  How does this compare to what we learned using the Fisher's comparisons?
+
+According to the shapes.lm model, Exact is statistically significant compared to the base case, Large; however, the Fisher’s comparisons tell us that exact is statistically significant compared to all the other groups.
+
+e. Interpret the Intercept, and the coefficients of the Medium, Small, and Xact levels.
+
+- The expected mean of completion time for large match proximity is 50.73 seconds. 
+- When the match proximity changes from large to medium, the completion mean time increases by 1.257e-14 seconds. 
+- When the match proximity changes from large to small, the completion mean time increases by 4.27 seconds. 
+- When the match proximity changes from large to exact, the completion mean time increases by 27.36 seconds.
+
+

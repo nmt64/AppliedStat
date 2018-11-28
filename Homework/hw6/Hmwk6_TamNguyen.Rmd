@@ -1,0 +1,100 @@
+---
+title: "Homework 6 "
+author: "Tam Nguyen"
+date: "Nov 26th, 2018"
+output: html_document
+
+---
+```{r include=FALSE}
+library(mosaic); library(Stat2Data); library(reshape2);data("FantasyBaseball"); library(car)
+```
+
+### Child Poverty: 5.22
+
+The same dataset used in Exercise 5.20 also contained information about the child poverty rate in those same Iowa counties. Below is the ANOVA table relating child poverty rate to type of county.
+
+### a.
+Give the hypotheses that are being tested in the ANOVA table both in words and in symbols.
+
+- Hypothesis: we will be testing the null hypothesis that all type of county have the samechild poverty mean rate
+
+- Symbols:  $H_0$ : $µ_1$ = $µ_2$ = $µ_3$ = · · · = $µ_K$; $H_a$: at least one $µ_K$ not equal to 0
+
+ 
+
+### b. 
+Given in Figure 5.13 is the dotplot of the child poverty rates by type of county. Does this dotplot raise any concerns for you with respect to the use of ANOVA? Explain.
+
+- A litle right skew, so maybe log transformation is appropriate. 
+
+
+### Fantasy Baseball: 5.24 (a&b only)
+A group of friends who participate in a “fantasy baseball” league became curious about whether some of them take significantly more or less time to make their selections in the “fantasy draft” through which they select players. 8 The table at the end of this exercise reports the times (in seconds) that each of the eight friends (identified by their initials) took to make their 24 selections in 2008 (the data are also available in the datafile FantasyBaseball):
+
+
+### a. 
+Produce boxplots and calculate descriptive statistics to compare the selection times for each participant. Comment on what they reveal. Also identify (by initials) which participant took the longest and which took the shortest time to make their selections.
+```{r}
+boxplot(FantasyBaseball)
+```
+```{r}
+fav = rbind(favstats(FantasyBaseball$DJ),favstats(FantasyBaseball$AR),favstats(FantasyBaseball$BK),favstats(FantasyBaseball$JW),favstats(FantasyBaseball$TS),favstats(FantasyBaseball$RL),favstats(FantasyBaseball$DR),favstats(FantasyBaseball$MF)); fav
+```
+```{r}
+dat=data.frame(Person=c(rep('DJ', 24),rep('AR',24),rep('BK',24),rep('JW',24),rep('TS',24),rep('RL',24),rep('DL',24),rep('MF',24)), Times =c(FantasyBaseball[,2],FantasyBaseball[,3],FantasyBaseball[,4],FantasyBaseball[,5],FantasyBaseball[,6],FantasyBaseball[,7],FantasyBaseball[,8],FantasyBaseball[,9]))
+```
+
+- JW has the largest mean of selection time: 163.87500
+- TS has the smallest mean of selection time: 19.33
+
+
+### b. 
+Conduct a one-way ANOVA to assess whether the data provide evidence that averages as far apart as these would be unlikely to occur by chance alone if there really were no differences among the participants in terms of their selection times. For now, assume that all conditions are met. Report the ANOVA table, test statistic, and p-value. Also summarize your conclusion.
+
+In 5.24b, to run the ANOVA, the data must be "unstacked", which you can do use `melt` from the `reshape2` package:
+
+```{r}
+Baseball2 <- melt(FantasyBaseball[,2:9])
+Baseball2$Round <- rep(1:24) #add the Round variable
+colnames(Baseball2)[1] <- c("Person"); colnames(Baseball2)[2] <- c("Time") #make the column names useful 
+
+Anova(Baseball2)
+```
+
+
+
+
+### 5.25
+
+### a. 
+In Exercise 5.24, part (a), you produced boxplots and descriptive statistics to assess whether an ANOVA model was appropriate for the fantasy baseball selection times of the various members of the league. Now produce the normal probability plot of the residuals for the ANOVA model in Exercise 5.24 and comment on the appropriateness of the ANOVA model for these data. 
+```{r}
+m0=lm(Times~Person, data=dat);
+qqnorm(residuals(m0));
+qqline(residuals(m0))
+```
+
+- The model seems to have normalitily in the middle. However the tails seem to have very little normality if any at all
+
+
+### b. 
+Transform the selection times using the natural log. Repeat your analysis of the data and report your findings.
+```{r}
+m1=lm(log(Times)~Person, data=dat);
+qqnorm(residuals(m1));
+qqline(residuals(m1))
+```
+
+- The two-tail looks less skew that the previous one. 
+
+### 5.27
+
+Reconsider the data from Exercise 5.24. Now disregard the participant variable, and focus instead on the round variable. Perform an appropriate ANOVA analysis of whether the data suggest that some rounds of the draft tend to have significantly longer selection times than other rounds. Use a transformation if necessary. Write a paragraph or two describing your analysis and summarizing your conclusions.
+
+```{r}
+
+```
+
+
+
+

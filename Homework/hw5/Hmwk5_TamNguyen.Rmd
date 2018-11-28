@@ -1,0 +1,177 @@
+---
+title: "Homework 5 "
+author: "Tam Nguyen"
+date: "Nov 4th, 2018"
+output: html_document
+---
+```{r include=FALSE}
+library(mosaic); library(Stat2Data); data("Titanic")
+str(Titanic)
+```
+
+### 10.12: Survival and age.
+
+## a. In Exercises 9.17–9.20, you fit separate logistic regression models for the binary response Survived using Age and then SexCode. Now fit a multiple logistic model using these two predictors. Write down both the logit and probability forms for the fitted model.
+```{r}
+sexage.log = glm(Survived ~ Age + as.factor(SexCode), data=Titanic, family=binomial)
+summary(sexage.log)
+```
+
+
+- Model : logit(oddsofSurvived) = -1.159839 + -0.006352.Age + 2.465996.as.factor(SexCode)1
+
+- Probability forms for the fitted model: 
+(exp(-1.159839 - 0.006352Age + 2.465996SexCode))/ (1 + exp(-1.159839 - 0.006352Age + 2.465996SexCode))
+
+
+## b. Comment on the effectiveness of each of the predictors in the two-predictor model.
+
+- p-value of Age: 0.305 ( > 0.05 ) is high, so Age is not a good factor in this model. 
+- p-value of SexCode:  2e-16 (~0), is significant, so SexCode is a good factor in this model.
+
+- In this model, Age is not a significant factor, otherwise, SexCode is statiscally siginificant. 
+
+## c. According to the fitted model, estimate the probability and odds that an 18-year-old man would survive the Titanic sinking. 
+
+```{r}
+man = data.frame(Age = 18, SexCode = 0) # 0 for male
+p0 = predict(sexage.log, man , type = "response"); p0 #probability
+odds_man0 = (exp(-1.159839 - 0.006352*18)); odds_man0 #odds
+```
+- The probability that an 18-year-old woman would survive the Titanic sinking is 0.2185435 
+
+- The odds of that an 18-year-old woman would survive the Titanic sinking is 0.2796616
+
+## d. Repeat the calculations for an 18-year-old woman and find the odds ratio compared to a man of the same age. 
+```{r}
+woman = data.frame(Age = 18, SexCode = 1) # 1 for female
+p1 = predict(sexage.log, woman , type = "response"); p1 #probability
+odds_wn = (exp(-1.16-0.00635*18+2.47)); odds_wn
+```
+
+- The probability that an 18-year-old woman would survive the Titanic sinking is 0.7670667 
+
+- The odds of that an 18-year-old woman would survive the Titanic sinking is 3.305871.
+
+# The odds ratio compared to a man of the same age is 11.82
+```{r}
+odds_wn/odds_man0
+```
+
+
+## e. Redo both (b) and (c) for a man and woman of age 50. 
+
+# The probability and odds that an 50-year-old man would survive the Titanic sinking. 
+```{r}
+man_2 = data.frame(Age = 50, SexCode = 0) # 0 for male
+p2 = predict(sexage.log, man_2 , type = "response"); p2 #probability
+odds_man0 = (exp(-1.159839 - 0.006352*50)); odds_man0 #odds
+```
+- The probability that an 50-year-old man would survive the Titanic sinking is 0.1858148 
+
+- The odds of that an 50-year-old man would survive the Titanic sinking is 0.2282214
+
+# The probability and odds that an 50-year-old man would survive the Titanic sinking. 
+
+```{r}
+woman_2 = data.frame(Age = 50, SexCode = 1) # 1 for female
+p3 = predict(sexage.log, woman_2 , type = "response"); p3 #prob
+odds_wn1 = (exp(-1.16-0.00635*50+2.47)); odds_wn1 #odds
+
+```
+- The probability that an 50-year-old woman would survive the Titanic sinking is 0.7288031
+
+- The odds of that an 50-year-old woman would survive the Titanic sinking is 2.697971
+# The odds ratio compared to a man of the same age is 11.82
+```{r}
+odds_wn1/odds_man0
+```
+
+
+##f. What happens to the odds ratio (female to male of the same age) when the age increases in the Titanic data? Will this always be the case?
+
+- Yes, the odds ratio will remain the same for all cases. 
+
+### 10.13: 
+
+## a. Explain how the coefficients in the model with Age, SexCode, and Age∗SexCode relate to separate linear models for males and females to predict log(odds) of survival based on Age. 
+
+```{r}
+inter.log = glm (Survived ~Age + SexCode + Age*SexCode, data = Titanic, family = binomial); summary(inter.log)
+```
+
+- Model for SexCode = 0: logit(Survived) = −0.2988−0.0364Age,
+- Model for SexCode = 1: logit(Survived ) = −0.299−0.0364Age+0.600+0.0657∗Age; which also equal to: 0.3012 + 0.0293Age
+
+- The difference of the intercepts of female model and male model is the slope of SexCode in model inter.log.
+- The difference of  the intercepts of female model and male model is the slope of Age * SexCode in model inter.log.
+
+## b. Is this model a significant improvement over one that uses just the SexCode variable (and not Age)? Justify your answer by showing the details of a nested likelihood ratio test for the two terms involving Age.
+
+
+```{r}
+1-pchisq(796.64-770.56,2) # compare the residual deviance between two models
+```
+- $x^2$ = 26.088, p-value = 0.000002 (< 0.05), reject $H_0$ .
+
+- The p-value is approximately zero so the full model is useful; the interaction terms are necessary. The full model is a significant improvement.
+
+
+### 10.19: 
+
+## a. Create a 2 × 3 table of Survived (Yes or No) by the three categories in the passenger class (P Class). Find the proportion surviving in each class. Make a conjecture in the context of this problem about why the proportions behave the way they do. 
+
+```{r}
+class_survive = tally (~PClass+Survived, data = Titanic) ; class_survive
+193/(129+193) #First_class proportion surviving
+119/(119+160) #2nd_class proportion surviving
+138/(573+138) #3rd_class proportion surviving
+```
+
+- The higher class you are, the higher chance of surviving you will have. 
+
+## b. Use a chi-square test for the 2 × 3 table to see whether there is a significant relationship between P Class and Survive. 
+
+```{r}
+chisq.test(class_survive, correct=FALSE)
+```
+
+- $X^2$ is really high and p-value ~ 0, so there is a significant relationship between P-class and Survive
+
+## c. Create indicator variables (or use P Class as a factor) to run a logistic regression model to predict Survived based on the categories in P class. Interpret each of the estimated coefficients in the model. 
+
+```{r}
+#Delete 1 missing person, then run the model
+pclass.log = glm(Survived ~ as.factor(PClass) , data = Titanic[-457,], family = binomial); summary (pclass.log) #Titanic[457,] missing row
+```
+```{r}
+exp(0.4029) #1st class
+exp(-0.6989) #2nd class
+exp(-1.8265) #3rd class
+```
+-Model: ln(Survived)=0.403−0.699PClass2nd−1.83PClass3rd
+
+The coefficient of 2nd Class is -0.6989, which means the odds ratio for that group is 0.4971318. Interpret this odds ratio: 2nd Class passenger have 0.498 times the odds of surviving in the ship of people in First Class. 
+
+The coefficient of 3rd Class is -1.8265, which means the odds ratio for that group is 0.160976. Interpret this odds ratio: 3rd Class passenger have 0.161 times the odds of surviving in the ship of people in First Class. 
+
+## d. Verify that the predicted probability of survival in each passenger class based on the logistic model matches the actual proportion of passengers in that class who survived. 
+
+```{r}
+(exp(0.403))/(1+exp(0.403)) #1st class
+(exp(0.403-0.699))/(1+exp(0.403-0.699)) #2nd class
+(exp(0.403-1.83))/(1+exp(0.403-1.83)) # 3rd class
+```
+
+- The predicted probability of survival in each passenger class based on the logistic model does match the actual proportion of the passengers in that class who survived. 
+
+
+## e. Compare the test statistic for the overall test of fit for the logistic regression model to the chi-square statistic from your analysis of the two-way table. Are the results (and conclusion) similar?
+
+- G-test:     Null deviance: 1687.2  on 1311  degrees of freedom
+Residual deviance: 1514.1  on 1309  degrees of freedom
+
+- $X^2$ = 173.1, p-value≈0, reject $H_0$ , results are similar to part (b).
+
+ 
+

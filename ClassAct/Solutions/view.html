@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+<html  dir="ltr" lang="en-us" xml:lang="en-us">
+<head>
+    <title>MATH-29901-01-1819FA: Multiple Logistic solutions</title>
+    <link rel="shortcut icon" href="https://moodle-1819.wooster.edu/theme/image.php/boost/theme/1533823411/favicon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="moodle, MATH-29901-01-1819FA: Multiple Logistic solutions" />
+<link rel="stylesheet" type="text/css" href="https://moodle-1819.wooster.edu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple-min.css" /><script id="firstthemesheet" type="text/css">/** Required in order to fix style inclusion problems in IE with YUI **/</script><link rel="stylesheet" type="text/css" href="https://moodle-1819.wooster.edu/theme/styles.php/boost/1533823411_1/all" />
+<script type="text/javascript">
+//<![CDATA[
+var M = {}; M.yui = {};
+M.pageloadstarttime = new Date();
+M.cfg = {"wwwroot":"https:\/\/moodle-1819.wooster.edu","sesskey":"jOQHkFlHqY","themerev":"1533823411","slasharguments":1,"theme":"boost","iconsystemmodule":"core\/icon_system_fontawesome","jsrev":"1530544450","admin":"admin","svgicons":true,"usertimezone":"America\/New_York","contextid":34480};var yui1ConfigFn = function(me) {if(/-skin|reset|fonts|grids|base/.test(me.name)){me.type='css';me.path=me.path.replace(/\.js/,'.css');me.path=me.path.replace(/\/yui2-skin/,'/assets/skins/sam/yui2-skin')}};
+var yui2ConfigFn = function(me) {var parts=me.name.replace(/^moodle-/,'').split('-'),component=parts.shift(),module=parts[0],min='-min';if(/-(skin|core)$/.test(me.name)){parts.pop();me.type='css';min=''}
+if(module){var filename=parts.join('-');me.path=component+'/'+module+'/'+filename+min+'.'+me.type}else{me.path=component+'/'+component+'.'+me.type}};
+YUI_config = {"debug":false,"base":"https:\/\/moodle-1819.wooster.edu\/lib\/yuilib\/3.17.2\/","comboBase":"https:\/\/moodle-1819.wooster.edu\/theme\/yui_combo.php?","combine":true,"filter":null,"insertBefore":"firstthemesheet","groups":{"yui2":{"base":"https:\/\/moodle-1819.wooster.edu\/lib\/yuilib\/2in3\/2.9.0\/build\/","comboBase":"https:\/\/moodle-1819.wooster.edu\/theme\/yui_combo.php?","combine":true,"ext":false,"root":"2in3\/2.9.0\/build\/","patterns":{"yui2-":{"group":"yui2","configFn":yui1ConfigFn}}},"moodle":{"name":"moodle","base":"https:\/\/moodle-1819.wooster.edu\/theme\/yui_combo.php?m\/1530544450\/","combine":true,"comboBase":"https:\/\/moodle-1819.wooster.edu\/theme\/yui_combo.php?","ext":false,"root":"m\/1530544450\/","patterns":{"moodle-":{"group":"moodle","configFn":yui2ConfigFn}},"filter":null,"modules":{"moodle-core-actionmenu":{"requires":["base","event","node-event-simulate"]},"moodle-core-blocks":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification"]},"moodle-core-checknet":{"requires":["base-base","moodle-core-notification-alert","io-base"]},"moodle-core-chooserdialogue":{"requires":["base","panel","moodle-core-notification"]},"moodle-core-dock":{"requires":["base","node","event-custom","event-mouseenter","event-resize","escape","moodle-core-dock-loader","moodle-core-event"]},"moodle-core-dock-loader":{"requires":["escape"]},"moodle-core-dragdrop":{"requires":["base","node","io","dom","dd","event-key","event-focus","moodle-core-notification"]},"moodle-core-event":{"requires":["event-custom"]},"moodle-core-formchangechecker":{"requires":["base","event-focus","moodle-core-event"]},"moodle-core-handlebars":{"condition":{"trigger":"handlebars","when":"after"}},"moodle-core-languninstallconfirm":{"requires":["base","node","moodle-core-notification-confirm","moodle-core-notification-alert"]},"moodle-core-lockscroll":{"requires":["plugin","base-build"]},"moodle-core-maintenancemodetimer":{"requires":["base","node"]},"moodle-core-notification":{"requires":["moodle-core-notification-dialogue","moodle-core-notification-alert","moodle-core-notification-confirm","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-core-notification-dialogue":{"requires":["base","node","panel","escape","event-key","dd-plugin","moodle-core-widget-focusafterclose","moodle-core-lockscroll"]},"moodle-core-notification-alert":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-confirm":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-exception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-ajaxexception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-popuphelp":{"requires":["moodle-core-tooltip"]},"moodle-core-tooltip":{"requires":["base","node","io-base","moodle-core-notification-dialogue","json-parse","widget-position","widget-position-align","event-outside","cache-base"]},"moodle-core_availability-form":{"requires":["base","node","event","event-delegate","panel","moodle-core-notification-dialogue","json"]},"moodle-backup-backupselectall":{"requires":["node","event","node-event-simulate","anim"]},"moodle-backup-confirmcancel":{"requires":["node","node-event-simulate","moodle-core-notification-confirm"]},"moodle-course-categoryexpander":{"requires":["node","event-key"]},"moodle-course-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-course-coursebase","moodle-course-util"]},"moodle-course-formatchooser":{"requires":["base","node","node-event-simulate"]},"moodle-course-management":{"requires":["base","node","io-base","moodle-core-notification-exception","json-parse","dd-constrain","dd-proxy","dd-drop","dd-delegate","node-event-delegate"]},"moodle-course-modchooser":{"requires":["moodle-core-chooserdialogue","moodle-course-coursebase"]},"moodle-course-util":{"requires":["node"],"use":["moodle-course-util-base"],"submodules":{"moodle-course-util-base":{},"moodle-course-util-section":{"requires":["node","moodle-course-util-base"]},"moodle-course-util-cm":{"requires":["node","moodle-course-util-base"]}}},"moodle-form-dateselector":{"requires":["base","node","overlay","calendar"]},"moodle-form-passwordunmask":{"requires":[]},"moodle-form-shortforms":{"requires":["node","base","selector-css3","moodle-core-event"]},"moodle-form-showadvanced":{"requires":["node","base","selector-css3"]},"moodle-question-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-question-preview":{"requires":["base","dom","event-delegate","event-key","core_question_engine"]},"moodle-question-qbankmanager":{"requires":["node","selector-css3"]},"moodle-question-searchform":{"requires":["base","node"]},"moodle-availability_completion-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_date-form":{"requires":["base","node","event","io","moodle-core_availability-form"]},"moodle-availability_grade-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_group-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_grouping-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_profile-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-qtype_ddimageortext-dd":{"requires":["node","dd","dd-drop","dd-constrain"]},"moodle-qtype_ddimageortext-form":{"requires":["moodle-qtype_ddimageortext-dd","form_filepicker"]},"moodle-qtype_ddmarker-dd":{"requires":["node","event-resize","dd","dd-drop","dd-constrain","graphics"]},"moodle-qtype_ddmarker-form":{"requires":["moodle-qtype_ddmarker-dd","form_filepicker","graphics","escape"]},"moodle-qtype_ddwtos-dd":{"requires":["node","dd","dd-drop","dd-constrain"]},"moodle-qtype_stack-input":{"requires":["node","event-valuechange","moodle-core-event","io","json-parse"]},"moodle-mod_assign-history":{"requires":["node","transition"]},"moodle-mod_attendance-groupfilter":{"requires":["base","node"]},"moodle-mod_forum-subscriptiontoggle":{"requires":["base-base","io-base"]},"moodle-mod_offlinequiz-autosave":{"requires":["base","node","event","event-valuechange","node-event-delegate","io-form"]},"moodle-mod_offlinequiz-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-mod_offlinequiz-offlinequizbase","moodle-mod_offlinequiz-util-base","moodle-mod_offlinequiz-util-page","moodle-mod_offlinequiz-util-slot","moodle-course-util"]},"moodle-mod_offlinequiz-modform":{"requires":["base","node","event"]},"moodle-mod_offlinequiz-offlinequizbase":{"requires":["base","node"]},"moodle-mod_offlinequiz-offlinequizquestionbank":{"requires":["base","event","node","io","io-form","yui-later","moodle-question-qbankmanager","moodle-core-notification-dialogue"]},"moodle-mod_offlinequiz-questionchooser":{"requires":["moodle-core-chooserdialogue","moodle-mod_offlinequiz-util","querystring-parse"]},"moodle-mod_offlinequiz-randomquestion":{"requires":["base","event","node","io","moodle-core-notification-dialogue"]},"moodle-mod_offlinequiz-repaginate":{"requires":["base","event","node","io","moodle-core-notification-dialogue"]},"moodle-mod_offlinequiz-toolboxes":{"requires":["base","node","event","event-key","io","moodle-mod_offlinequiz-offlinequizbase","moodle-mod_offlinequiz-util-slot","moodle-core-notification-ajaxexception"]},"moodle-mod_offlinequiz-util":{"requires":["node"],"use":["moodle-mod_offlinequiz-util-base"],"submodules":{"moodle-mod_offlinequiz-util-base":{},"moodle-mod_offlinequiz-util-slot":{"requires":["node","moodle-mod_offlinequiz-util-base"]},"moodle-mod_offlinequiz-util-page":{"requires":["node","moodle-mod_offlinequiz-util-base"]}}},"moodle-mod_quiz-autosave":{"requires":["base","node","event","event-valuechange","node-event-delegate","io-form"]},"moodle-mod_quiz-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-base","moodle-mod_quiz-util-page","moodle-mod_quiz-util-slot","moodle-course-util"]},"moodle-mod_quiz-modform":{"requires":["base","node","event"]},"moodle-mod_quiz-questionchooser":{"requires":["moodle-core-chooserdialogue","moodle-mod_quiz-util","querystring-parse"]},"moodle-mod_quiz-quizbase":{"requires":["base","node"]},"moodle-mod_quiz-quizquestionbank":{"requires":["base","event","node","io","io-form","yui-later","moodle-question-qbankmanager","moodle-core-notification-dialogue"]},"moodle-mod_quiz-randomquestion":{"requires":["base","event","node","io","moodle-core-notification-dialogue"]},"moodle-mod_quiz-repaginate":{"requires":["base","event","node","io","moodle-core-notification-dialogue"]},"moodle-mod_quiz-toolboxes":{"requires":["base","node","event","event-key","io","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-slot","moodle-core-notification-ajaxexception"]},"moodle-mod_quiz-util":{"requires":["node","moodle-core-actionmenu"],"use":["moodle-mod_quiz-util-base"],"submodules":{"moodle-mod_quiz-util-base":{},"moodle-mod_quiz-util-slot":{"requires":["node","moodle-mod_quiz-util-base"]},"moodle-mod_quiz-util-page":{"requires":["node","moodle-mod_quiz-util-base"]}}},"moodle-mod_scheduler-delselected":{"requires":["base","node","event"]},"moodle-mod_scheduler-studentlist":{"requires":["base","node","event","io"]},"moodle-mod_scheduler-saveseen":{"requires":["base","node","event"]},"moodle-message_airnotifier-toolboxes":{"requires":["base","node","io"]},"moodle-filter_glossary-autolinker":{"requires":["base","node","io-base","json-parse","event-delegate","overlay","moodle-core-event","moodle-core-notification-alert","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-filter_mathjaxloader-loader":{"requires":["moodle-core-event"]},"moodle-editor_atto-editor":{"requires":["node","transition","io","overlay","escape","event","event-simulate","event-custom","node-event-html5","node-event-simulate","yui-throttle","moodle-core-notification-dialogue","moodle-core-notification-confirm","moodle-editor_atto-rangy","handlebars","timers","querystring-stringify"]},"moodle-editor_atto-plugin":{"requires":["node","base","escape","event","event-outside","handlebars","event-custom","timers","moodle-editor_atto-menu"]},"moodle-editor_atto-menu":{"requires":["moodle-core-notification-dialogue","node","event","event-custom"]},"moodle-editor_atto-rangy":{"requires":[]},"moodle-report_eventlist-eventfilter":{"requires":["base","event","node","node-event-delegate","datatable","autocomplete","autocomplete-filters"]},"moodle-report_loglive-fetchlogs":{"requires":["base","event","node","io","node-event-delegate"]},"moodle-report_overviewstats-charts":{"requires":["base","node","charts","charts-legend"]},"moodle-gradereport_grader-gradereporttable":{"requires":["base","node","event","handlebars","overlay","event-hover"]},"moodle-gradereport_history-userselector":{"requires":["escape","event-delegate","event-key","handlebars","io-base","json-parse","moodle-core-notification-dialogue"]},"moodle-tool_capability-search":{"requires":["base","node"]},"moodle-tool_lp-dragdrop-reorder":{"requires":["moodle-core-dragdrop"]},"moodle-tool_monitor-dropdown":{"requires":["base","event","node"]},"moodle-assignfeedback_editpdf-editor":{"requires":["base","event","node","io","graphics","json","event-move","event-resize","transition","querystring-stringify-simple","moodle-core-notification-dialog","moodle-core-notification-alert","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-atto_accessibilitychecker-button":{"requires":["color-base","moodle-editor_atto-plugin"]},"moodle-atto_accessibilityhelper-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_align-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_bold-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_charmap-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_clear-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_collapse-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emoticon-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_equation-button":{"requires":["moodle-editor_atto-plugin","moodle-core-event","io","event-valuechange","tabview","array-extras"]},"moodle-atto_html-button":{"requires":["moodle-editor_atto-plugin","event-valuechange"]},"moodle-atto_image-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_indent-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_italic-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_link-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-usedfiles":{"requires":["node","escape"]},"moodle-atto_media-button":{"requires":["moodle-editor_atto-plugin","moodle-form-shortforms"]},"moodle-atto_noautolink-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_orderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_rtl-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_strike-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_subscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_superscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_table-button":{"requires":["moodle-editor_atto-plugin","moodle-editor_atto-menu","event","event-valuechange"]},"moodle-atto_title-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_underline-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_undo-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_unorderedlist-button":{"requires":["moodle-editor_atto-plugin"]}}},"gallery":{"name":"gallery","base":"https:\/\/moodle-1819.wooster.edu\/lib\/yuilib\/gallery\/","combine":true,"comboBase":"https:\/\/moodle-1819.wooster.edu\/theme\/yui_combo.php?","ext":false,"root":"gallery\/1530544450\/","patterns":{"gallery-":{"group":"gallery"}}}},"modules":{"core_filepicker":{"name":"core_filepicker","fullpath":"https:\/\/moodle-1819.wooster.edu\/lib\/javascript.php\/1530544450\/repository\/filepicker.js","requires":["base","node","node-event-simulate","json","async-queue","io-base","io-upload-iframe","io-form","yui2-treeview","panel","cookie","datatable","datatable-sort","resize-plugin","dd-plugin","escape","moodle-core_filepicker","moodle-core-notification-dialogue"]},"core_comment":{"name":"core_comment","fullpath":"https:\/\/moodle-1819.wooster.edu\/lib\/javascript.php\/1530544450\/comment\/comment.js","requires":["base","io-base","node","json","yui2-animation","overlay","escape"]},"mathjax":{"name":"mathjax","fullpath":"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/mathjax\/2.7.2\/MathJax.js?delayStartupUntil=configured"}}};
+M.yui.loader = {modules: {}};
+
+//]]>
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body  id="page-mod-resource-view" class="format-weeks  path-mod path-mod-resource safari dir-ltr lang-en_us yui-skin-sam yui3-skin-sam moodle-1819-wooster-edu pagelayout-incourse course-991 context-34480 cmid-18053 category-2 drawer-open-left">
+
+<div id="page-wrapper">
+
+    <div>
+    <a class="sr-only sr-only-focusable" href="#maincontent">Skip to main content</a>
+</div><script type="text/javascript" src="https://moodle-1819.wooster.edu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple-min.js"></script><script type="text/javascript" src="https://moodle-1819.wooster.edu/lib/javascript.php/1530544450/lib/javascript-static.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+document.body.className += ' jsenabled';
+//]]>
+</script>
+
+
+
+    <header role="banner" class="pos-f-t navbar navbar-full navbar-light bg-faded navbar-static-top moodle-has-zindex">
+    
+        <div class="container-fluid navbar-nav">
+    
+            <div data-region="drawer-toggle">
+                <button aria-expanded="true" aria-controls="nav-drawer" type="button" class="btn pull-xs-left m-r-1 btn-secondary" data-action="toggle-drawer" data-side="left" data-preference="drawer-open-nav"><i class="icon fa fa-bars fa-fw " aria-hidden="true"  aria-label=""></i><span class="sr-only">Side panel</span></button>
+            </div>
+    
+            <a href="https://moodle-1819.wooster.edu" class="navbar-brand 
+                    hidden-sm-down
+                    ">
+                <span class="site-name hidden-sm-down">Moodle</span>
+            </a>
+    
+            <!-- user_menu -->
+            <div class="usermenu"><div class="action-menu moodle-actionmenu nowrap-items" id="action-menu-1" data-enhance="moodle-core-actionmenu">
+
+        <div class="menubar" id="action-menu-1-menubar" role="menubar">
+
+            <div class="dropdown d-inline">
+    <a href="#" class="dropdown-toggle" id="dropdown-1" title="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="userbutton"><span class="usertext">Tam Nguyen</span><span class="avatars"><span class="avatar current"><img src="https://moodle-1819.wooster.edu/theme/image.php/boost/core/1533823411/u/f2" alt="Picture of Tam Nguyen" title="Picture of Tam Nguyen" class="userpicture defaultuserpic" width="35" height="35" role="presentation" /></span></span></span><b class="caret"></b></a>
+        <div class="dropdown-menu dropdown-menu-right menu  align-tr-br" id="action-menu-1-menu" data-rel="menu-content" aria-labelledby="action-menu-toggle-1" role="menu" data-align="tr-br">
+            <a href="https://moodle-1819.wooster.edu/my/" class="dropdown-item menu-action" role="menuitem" data-title="mymoodle,admin" aria-labelledby="actionmenuaction-1"><i class="icon fa fa-tachometer fa-fw " aria-hidden="true" title="Dashboard" aria-label="Dashboard"></i><span class="menu-action-text" id="actionmenuaction-1">Dashboard</span></a><div class="dropdown-divider"></div><a href="https://moodle-1819.wooster.edu/user/profile.php?id=16" class="dropdown-item menu-action" role="menuitem" data-title="profile,moodle" aria-labelledby="actionmenuaction-2"><i class="icon fa fa-user fa-fw " aria-hidden="true" title="Profile" aria-label="Profile"></i><span class="menu-action-text" id="actionmenuaction-2">Profile</span></a><a href="https://moodle-1819.wooster.edu/grade/report/overview/index.php" class="dropdown-item menu-action" role="menuitem" data-title="grades,grades" aria-labelledby="actionmenuaction-3"><i class="icon fa fa-table fa-fw " aria-hidden="true" title="Grades" aria-label="Grades"></i><span class="menu-action-text" id="actionmenuaction-3">Grades</span></a><a href="https://moodle-1819.wooster.edu/message/index.php" class="dropdown-item menu-action" role="menuitem" data-title="messages,message" aria-labelledby="actionmenuaction-4"><i class="icon fa fa-comment fa-fw " aria-hidden="true" title="Messages" aria-label="Messages"></i><span class="menu-action-text" id="actionmenuaction-4">Messages</span></a><a href="https://moodle-1819.wooster.edu/user/preferences.php" class="dropdown-item menu-action" role="menuitem" data-title="preferences,moodle" aria-labelledby="actionmenuaction-5"><i class="icon fa fa-wrench fa-fw " aria-hidden="true" title="Preferences" aria-label="Preferences"></i><span class="menu-action-text" id="actionmenuaction-5">Preferences</span></a><div class="dropdown-divider"></div><a href="https://moodle-1819.wooster.edu/login/logout.php?sesskey=jOQHkFlHqY" class="dropdown-item menu-action" role="menuitem" data-title="logout,moodle" aria-labelledby="actionmenuaction-6"><i class="icon fa fa-sign-out fa-fw " aria-hidden="true" title="Log out" aria-label="Log out"></i><span class="menu-action-text" id="actionmenuaction-6">Log out</span></a>
+        </div>
+</div>
+
+
+        </div>
+
+</div></div>
+    
+            <!-- navbar_plugin_output -->
+            <div class="popover-region collapsed popover-region-notifications"
+    id="nav-notification-popover-container" data-userid="16"
+    data-region="popover-region">
+    <div class="popover-region-toggle nav-link"
+        data-region="popover-region-toggle"
+        aria-role="button"
+        aria-controls="popover-region-container-5be242833dbdb5be242832b7d311"
+        aria-haspopup="true"
+        aria-label="Show notification window with no new notifications"
+        tabindex="0">
+                <i class="icon fa fa-bell fa-fw " aria-hidden="true" title="Toggle notifications menu" aria-label="Toggle notifications menu"></i>
+        <div class="count-container hidden" data-region="count-container"></div>
+
+    </div>
+    <div 
+        id="popover-region-container-5be242833dbdb5be242832b7d311"
+        class="popover-region-container"
+        data-region="popover-region-container"
+        aria-expanded="false"
+        aria-hidden="true"
+        aria-label="Notification window"
+        role="region">
+        <div class="popover-region-header-container">
+            <h3 class="popover-region-header-text" data-region="popover-region-header-text">Notifications</h3>
+            <div class="popover-region-header-actions" data-region="popover-region-header-actions">        <a class="mark-all-read-button"
+           href="#"
+           title="Mark all as read"
+           data-action="mark-all-read"
+           role="button">
+            <span class="normal-icon"><i class="icon fa fa-check fa-fw " aria-hidden="true" title="Mark all as read" aria-label="Mark all as read"></i></span>
+            <span class="loading-icon"><img class="icon " alt="Loading" title="Loading" src="https://moodle-1819.wooster.edu/theme/image.php/boost/core/1533823411/y/loading" /></span>
+        </a>
+        <a href="https://moodle-1819.wooster.edu/message/notificationpreferences.php?userid=16"
+           title="Notification preferences">
+            <i class="icon fa fa-cog fa-fw " aria-hidden="true" title="Notification preferences" aria-label="Notification preferences"></i>
+        </a>
+</div>
+        </div>
+        <div class="popover-region-content-container" data-region="popover-region-content-container">
+            <div class="popover-region-content" data-region="popover-region-content">
+                        <div class="all-notifications"
+            data-region="all-notifications"
+            role="log"
+            aria-busy="false"
+            aria-atomic="false"
+            aria-relevant="additions"></div>
+        <div class="empty-message" tabindex="0" data-region="empty-message">You have no notifications</div>
+
+            </div>
+            <span class="loading-icon"><img class="icon " alt="Loading" title="Loading" src="https://moodle-1819.wooster.edu/theme/image.php/boost/core/1533823411/y/loading" /></span>
+        </div>
+                <a class="see-all-link"
+                    href="https://moodle-1819.wooster.edu/message/output/popup/notifications.php">
+                    <div class="popover-region-footer-container">
+                        <div class="popover-region-seeall-text">See all</div>
+                    </div>
+                </a>
+    </div>
+</div>
+    
+            <!-- search_box -->
+            <span class="hidden-md-down">
+            
+            </span>
+    
+            <nav class="nav navbar-nav hidden-md-down">
+                <!-- custom_menu -->
+                <a class="nav-item nav-link" href="http://wooster.edu" title="Wooster">Wooster</a><a class="nav-item nav-link" href="http://wooster.edu/Academics/Libraries" title="Libraries">Libraries</a><a class="nav-item nav-link" href="http://technology.spaces.wooster.edu" title="IT">IT</a><a class="nav-item nav-link" href="http://educationaltechnology.wooster.edu" title="Ed. Tech.">Ed. Tech.</a><a class="nav-item nav-link" href="https://voices.wooster.edu" title="Voices">Voices</a><a class="nav-item nav-link" href="http://email.wooster.edu" title="Email">Email</a><a class="nav-item nav-link" href="http://scotweb.wooster.edu/" title="ScotWeb">ScotWeb</a><div class="dropdown nav-item">
+    <a class="dropdown-toggle nav-link" id="drop-down-5be242833fd385be242832b7d314" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+        Archives
+    </a>
+    <div class="dropdown-menu" aria-labelledby="drop-down-5be242833fd385be242832b7d314">
+                <a class="dropdown-item" href="https://moodle-1718.wooster.edu/" title="Moodle Archive 17-18">Moodle Archive 17-18</a>
+                <a class="dropdown-item" href="https://moodle-1617.wooster.edu/" title="Moodle Archive 16-17">Moodle Archive 16-17</a>
+                <a class="dropdown-item" href="https://moodle-1516.wooster.edu/" title="Moodle Archive 15-16">Moodle Archive 15-16</a>
+                <a class="dropdown-item" href="https://woodle-1415.wooster.edu/" title="Woodle Archive 14-15">Woodle Archive 14-15</a>
+    </div>
+</div><a class="nav-item nav-link" href="http://wiki.wooster.edu/display/itdocumentation/GDPR+Privacy+Statement" title="Privacy Policy">Privacy Policy</a><div class="dropdown nav-item">
+    <a class="dropdown-toggle nav-link" id="drop-down-5be242833ff485be242832b7d315" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+        Moodle Support
+    </a>
+    <div class="dropdown-menu" aria-labelledby="drop-down-5be242833ff485be242832b7d315">
+                <a class="dropdown-item" href="https://wiki.wooster.edu/x/EAv1AQ" title="Moodle for Teaching">Moodle for Teaching</a>
+                <a class="dropdown-item" href="http://docs.moodle.org" title="Moodle Docs">Moodle Docs</a>
+                <a class="dropdown-item" href="https://youtu.be/YjlgrVag6JQ?list=PLxcO_MFWQBDfrcwIG_jYHr7BrOLD-fPL4" title="video tutorials">Boost theme</a>
+    </div>
+</div><div class="dropdown nav-item">
+    <a class="dropdown-toggle nav-link" id="drop-down-5be2428340ccd5be242832b7d316" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+        English - United States ‎(en_us)‎
+    </a>
+    <div class="dropdown-menu" aria-labelledby="drop-down-5be2428340ccd5be242832b7d316">
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=am" title=" አማርኛ ‎(am)‎"> አማርኛ ‎(am)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=af" title="Afrikaans ‎(af)‎">Afrikaans ‎(af)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=an" title="Aragonés ‎(an)‎">Aragonés ‎(an)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_es" title="Aranés ‎(oc_es)‎">Aranés ‎(oc_es)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ast" title="Asturianu ‎(ast)‎">Asturianu ‎(ast)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=az" title="Azərbaycanca ‎(az)‎">Azərbaycanca ‎(az)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ms" title="Bahasa Melayu ‎(ms)‎">Bahasa Melayu ‎(ms)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bi" title="Bislama ‎(bi)‎">Bislama ‎(bi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bs" title="Bosanski ‎(bs)‎">Bosanski ‎(bs)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=br" title="Breizh ‎(br)‎">Breizh ‎(br)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ca" title="Català ‎(ca)‎">Català ‎(ca)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ca_valencia" title="Català (Valencià) ‎(ca_valencia)‎">Català (Valencià) ‎(ca_valencia)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=cs" title="Čeština ‎(cs)‎">Čeština ‎(cs)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mis" title="Crnogorski ‎(mis)‎">Crnogorski ‎(mis)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=cy" title="Cymraeg ‎(cy)‎">Cymraeg ‎(cy)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da" title="Dansk ‎(da)‎">Dansk ‎(da)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da_kursus" title="Dansk (kursus) ‎(da_kursus)‎">Dansk (kursus) ‎(da_kursus)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da_rum" title="Dansk Rum ‎(da_rum)‎">Dansk Rum ‎(da_rum)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=se" title="Davvisámegiella ‎(se)‎">Davvisámegiella ‎(se)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_du" title="Deutsch - Du ‎(de_du)‎">Deutsch - Du ‎(de_du)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_ch" title="Deutsch - Schweiz ‎(de_ch)‎">Deutsch - Schweiz ‎(de_ch)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de" title="Deutsch ‎(de)‎">Deutsch ‎(de)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_comm" title="Deutsch community ‎(de_comm)‎">Deutsch community ‎(de_comm)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dsb" title="Dolnoserbski ‎(dsb)‎">Dolnoserbski ‎(dsb)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mh" title="Ebon ‎(mh)‎">Ebon ‎(mh)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=et" title="eesti ‎(et)‎">eesti ‎(et)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=en_us" title="English - United States ‎(en_us)‎">English - United States ‎(en_us)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=en" title="English ‎(en)‎">English ‎(en)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_co" title="Español - Colombia ‎(es_co)‎">Español - Colombia ‎(es_co)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es" title="Español - Internacional ‎(es)‎">Español - Internacional ‎(es)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_mx" title="Español - México ‎(es_mx)‎">Español - México ‎(es_mx)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_ve" title="Español Venezuela ‎(es_ve)‎">Español Venezuela ‎(es_ve)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=eo" title="Esperanto ‎(eo)‎">Esperanto ‎(eo)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=eu" title="Euskara ‎(eu)‎">Euskara ‎(eu)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ee" title="Èʋegbe ‎(ee)‎">Èʋegbe ‎(ee)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fil" title="Filipino ‎(fil)‎">Filipino ‎(fil)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sv_fi" title="Finlandssvenska ‎(sv_fi)‎">Finlandssvenska ‎(sv_fi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fo" title="Føroyskt ‎(fo)‎">Føroyskt ‎(fo)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fr_ca" title="Français - Canada ‎(fr_ca)‎">Français - Canada ‎(fr_ca)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fr" title="Français ‎(fr)‎">Français ‎(fr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ga" title="Gaeilge ‎(ga)‎">Gaeilge ‎(ga)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gd" title="Gàidhlig ‎(gd)‎">Gàidhlig ‎(gd)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gl" title="Galego ‎(gl)‎">Galego ‎(gl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_gsc" title="Gascon ‎(oc_gsc)‎">Gascon ‎(oc_gsc)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ha" title="Hausa ‎(ha)‎">Hausa ‎(ha)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hr" title="Hrvatski ‎(hr)‎">Hrvatski ‎(hr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=haw" title="ʻŌlelo Hawaiʻi ‎(haw)‎">ʻŌlelo Hawaiʻi ‎(haw)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ig" title="Igbo ‎(ig)‎">Igbo ‎(ig)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=id" title="Indonesian ‎(id)‎">Indonesian ‎(id)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zu" title="isiZulu ‎(zu)‎">isiZulu ‎(zu)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=is" title="Íslenska ‎(is)‎">Íslenska ‎(is)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=it" title="Italiano ‎(it)‎">Italiano ‎(it)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kl" title="Kalaallisut ‎(kl)‎">Kalaallisut ‎(kl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sw" title="Kiswahili ‎(sw)‎">Kiswahili ‎(sw)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hat" title="Kreyòl Ayisyen ‎(hat)‎">Kreyòl Ayisyen ‎(hat)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kmr" title="Kurmanji ‎(kmr)‎">Kurmanji ‎(kmr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lo" title="Laotian ‎(lo)‎">Laotian ‎(lo)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=la" title="Latin ‎(la)‎">Latin ‎(la)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lv" title="Latviešu ‎(lv)‎">Latviešu ‎(lv)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_lnc" title="Lengadocian ‎(oc_lnc)‎">Lengadocian ‎(oc_lnc)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lb" title="Lëtzebuergesch ‎(lb)‎">Lëtzebuergesch ‎(lb)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lt" title="Lietuvių ‎(lt)‎">Lietuvių ‎(lt)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lt_uni" title="Lithuanian (university) ‎(lt_uni)‎">Lithuanian (university) ‎(lt_uni)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=smj" title="Lulesamisk ‎(smj)‎">Lulesamisk ‎(smj)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hu" title="magyar ‎(hu)‎">magyar ‎(hu)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mg" title="Malagasy ‎(mg)‎">Malagasy ‎(mg)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi_tn" title="Māori - Tainui ‎(mi_tn)‎">Māori - Tainui ‎(mi_tn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi_wwow" title="Māori - Waikato ‎(mi_wwow)‎">Māori - Waikato ‎(mi_wwow)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi" title="Māori (Te Reo) ‎(mi)‎">Māori (Te Reo) ‎(mi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mn_mong" title="Mongolian ‎(mn_mong)‎">Mongolian ‎(mn_mong)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=my" title="myanma bhasa ‎(my)‎">myanma bhasa ‎(my)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=nl" title="Nederlands ‎(nl)‎">Nederlands ‎(nl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=no" title="Norsk - bokmål ‎(no)‎">Norsk - bokmål ‎(no)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=nn" title="Norsk - nynorsk ‎(nn)‎">Norsk - nynorsk ‎(nn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=no_gr" title="Norsk ‎(no_gr)‎">Norsk ‎(no_gr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=uz" title="O'zbekcha ‎(uz)‎">O&#039;zbekcha ‎(uz)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pcm" title="Pidgin ‎(pcm)‎">Pidgin ‎(pcm)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pl" title="Polski ‎(pl)‎">Polski ‎(pl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pt_br" title="Português - Brasil ‎(pt_br)‎">Português - Brasil ‎(pt_br)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pt" title="Português - Portugal ‎(pt)‎">Português - Portugal ‎(pt)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ro" title="Română ‎(ro)‎">Română ‎(ro)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=rm_surs" title="Romansh Sursilvan ‎(rm_surs)‎">Romansh Sursilvan ‎(rm_surs)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sm" title="Samoan ‎(sm)‎">Samoan ‎(sm)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tn" title="Setswana ‎(tn)‎">Setswana ‎(tn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sq" title="Shqip ‎(sq)‎">Shqip ‎(sq)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sl" title="Sloven&#353;&#269;ina ‎(sl)‎">Sloven&#353;&#269;ina ‎(sl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sk" title="Slovenčina ‎(sk)‎">Slovenčina ‎(sk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=so" title="Soomaali ‎(so)‎">Soomaali ‎(so)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sma" title="Sørsamisk ‎(sma)‎">Sørsamisk ‎(sma)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sr_lt" title="Srpski ‎(sr_lt)‎">Srpski ‎(sr_lt)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fi" title="Suomi ‎(fi)‎">Suomi ‎(fi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fi_co" title="Suomi+ ‎(fi_co)‎">Suomi+ ‎(fi_co)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sv" title="Svenska ‎(sv)‎">Svenska ‎(sv)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tl" title="Tagalog ‎(tl)‎">Tagalog ‎(tl)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ta" title="Tamil ‎(ta)‎">Tamil ‎(ta)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kab" title="Taqbaylit ‎(kab)‎">Taqbaylit ‎(kab)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=th" title="Thai ‎(th)‎">Thai ‎(th)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=to" title="Tongan ‎(to)‎">Tongan ‎(to)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tr" title="Türkçe ‎(tr)‎">Türkçe ‎(tr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tk" title="Turkmen ‎(tk)‎">Turkmen ‎(tk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ug_lt" title="Uyghur - latin ‎(ug_lt)‎">Uyghur - latin ‎(ug_lt)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fj" title="VakaViti ‎(fj)‎">VakaViti ‎(fj)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=vi" title="Vietnamese ‎(vi)‎">Vietnamese ‎(vi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=wo" title="Wolof ‎(wo)‎">Wolof ‎(wo)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=el" title="Ελληνικά ‎(el)‎">Ελληνικά ‎(el)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ba" title="Башҡорт теле ‎(ba)‎">Башҡорт теле ‎(ba)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=be" title="Беларуская ‎(be)‎">Беларуская ‎(be)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bg" title="Български ‎(bg)‎">Български ‎(bg)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ky" title="Кыргызча ‎(ky)‎">Кыргызча ‎(ky)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kk" title="Қазақша ‎(kk)‎">Қазақша ‎(kk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mk" title="Македонски ‎(mk)‎">Македонски ‎(mk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mn" title="Монгол ‎(mn)‎">Монгол ‎(mn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ru" title="Русский ‎(ru)‎">Русский ‎(ru)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sr_cr" title="Српски ‎(sr_cr)‎">Српски ‎(sr_cr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tt" title="татар теле ‎(tt)‎">татар теле ‎(tt)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tg" title="Тоҷикӣ ‎(tg)‎">Тоҷикӣ ‎(tg)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=uk" title="Українська ‎(uk)‎">Українська ‎(uk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ka" title="ქართული ‎(ka)‎">ქართული ‎(ka)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hy" title="Հայերեն ‎(hy)‎">Հայերեն ‎(hy)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=he" title="עברית ‎(he)‎">עברית ‎(he)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ug_ug" title="ئۇيغۇرچە ‎(ug_ug)‎">ئۇيغۇرچە ‎(ug_ug)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ur" title="اردو ‎(ur)‎">اردو ‎(ur)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ps" title="پښتو ‎(ps)‎">پښتو ‎(ps)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ckb" title="سۆرانی ‎(ckb)‎">سۆرانی ‎(ckb)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ar" title="عربي ‎(ar)‎">عربي ‎(ar)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fa" title="فارسی ‎(fa)‎">فارسی ‎(fa)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dv" title="ދިވެހި ‎(dv)‎">ދިވެހި ‎(dv)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zgh" title="ⵜⴰⵎⴰⵣⵉⵖⵜ ‎(zgh)‎">ⵜⴰⵎⴰⵣⵉⵖⵜ ‎(zgh)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ti" title="ትግርኛ ‎(ti)‎">ትግርኛ ‎(ti)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ne" title="नेपाली ‎(ne)‎">नेपाली ‎(ne)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mr" title="मराठी ‎(mr)‎">मराठी ‎(mr)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hi" title="हिंदी ‎(hi)‎">हिंदी ‎(hi)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bn" title="বাংলা ‎(bn)‎">বাংলা ‎(bn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pan" title="ਪੰਜਾਬੀ ‎(pan)‎">ਪੰਜਾਬੀ ‎(pan)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gu" title="ગુજરાતી ‎(gu)‎">ગુજરાતી ‎(gu)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=or" title="ଓଡ଼ିଆ ‎(or)‎">ଓଡ଼ିଆ ‎(or)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ta_lk" title="தமிழ் ‎(ta_lk)‎">தமிழ் ‎(ta_lk)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=te" title="తెలుగు  ‎(te)‎">తెలుగు  ‎(te)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kn" title="ಕನ್ನಡ ‎(kn)‎">ಕನ್ನಡ ‎(kn)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ml" title="മലയാളം ‎(ml)‎">മലയാളം ‎(ml)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=si" title="සිංහල ‎(si)‎">සිංහල ‎(si)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=xct" title="བོད་ཡིག ‎(xct)‎">བོད་ཡིག ‎(xct)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dz" title="རྫོང་ཁ ‎(dz)‎">རྫོང་ཁ ‎(dz)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=km" title="ខ្មែរ ‎(km)‎">ខ្មែរ ‎(km)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ko" title="한국어 ‎(ko)‎">한국어 ‎(ko)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ja" title="日本語 ‎(ja)‎">日本語 ‎(ja)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zh_tw" title="正體中文 ‎(zh_tw)‎">正體中文 ‎(zh_tw)‎</a>
+                <a class="dropdown-item" href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zh_cn" title="简体中文 ‎(zh_cn)‎">简体中文 ‎(zh_cn)‎</a>
+    </div>
+</div>
+                <!-- page_heading_menu -->
+                
+            </nav>
+        </div>
+    </header>
+    
+
+    <div id="page" class="container-fluid">
+        <header id="page-header" class="row"><div class="col-xs-12 p-a-1"><div class="card"><div class="card-block"><div class="pull-xs-right context-header-settings-menu"></div><div class="pull-xs-left"><div class="page-context-header"><div class="page-header-headings"><h1>Applied Statistical Methods FA18 (MATH-29901-01)</h1></div></div></div><div class="clearfix w-100 pull-xs-left" id="page-navbar"><div class="breadcrumb-nav"><nav role="navigation">
+    <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://moodle-1819.wooster.edu/" >Home</a></li>
+                <li class="breadcrumb-item">My courses</li>
+                <li class="breadcrumb-item"><a href="https://moodle-1819.wooster.edu/course/index.php?categoryid=2" >Fall</a></li>
+                <li class="breadcrumb-item"><a href="https://moodle-1819.wooster.edu/course/view.php?id=991" title="Applied Statistical Methods FA18 (MATH-29901-01)">Applied Statistical Methods FA18 (MATH-29901-01)</a></li>
+                <li class="breadcrumb-item"><a href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-10" >October 22 - October 28</a></li>
+                <li class="breadcrumb-item"><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053" title="File">Multiple Logistic solutions</a></li>
+    </ol>
+</nav></div><div class="breadcrumb-button pull-xs-right"></div></div><div id="course-header"></div></div></div></div></header>
+
+        <div id="page-content" class="row">
+            <div id="region-main-box" class="col-xs-12">
+                <section id="region-main" >
+                    <div class="card card-block">
+                    <span class="notifications" id="user-notifications"></span>
+                    <div role="main"><span id="maincontent"></span><h2>Multiple Logistic solutions</h2><div class="resourcecontent resourcegeneral">
+  <iframe id="resourceobject" src="https://moodle-1819.wooster.edu/pluginfile.php/34480/mod_resource/content/0/Multiple_Logistic_solutions.html?embed=1">
+    Click <a href="https://moodle-1819.wooster.edu/pluginfile.php/34480/mod_resource/content/0/Multiple_Logistic_solutions.html" >Multiple_Logistic_solutions.html</a> link to view the file.
+  </iframe>
+</div></div>
+                    <div class="m-t-2 m-b-1">
+<div class="row">
+    <div class="col-md-4">        <div class="pull-left">
+                <a href="https://moodle-1819.wooster.edu/mod/assign/view.php?id=17266&forceview=1" id="prev-activity-link" class=""  classes="btn btn-link"  title="Multiple Logistic Regression" >&#x25C0;&#xFE0E; Multiple Logistic Regression</a>
+
+        </div>
+</div>
+    <div class="col-md-4">        <div class="mdl-align">
+            <div class="urlselect">
+    <form method="post" action="https://moodle-1819.wooster.edu/course/jumpto.php" class="form-inline" id="url_select_f5be242832b7d317">
+        <input type="hidden" name="sesskey" value="jOQHkFlHqY">
+            <label for="jump-to-activity" class="sr-only">
+                Jump to...
+            </label>
+        <select id="jump-to-activity"  id="jump-to-activity" class="custom-select urlselect" name="jump">
+                    <option value="" selected>Jump to...</option>
+                    <option value="/mod/forum/view.php?id=1002&amp;forceview=1" >Announcements</option>
+                    <option value="/mod/resource/view.php?id=5765&amp;forceview=1" >Syllabus</option>
+                    <option value="/mod/url/view.php?id=2227&amp;forceview=1" >Topic Schedule (continually updated)</option>
+                    <option value="/mod/folder/view.php?id=11404&amp;forceview=1" >Articles</option>
+                    <option value="/mod/url/view.php?id=2229&amp;forceview=1" >Aaron&#039;s Amazing RStudio Help</option>
+                    <option value="/mod/resource/view.php?id=9834&amp;forceview=1" >Stat2 R Guide</option>
+                    <option value="/mod/url/view.php?id=2230&amp;forceview=1" >Twotorials</option>
+                    <option value="/mod/url/view.php?id=2231&amp;forceview=1" >R/RStudio User&#039;s Guide (from Duke)</option>
+                    <option value="/mod/url/view.php?id=2232&amp;forceview=1" >R resources at UCLA</option>
+                    <option value="/mod/url/view.php?id=2233&amp;forceview=1" >Quick R</option>
+                    <option value="/mod/resource/view.php?id=2234&amp;forceview=1" >R Markdown reference guide</option>
+                    <option value="/mod/resource/view.php?id=14395&amp;forceview=1" >Miller Expository approach</option>
+                    <option value="/mod/resource/view.php?id=14396&amp;forceview=1" >Miller Slides Multivariate Analysis</option>
+                    <option value="/mod/resource/view.php?id=14397&amp;forceview=1" >Miller writing</option>
+                    <option value="/mod/resource/view.php?id=14398&amp;forceview=1" >Group Project - Modeling Competition</option>
+                    <option value="/mod/resource/view.php?id=14127&amp;forceview=1" >NHANES-testing</option>
+                    <option value="/mod/page/view.php?id=13218&amp;forceview=1" >Group Project assignments</option>
+                    <option value="/mod/assign/view.php?id=14403&amp;forceview=1" >Group Project submission</option>
+                    <option value="/mod/page/view.php?id=15228&amp;forceview=1" >Group Project MSPE&#039;s</option>
+                    <option value="/mod/assign/view.php?id=14406&amp;forceview=1" >Small Group Presentations</option>
+                    <option value="/mod/resource/view.php?id=15058&amp;forceview=1" >Peer review</option>
+                    <option value="/mod/resource/view.php?id=15266&amp;forceview=1" >Results rubric</option>
+                    <option value="/mod/resource/view.php?id=15068&amp;forceview=1" >Results Self-reflection</option>
+                    <option value="/mod/assign/view.php?id=14405&amp;forceview=1" >Results revision (individual)</option>
+                    <option value="/mod/resource/view.php?id=15515&amp;forceview=1" >Dataset ideas</option>
+                    <option value="/mod/resource/view.php?id=17834&amp;forceview=1" >Individual Project guidelines</option>
+                    <option value="/mod/assign/view.php?id=15064&amp;forceview=1" >Individual Project Proposal</option>
+                    <option value="/mod/assign/view.php?id=17514&amp;forceview=1" >Individual Project EDA</option>
+                    <option value="/mod/folder/view.php?id=18225&amp;forceview=1" >Example EDAs</option>
+                    <option value="/mod/resource/view.php?id=8828&amp;forceview=1" >8-23-18</option>
+                    <option value="/mod/resource/view.php?id=4948&amp;forceview=1" >Getting Started with R.Rmd</option>
+                    <option value="/mod/resource/view.php?id=4949&amp;forceview=1" >Getting Started with R.html</option>
+                    <option value="/mod/assign/view.php?id=5850&amp;forceview=1" >Getting Started with R</option>
+                    <option value="/mod/resource/view.php?id=10138&amp;forceview=1" >8-28-18</option>
+                    <option value="/mod/resource/view.php?id=10589&amp;forceview=1" >8-30-18</option>
+                    <option value="/mod/resource/view.php?id=5865&amp;forceview=1" >Simple Linear Regression.Rmd</option>
+                    <option value="/mod/assign/view.php?id=5868&amp;forceview=1" >Simple Linear Regression</option>
+                    <option value="/mod/resource/view.php?id=11401&amp;forceview=1" >9-4-18</option>
+                    <option value="/mod/resource/view.php?id=11413&amp;forceview=1" >9-6-18</option>
+                    <option value="/mod/resource/view.php?id=11131&amp;forceview=1" >Fig2-2 - R code</option>
+                    <option value="/mod/assign/view.php?id=8141&amp;forceview=1" >Homework #1 - due Thursday</option>
+                    <option value="/mod/resource/view.php?id=13257&amp;forceview=1" >Hmwk 1 solutions</option>
+                    <option value="/mod/resource/view.php?id=12221&amp;forceview=1" >Vitruvius I.Rmd</option>
+                    <option value="/mod/assign/view.php?id=12234&amp;forceview=1" >Vitruvius I</option>
+                    <option value="/mod/resource/view.php?id=12736&amp;forceview=1" >Vitruvius I solutions</option>
+                    <option value="/mod/resource/view.php?id=12520&amp;forceview=1" >Simple-vs-Multiple Regression</option>
+                    <option value="/mod/resource/view.php?id=14202&amp;forceview=1" >Simple-vs-Multiple Regression solutions</option>
+                    <option value="/mod/resource/view.php?id=12521&amp;forceview=1" >NHANES Part I.Rmd</option>
+                    <option value="/mod/resource/view.php?id=12514&amp;forceview=1" >NHANES brochure</option>
+                    <option value="/mod/resource/view.php?id=12519&amp;forceview=1" >NHANES-body.csv</option>
+                    <option value="/mod/assign/view.php?id=12734&amp;forceview=1" >NHANES part 1</option>
+                    <option value="/mod/assign/view.php?id=10300&amp;forceview=1" >R Quiz #1</option>
+                    <option value="/mod/resource/view.php?id=13339&amp;forceview=1" >R Quiz 1 solutions</option>
+                    <option value="/mod/assign/view.php?id=11141&amp;forceview=1" >Homework #2 - due Thursday</option>
+                    <option value="/mod/resource/view.php?id=14086&amp;forceview=1" >Hmwk 2 solutions</option>
+                    <option value="/mod/resource/view.php?id=13305&amp;forceview=1" >Regression article critique</option>
+                    <option value="/mod/resource/view.php?id=13428&amp;forceview=1" >9-18-18</option>
+                    <option value="/mod/resource/view.php?id=12745&amp;forceview=1" >NHANES Part II.Rmd</option>
+                    <option value="/mod/assign/view.php?id=12746&amp;forceview=1" >NHANES part 2</option>
+                    <option value="/mod/resource/view.php?id=13857&amp;forceview=1" >NHANES 1&amp;amp;2 solutions</option>
+                    <option value="/mod/resource/view.php?id=13810&amp;forceview=1" >9-20-18 Notes</option>
+                    <option value="/mod/resource/view.php?id=13811&amp;forceview=1" >NHANES Part III.Rmd</option>
+                    <option value="/mod/resource/view.php?id=13858&amp;forceview=1" >NHANES 3 solutions</option>
+                    <option value="/mod/resource/view.php?id=14362&amp;forceview=1" >model building</option>
+                    <option value="/mod/assign/view.php?id=13301&amp;forceview=1" >Homework #3 - due Tuesday</option>
+                    <option value="/mod/resource/view.php?id=14463&amp;forceview=1" >Hmwk 3 solutions</option>
+                    <option value="/mod/assign/view.php?id=13863&amp;forceview=1" >R Quiz #2</option>
+                    <option value="/mod/resource/view.php?id=13341&amp;forceview=1" >Test A review</option>
+                    <option value="/mod/resource/view.php?id=14195&amp;forceview=1" >Test A review solutions</option>
+                    <option value="/mod/resource/view.php?id=15227&amp;forceview=1" >Test A solutions</option>
+                    <option value="/mod/resource/view.php?id=15509&amp;forceview=1" >10-4-18</option>
+                    <option value="/mod/resource/view.php?id=16287&amp;forceview=1" >10-16-18</option>
+                    <option value="/mod/assign/view.php?id=15968&amp;forceview=1" >Logistic Regression Practice</option>
+                    <option value="/mod/resource/view.php?id=17564&amp;forceview=1" >Logistic Regression solutions</option>
+                    <option value="/mod/resource/view.php?id=16540&amp;forceview=1" >Simple-vs-Multiple Logistic</option>
+                    <option value="/mod/resource/view.php?id=17800&amp;forceview=1" >Simple-vs-Multiple Logistic solutions</option>
+                    <option value="/mod/resource/view.php?id=17061&amp;forceview=1" >10-23-18</option>
+                    <option value="/mod/resource/view.php?id=17263&amp;forceview=1" >Multiple Logistic.Rmd</option>
+                    <option value="/mod/assign/view.php?id=17266&amp;forceview=1" >Multiple Logistic Regression</option>
+                    <option value="/mod/assign/view.php?id=15626&amp;forceview=1" >Homework #4 - due Thursday</option>
+                    <option value="/mod/resource/view.php?id=18671&amp;forceview=1" >Hmwk 4 solutions</option>
+                    <option value="/mod/resource/view.php?id=18668&amp;forceview=1" >Logistic article critique</option>
+                    <option value="/mod/resource/view.php?id=17765&amp;forceview=1" >10-30-18</option>
+                    <option value="/mod/resource/view.php?id=17958&amp;forceview=1" >Logistic-ICU.Rmd</option>
+                    <option value="/mod/resource/view.php?id=18247&amp;forceview=1" >Logistic ICU solutions</option>
+                    <option value="/mod/assign/view.php?id=17267&amp;forceview=1" >R Quiz #3</option>
+                    <option value="/mod/resource/view.php?id=18207&amp;forceview=1" >11-1-18</option>
+                    <option value="/mod/resource/view.php?id=18670&amp;forceview=1" >11-6-18</option>
+                    <option value="/mod/resource/view.php?id=18695&amp;forceview=1" >Vitruvius II.Rmd</option>
+                    <option value="/mod/resource/view.php?id=18713&amp;forceview=1" >Vitruvius II solutions</option>
+                    <option value="/mod/assign/view.php?id=17513&amp;forceview=1" >Homework #5 - due Tuesday</option>
+                    <option value="/mod/resource/view.php?id=18720&amp;forceview=1" >Hmwk 5 solutions</option>
+                    <option value="/mod/resource/view.php?id=17840&amp;forceview=1" >Test C review</option>
+                    <option value="/mod/resource/view.php?id=17839&amp;forceview=1" >Test C review R output</option>
+                    <option value="/mod/resource/view.php?id=18438&amp;forceview=1" >Test C review solutions</option>
+        </select>
+            <noscript>
+                <input type="submit" class="btn btn-secondary" value="Go">
+            </noscript>
+    </form>
+</div>
+
+        </div>
+</div>
+    <div class="col-md-4">        <div class="pull-right">
+                <a href="https://moodle-1819.wooster.edu/mod/assign/view.php?id=15626&forceview=1" id="next-activity-link" class=""  classes="btn btn-link"  title="Homework #4 - due Thursday" >Homework #4 - due Thursday &#x25B6;&#xFE0E;</a>
+
+        </div>
+</div>
+</div>
+</div>
+                    
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div id="nav-drawer" data-region="drawer" class="hidden-print moodle-has-zindex " aria-hidden="false" tabindex="-1">
+        <nav class="list-group">
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991" data-key="coursehome" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" >
+                <div class="m-l-0">
+                        Applied Statistical Methods FA18 (MATH-29901-01)
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/user/index.php?id=991" data-key="participants" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="90" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        Participants
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/badges/view.php?type=2&amp;id=991" data-key="badgesview" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        Badges
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/admin/tool/lp/coursecompetencies.php?courseid=991" data-key="competencies" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        Competencies
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/grade/report/index.php?id=991" data-key="grades" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        Grades
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-0" data-key="1031" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">General</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-1" data-key="1707" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">August 20 - August 26</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-2" data-key="1708" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">August 27 - September 2</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-3" data-key="1709" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">September 3 - September 9</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-4" data-key="1710" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">September 10 - September 16</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-5" data-key="1711" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">September 17 - September 23</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-6" data-key="1712" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">September 24 - September 30</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-7" data-key="1713" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">October 1 - October 7</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-8" data-key="1714" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">October 8 - October 14</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-9" data-key="1715" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">October 15 - October 21</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action font-weight-bold" href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-10" data-key="1716" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="1" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">October 22 - October 28</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-11" data-key="1717" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">October 29 - November 4</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-12" data-key="1718" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">November 5 - November 11</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-13" data-key="1719" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">November 12 - November 18</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-14" data-key="1720" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">November 19 - November 25</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-15" data-key="1721" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">November 26 - December 2</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-16" data-key="1722" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">December 3 - December 9</span>
+                        </div>
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991#section-17" data-key="1723" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="991">
+                <div class="m-l-0">
+                        <div class="media">
+                            <span class="media-left">
+                                <i class="icon fa fa-folder fa-fw " aria-hidden="true"  aria-label=""></i>
+                            </span>
+                            <span class="media-body">December 10 - December 16</span>
+                        </div>
+                </div>
+            </a>
+        </nav>
+        <nav class="list-group m-t-1">
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/" data-key="home" data-isexpandable="0" data-indent="0" data-showdivider="1" data-type="1" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="0" data-hidden="0" data-preceedwithhr="0" >
+                <div class="m-l-0">
+                        Home
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/my/" data-key="home" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="home">
+                <div class="m-l-0">
+                        Dashboard
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/calendar/view.php?view=month&amp;course=991" data-key="calendar" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="1">
+                <div class="m-l-0">
+                        Calendar
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/user/files.php" data-key="privatefiles" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="1">
+                <div class="m-l-0">
+                        Private files
+                </div>
+            </a>
+            <div class="list-group-item" data-key="mycourses" data-isexpandable="1" data-indent="0" data-showdivider="0" data-type="0" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="home">
+                <div class="m-l-0">
+                    My courses
+                </div>
+            </div>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=991" data-key="991" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="2">
+                <div class="m-l-1">
+                        Applied Statistical Methods FA18 (MATH-29901-01)
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=1464" data-key="1464" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="2">
+                <div class="m-l-1">
+                        Calculus With Algebra A Metacourse FA18 (MATH-10700-MC)
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=951" data-key="951" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="2">
+                <div class="m-l-1">
+                        Multivariate Calculus Math 212 FA18 
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=756" data-key="756" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="2">
+                <div class="m-l-1">
+                        Operating Systems FA18 (CSCI-21200-01)
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=780" data-key="780" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="2">
+                <div class="m-l-1">
+                        User Interface Design FA18 (CSCI-32000-01)
+                </div>
+            </a>
+            <a class="list-group-item list-group-item-action " href="https://moodle-1819.wooster.edu/course/view.php?id=3" data-key="3" data-isexpandable="1" data-indent="1" data-showdivider="0" data-type="20" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="1">
+                <div class="m-l-1">
+                        Test Course
+                </div>
+            </a>
+        </nav>
+    </div>
+</div>
+<footer id="page-footer" class="p-y-1 bg-inverse">
+    <div class="container">
+        <div id="course-footer"></div>
+
+
+        <div class="logininfo">You are logged in as <a href="https://moodle-1819.wooster.edu/user/profile.php?id=16" title="View profile">Tam Nguyen</a> (<a href="https://moodle-1819.wooster.edu/login/logout.php?sesskey=jOQHkFlHqY">Log out</a>)</div>
+        <div class="tool_usertours-resettourcontainer"></div>
+        <div class="homelink"><a href="https://moodle-1819.wooster.edu/course/view.php?id=991">MATH-29901-01-1819FA</a></div>
+        <nav class="nav navbar-nav hidden-lg-up">
+                <ul class="list-unstyled p-t-1">
+                                    <li><a href="http://wooster.edu" title="Wooster">Wooster</a></li>
+                                    <li><a href="http://wooster.edu/Academics/Libraries" title="Libraries">Libraries</a></li>
+                                    <li><a href="http://technology.spaces.wooster.edu" title="IT">IT</a></li>
+                                    <li><a href="http://educationaltechnology.wooster.edu" title="Ed. Tech.">Ed. Tech.</a></li>
+                                    <li><a href="https://voices.wooster.edu" title="Voices">Voices</a></li>
+                                    <li><a href="http://email.wooster.edu" title="Email">Email</a></li>
+                                    <li><a href="http://scotweb.wooster.edu/" title="ScotWeb">ScotWeb</a></li>
+                                    <li>Archives</li>
+                                <li>
+                                    <ul class="list-unstyled m-l-1">
+                                                        <li><a href="https://moodle-1718.wooster.edu/" title="Moodle Archive 17-18">Moodle Archive 17-18</a></li>
+                                                        <li><a href="https://moodle-1617.wooster.edu/" title="Moodle Archive 16-17">Moodle Archive 16-17</a></li>
+                                                        <li><a href="https://moodle-1516.wooster.edu/" title="Moodle Archive 15-16">Moodle Archive 15-16</a></li>
+                                                        <li><a href="https://woodle-1415.wooster.edu/" title="Woodle Archive 14-15">Woodle Archive 14-15</a></li>
+                                    </ul>
+                                </li>
+                                    <li><a href="http://wiki.wooster.edu/display/itdocumentation/GDPR+Privacy+Statement" title="Privacy Policy">Privacy Policy</a></li>
+                                    <li>Moodle Support</li>
+                                <li>
+                                    <ul class="list-unstyled m-l-1">
+                                                        <li><a href="https://wiki.wooster.edu/x/EAv1AQ" title="Moodle for Teaching">Moodle for Teaching</a></li>
+                                                        <li><a href="http://docs.moodle.org" title="Moodle Docs">Moodle Docs</a></li>
+                                                        <li><a href="https://youtu.be/YjlgrVag6JQ?list=PLxcO_MFWQBDfrcwIG_jYHr7BrOLD-fPL4" title="video tutorials">Boost theme</a></li>
+                                    </ul>
+                                </li>
+                                    <li><a href="#" title="Language">English - United States ‎(en_us)‎</a></li>
+                                <li>
+                                    <ul class="list-unstyled m-l-1">
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=am" title=" አማርኛ ‎(am)‎"> አማርኛ ‎(am)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=af" title="Afrikaans ‎(af)‎">Afrikaans ‎(af)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=an" title="Aragonés ‎(an)‎">Aragonés ‎(an)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_es" title="Aranés ‎(oc_es)‎">Aranés ‎(oc_es)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ast" title="Asturianu ‎(ast)‎">Asturianu ‎(ast)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=az" title="Azərbaycanca ‎(az)‎">Azərbaycanca ‎(az)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ms" title="Bahasa Melayu ‎(ms)‎">Bahasa Melayu ‎(ms)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bi" title="Bislama ‎(bi)‎">Bislama ‎(bi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bs" title="Bosanski ‎(bs)‎">Bosanski ‎(bs)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=br" title="Breizh ‎(br)‎">Breizh ‎(br)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ca" title="Català ‎(ca)‎">Català ‎(ca)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ca_valencia" title="Català (Valencià) ‎(ca_valencia)‎">Català (Valencià) ‎(ca_valencia)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=cs" title="Čeština ‎(cs)‎">Čeština ‎(cs)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mis" title="Crnogorski ‎(mis)‎">Crnogorski ‎(mis)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=cy" title="Cymraeg ‎(cy)‎">Cymraeg ‎(cy)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da" title="Dansk ‎(da)‎">Dansk ‎(da)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da_kursus" title="Dansk (kursus) ‎(da_kursus)‎">Dansk (kursus) ‎(da_kursus)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=da_rum" title="Dansk Rum ‎(da_rum)‎">Dansk Rum ‎(da_rum)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=se" title="Davvisámegiella ‎(se)‎">Davvisámegiella ‎(se)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_du" title="Deutsch - Du ‎(de_du)‎">Deutsch - Du ‎(de_du)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_ch" title="Deutsch - Schweiz ‎(de_ch)‎">Deutsch - Schweiz ‎(de_ch)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de" title="Deutsch ‎(de)‎">Deutsch ‎(de)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=de_comm" title="Deutsch community ‎(de_comm)‎">Deutsch community ‎(de_comm)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dsb" title="Dolnoserbski ‎(dsb)‎">Dolnoserbski ‎(dsb)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mh" title="Ebon ‎(mh)‎">Ebon ‎(mh)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=et" title="eesti ‎(et)‎">eesti ‎(et)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=en_us" title="English - United States ‎(en_us)‎">English - United States ‎(en_us)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=en" title="English ‎(en)‎">English ‎(en)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_co" title="Español - Colombia ‎(es_co)‎">Español - Colombia ‎(es_co)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es" title="Español - Internacional ‎(es)‎">Español - Internacional ‎(es)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_mx" title="Español - México ‎(es_mx)‎">Español - México ‎(es_mx)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=es_ve" title="Español Venezuela ‎(es_ve)‎">Español Venezuela ‎(es_ve)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=eo" title="Esperanto ‎(eo)‎">Esperanto ‎(eo)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=eu" title="Euskara ‎(eu)‎">Euskara ‎(eu)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ee" title="Èʋegbe ‎(ee)‎">Èʋegbe ‎(ee)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fil" title="Filipino ‎(fil)‎">Filipino ‎(fil)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sv_fi" title="Finlandssvenska ‎(sv_fi)‎">Finlandssvenska ‎(sv_fi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fo" title="Føroyskt ‎(fo)‎">Føroyskt ‎(fo)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fr_ca" title="Français - Canada ‎(fr_ca)‎">Français - Canada ‎(fr_ca)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fr" title="Français ‎(fr)‎">Français ‎(fr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ga" title="Gaeilge ‎(ga)‎">Gaeilge ‎(ga)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gd" title="Gàidhlig ‎(gd)‎">Gàidhlig ‎(gd)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gl" title="Galego ‎(gl)‎">Galego ‎(gl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_gsc" title="Gascon ‎(oc_gsc)‎">Gascon ‎(oc_gsc)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ha" title="Hausa ‎(ha)‎">Hausa ‎(ha)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hr" title="Hrvatski ‎(hr)‎">Hrvatski ‎(hr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=haw" title="ʻŌlelo Hawaiʻi ‎(haw)‎">ʻŌlelo Hawaiʻi ‎(haw)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ig" title="Igbo ‎(ig)‎">Igbo ‎(ig)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=id" title="Indonesian ‎(id)‎">Indonesian ‎(id)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zu" title="isiZulu ‎(zu)‎">isiZulu ‎(zu)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=is" title="Íslenska ‎(is)‎">Íslenska ‎(is)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=it" title="Italiano ‎(it)‎">Italiano ‎(it)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kl" title="Kalaallisut ‎(kl)‎">Kalaallisut ‎(kl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sw" title="Kiswahili ‎(sw)‎">Kiswahili ‎(sw)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hat" title="Kreyòl Ayisyen ‎(hat)‎">Kreyòl Ayisyen ‎(hat)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kmr" title="Kurmanji ‎(kmr)‎">Kurmanji ‎(kmr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lo" title="Laotian ‎(lo)‎">Laotian ‎(lo)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=la" title="Latin ‎(la)‎">Latin ‎(la)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lv" title="Latviešu ‎(lv)‎">Latviešu ‎(lv)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=oc_lnc" title="Lengadocian ‎(oc_lnc)‎">Lengadocian ‎(oc_lnc)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lb" title="Lëtzebuergesch ‎(lb)‎">Lëtzebuergesch ‎(lb)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lt" title="Lietuvių ‎(lt)‎">Lietuvių ‎(lt)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=lt_uni" title="Lithuanian (university) ‎(lt_uni)‎">Lithuanian (university) ‎(lt_uni)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=smj" title="Lulesamisk ‎(smj)‎">Lulesamisk ‎(smj)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hu" title="magyar ‎(hu)‎">magyar ‎(hu)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mg" title="Malagasy ‎(mg)‎">Malagasy ‎(mg)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi_tn" title="Māori - Tainui ‎(mi_tn)‎">Māori - Tainui ‎(mi_tn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi_wwow" title="Māori - Waikato ‎(mi_wwow)‎">Māori - Waikato ‎(mi_wwow)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mi" title="Māori (Te Reo) ‎(mi)‎">Māori (Te Reo) ‎(mi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mn_mong" title="Mongolian ‎(mn_mong)‎">Mongolian ‎(mn_mong)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=my" title="myanma bhasa ‎(my)‎">myanma bhasa ‎(my)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=nl" title="Nederlands ‎(nl)‎">Nederlands ‎(nl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=no" title="Norsk - bokmål ‎(no)‎">Norsk - bokmål ‎(no)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=nn" title="Norsk - nynorsk ‎(nn)‎">Norsk - nynorsk ‎(nn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=no_gr" title="Norsk ‎(no_gr)‎">Norsk ‎(no_gr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=uz" title="O'zbekcha ‎(uz)‎">O'zbekcha ‎(uz)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pcm" title="Pidgin ‎(pcm)‎">Pidgin ‎(pcm)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pl" title="Polski ‎(pl)‎">Polski ‎(pl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pt_br" title="Português - Brasil ‎(pt_br)‎">Português - Brasil ‎(pt_br)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pt" title="Português - Portugal ‎(pt)‎">Português - Portugal ‎(pt)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ro" title="Română ‎(ro)‎">Română ‎(ro)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=rm_surs" title="Romansh Sursilvan ‎(rm_surs)‎">Romansh Sursilvan ‎(rm_surs)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sm" title="Samoan ‎(sm)‎">Samoan ‎(sm)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tn" title="Setswana ‎(tn)‎">Setswana ‎(tn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sq" title="Shqip ‎(sq)‎">Shqip ‎(sq)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sl" title="Sloven&#353;&#269;ina ‎(sl)‎">Sloven&#353;&#269;ina ‎(sl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sk" title="Slovenčina ‎(sk)‎">Slovenčina ‎(sk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=so" title="Soomaali ‎(so)‎">Soomaali ‎(so)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sma" title="Sørsamisk ‎(sma)‎">Sørsamisk ‎(sma)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sr_lt" title="Srpski ‎(sr_lt)‎">Srpski ‎(sr_lt)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fi" title="Suomi ‎(fi)‎">Suomi ‎(fi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fi_co" title="Suomi+ ‎(fi_co)‎">Suomi+ ‎(fi_co)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sv" title="Svenska ‎(sv)‎">Svenska ‎(sv)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tl" title="Tagalog ‎(tl)‎">Tagalog ‎(tl)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ta" title="Tamil ‎(ta)‎">Tamil ‎(ta)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kab" title="Taqbaylit ‎(kab)‎">Taqbaylit ‎(kab)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=th" title="Thai ‎(th)‎">Thai ‎(th)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=to" title="Tongan ‎(to)‎">Tongan ‎(to)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tr" title="Türkçe ‎(tr)‎">Türkçe ‎(tr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tk" title="Turkmen ‎(tk)‎">Turkmen ‎(tk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ug_lt" title="Uyghur - latin ‎(ug_lt)‎">Uyghur - latin ‎(ug_lt)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fj" title="VakaViti ‎(fj)‎">VakaViti ‎(fj)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=vi" title="Vietnamese ‎(vi)‎">Vietnamese ‎(vi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=wo" title="Wolof ‎(wo)‎">Wolof ‎(wo)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=el" title="Ελληνικά ‎(el)‎">Ελληνικά ‎(el)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ba" title="Башҡорт теле ‎(ba)‎">Башҡорт теле ‎(ba)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=be" title="Беларуская ‎(be)‎">Беларуская ‎(be)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bg" title="Български ‎(bg)‎">Български ‎(bg)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ky" title="Кыргызча ‎(ky)‎">Кыргызча ‎(ky)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kk" title="Қазақша ‎(kk)‎">Қазақша ‎(kk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mk" title="Македонски ‎(mk)‎">Македонски ‎(mk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mn" title="Монгол ‎(mn)‎">Монгол ‎(mn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ru" title="Русский ‎(ru)‎">Русский ‎(ru)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=sr_cr" title="Српски ‎(sr_cr)‎">Српски ‎(sr_cr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tt" title="татар теле ‎(tt)‎">татар теле ‎(tt)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=tg" title="Тоҷикӣ ‎(tg)‎">Тоҷикӣ ‎(tg)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=uk" title="Українська ‎(uk)‎">Українська ‎(uk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ka" title="ქართული ‎(ka)‎">ქართული ‎(ka)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hy" title="Հայերեն ‎(hy)‎">Հայերեն ‎(hy)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=he" title="עברית ‎(he)‎">עברית ‎(he)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ug_ug" title="ئۇيغۇرچە ‎(ug_ug)‎">ئۇيغۇرچە ‎(ug_ug)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ur" title="اردو ‎(ur)‎">اردو ‎(ur)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ps" title="پښتو ‎(ps)‎">پښتو ‎(ps)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ckb" title="سۆرانی ‎(ckb)‎">سۆرانی ‎(ckb)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ar" title="عربي ‎(ar)‎">عربي ‎(ar)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=fa" title="فارسی ‎(fa)‎">فارسی ‎(fa)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dv" title="ދިވެހި ‎(dv)‎">ދިވެހި ‎(dv)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zgh" title="ⵜⴰⵎⴰⵣⵉⵖⵜ ‎(zgh)‎">ⵜⴰⵎⴰⵣⵉⵖⵜ ‎(zgh)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ti" title="ትግርኛ ‎(ti)‎">ትግርኛ ‎(ti)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ne" title="नेपाली ‎(ne)‎">नेपाली ‎(ne)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=mr" title="मराठी ‎(mr)‎">मराठी ‎(mr)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=hi" title="हिंदी ‎(hi)‎">हिंदी ‎(hi)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=bn" title="বাংলা ‎(bn)‎">বাংলা ‎(bn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=pan" title="ਪੰਜਾਬੀ ‎(pan)‎">ਪੰਜਾਬੀ ‎(pan)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=gu" title="ગુજરાતી ‎(gu)‎">ગુજરાતી ‎(gu)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=or" title="ଓଡ଼ିଆ ‎(or)‎">ଓଡ଼ିଆ ‎(or)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ta_lk" title="தமிழ் ‎(ta_lk)‎">தமிழ் ‎(ta_lk)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=te" title="తెలుగు  ‎(te)‎">తెలుగు  ‎(te)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=kn" title="ಕನ್ನಡ ‎(kn)‎">ಕನ್ನಡ ‎(kn)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ml" title="മലയാളം ‎(ml)‎">മലയാളം ‎(ml)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=si" title="සිංහල ‎(si)‎">සිංහල ‎(si)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=xct" title="བོད་ཡིག ‎(xct)‎">བོད་ཡིག ‎(xct)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=dz" title="རྫོང་ཁ ‎(dz)‎">རྫོང་ཁ ‎(dz)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=km" title="ខ្មែរ ‎(km)‎">ខ្មែរ ‎(km)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ko" title="한국어 ‎(ko)‎">한국어 ‎(ko)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=ja" title="日本語 ‎(ja)‎">日本語 ‎(ja)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zh_tw" title="正體中文 ‎(zh_tw)‎">正體中文 ‎(zh_tw)‎</a></li>
+                                                        <li><a href="https://moodle-1819.wooster.edu/mod/resource/view.php?id=18053&amp;lang=zh_cn" title="简体中文 ‎(zh_cn)‎">简体中文 ‎(zh_cn)‎</a></li>
+                                    </ul>
+                                </li>
+                </ul>
+        </nav>
+        
+        <script type="text/javascript">
+//<![CDATA[
+var require = {
+    baseUrl : 'https://moodle-1819.wooster.edu/lib/requirejs.php/1530544450/',
+    // We only support AMD modules with an explicit define() statement.
+    enforceDefine: true,
+    skipDataMain: true,
+    waitSeconds : 0,
+
+    paths: {
+        jquery: 'https://moodle-1819.wooster.edu/lib/javascript.php/1530544450/lib/jquery/jquery-3.2.1.min',
+        jqueryui: 'https://moodle-1819.wooster.edu/lib/javascript.php/1530544450/lib/jquery/ui-1.12.1/jquery-ui.min',
+        jqueryprivate: 'https://moodle-1819.wooster.edu/lib/javascript.php/1530544450/lib/requirejs/jquery-private'
+    },
+
+    // Custom jquery config map.
+    map: {
+      // '*' means all modules will get 'jqueryprivate'
+      // for their 'jquery' dependency.
+      '*': { jquery: 'jqueryprivate' },
+      // Stub module for 'process'. This is a workaround for a bug in MathJax (see MDL-60458).
+      '*': { process: 'core/first' },
+
+      // 'jquery-private' wants the real jQuery module
+      // though. If this line was not here, there would
+      // be an unresolvable cyclic dependency.
+      jqueryprivate: { jquery: 'jquery' }
+    }
+};
+
+//]]>
+</script>
+<script type="text/javascript" src="https://moodle-1819.wooster.edu/lib/javascript.php/1530544450/lib/requirejs/require.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+require(['core/first'], function() {
+;
+require(["media_videojs/loader"], function(loader) {
+    loader.setUp(function(videojs) {
+        videojs.options.flash.swf = "https://moodle-1819.wooster.edu/media/player/videojs/videojs/video-js.swf";
+videojs.addLanguage("en",{
+ "Audio Player": "Audio Player",
+ "Video Player": "Video Player",
+ "Play": "Play",
+ "Pause": "Pause",
+ "Replay": "Replay",
+ "Current Time": "Current Time",
+ "Duration Time": "Duration Time",
+ "Remaining Time": "Remaining Time",
+ "Stream Type": "Stream Type",
+ "LIVE": "LIVE",
+ "Loaded": "Loaded",
+ "Progress": "Progress",
+ "Progress Bar": "Progress Bar",
+ "progress bar timing: currentTime={1} duration={2}": "{1} of {2}",
+ "Fullscreen": "Fullscreen",
+ "Non-Fullscreen": "Non-Fullscreen",
+ "Mute": "Mute",
+ "Unmute": "Unmute",
+ "Playback Rate": "Playback Rate",
+ "Subtitles": "Subtitles",
+ "subtitles off": "subtitles off",
+ "Captions": "Captions",
+ "captions off": "captions off",
+ "Chapters": "Chapters",
+ "Descriptions": "Descriptions",
+ "descriptions off": "descriptions off",
+ "Audio Track": "Audio Track",
+ "Volume Level": "Volume Level",
+ "You aborted the media playback": "You aborted the media playback",
+ "A network error caused the media download to fail part-way.": "A network error caused the media download to fail part-way.",
+ "The media could not be loaded, either because the server or network failed or because the format is not supported.": "The media could not be loaded, either because the server or network failed or because the format is not supported.",
+ "The media playback was aborted due to a corruption problem or because the media used features your browser did not support.": "The media playback was aborted due to a corruption problem or because the media used features your browser did not support.",
+ "No compatible source was found for this media.": "No compatible source was found for this media.",
+ "The media is encrypted and we do not have the keys to decrypt it.": "The media is encrypted and we do not have the keys to decrypt it.",
+ "Play Video": "Play Video",
+ "Close": "Close",
+ "Close Modal Dialog": "Close Modal Dialog",
+ "Modal Window": "Modal Window",
+ "This is a modal window": "This is a modal window",
+ "This modal can be closed by pressing the Escape key or activating the close button.": "This modal can be closed by pressing the Escape key or activating the close button.",
+ ", opens captions settings dialog": ", opens captions settings dialog",
+ ", opens subtitles settings dialog": ", opens subtitles settings dialog",
+ ", opens descriptions settings dialog": ", opens descriptions settings dialog",
+ ", selected": ", selected",
+ "captions settings": "captions settings",
+ "subtitles settings": "subititles settings",
+ "descriptions settings": "descriptions settings",
+ "Text": "Text",
+ "White": "White",
+ "Black": "Black",
+ "Red": "Red",
+ "Green": "Green",
+ "Blue": "Blue",
+ "Yellow": "Yellow",
+ "Magenta": "Magenta",
+ "Cyan": "Cyan",
+ "Background": "Background",
+ "Window": "Window",
+ "Transparent": "Transparent",
+ "Semi-Transparent": "Semi-Transparent",
+ "Opaque": "Opaque",
+ "Font Size": "Font Size",
+ "Text Edge Style": "Text Edge Style",
+ "None": "None",
+ "Raised": "Raised",
+ "Depressed": "Depressed",
+ "Uniform": "Uniform",
+ "Dropshadow": "Dropshadow",
+ "Font Family": "Font Family",
+ "Proportional Sans-Serif": "Proportional Sans-Serif",
+ "Monospace Sans-Serif": "Monospace Sans-Serif",
+ "Proportional Serif": "Proportional Serif",
+ "Monospace Serif": "Monospace Serif",
+ "Casual": "Casual",
+ "Script": "Script",
+ "Small Caps": "Small Caps",
+ "Reset": "Reset",
+ "restore all settings to the default values": "restore all settings to the default values",
+ "Done": "Done",
+ "Caption Settings Dialog": "Caption Settings Dialog",
+ "Beginning of dialog window. Escape will cancel and close the window.": "Beginning of dialog window. Escape will cancel and close the window.",
+ "End of dialog window.": "End of dialog window."
+});
+
+    });
+});;
+
+require(['jquery', 'message_popup/notification_popover_controller'], function($, controller) {
+    var container = $('#nav-notification-popover-container');
+    var controller = new controller(container);
+    controller.registerEventListeners();
+    controller.registerListNavigationEventListeners();
+});
+;
+
+require(['jquery'], function($) {
+    $('#single_select5be242832b7d313').change(function() {
+        $('#single_select_f5be242832b7d312').submit();
+    });
+});
+;
+
+        require(['jquery'], function($) {
+            $('#jump-to-activity').change(function() {
+                $('#url_select_f5be242832b7d317').submit();
+            });
+        });
+    ;
+
+require(['jquery'], function($) {
+    $('#single_select5be242832b7d319').change(function() {
+        $('#single_select_f5be242832b7d318').submit();
+    });
+});
+;
+
+require(['theme_boost/loader']);
+require(['theme_boost/drawer'], function(mod) {
+    mod.init();
+});
+;
+require(["core/notification"], function(amd) { amd.init(34480, []); });;
+require(["core/log"], function(amd) { amd.setConfig({"level":"warn"}); });
+});
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+M.str = {"moodle":{"lastmodified":"Last modified","name":"Name","error":"Error","info":"Information","yes":"Yes","no":"No","cancel":"Cancel","confirm":"Confirm","areyousure":"Are you sure?","closebuttontitle":"Close","unknownerror":"Unknown error"},"repository":{"type":"Type","size":"Size","invalidjson":"Invalid JSON string","nofilesattached":"No files attached","filepicker":"File picker","logout":"Logout","nofilesavailable":"No files available","norepositoriesavailable":"Sorry, none of your current repositories can return files in the required format.","fileexistsdialogheader":"File exists","fileexistsdialog_editor":"A file with that name has already been attached to the text you are editing.","fileexistsdialog_filemanager":"A file with that name has already been attached","renameto":"Rename to \"{$a}\"","referencesexist":"There are {$a} alias\/shortcut files that use this file as their source","select":"Select"},"admin":{"confirmdeletecomments":"You are about to delete comments, are you sure?","confirmation":"Confirmation"}};
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+(function() { M.util.js_pending('random5be242832b7d31'); Y.on('domready', function() { M.util.init_maximised_embed(Y, "resourceobject");  M.util.js_complete('random5be242832b7d31'); });
+Y.use("moodle-filter_mathjaxloader-loader",function() {M.filter_mathjaxloader.configure({"mathjaxconfig":"\nMathJax.Hub.Config({\n    config: [\"Accessible.js\", \"Safe.js\"],\n    errorSettings: { message: [\"!\"] },\n    skipStartupTypeset: true,\n    messageStyle: \"none\"\n});\n","lang":"en"});
+});
+M.util.help_popups.setup(Y);
+ M.util.js_pending('random5be242832b7d320'); Y.on('domready', function() { M.util.js_complete("init");  M.util.js_complete('random5be242832b7d320'); });
+})();
+//]]>
+</script>
+
+    </div>
+</footer>
+
+</body>
+</html>

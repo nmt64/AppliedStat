@@ -6,6 +6,7 @@ output: html_document
 ---
 ```{r include=FALSE}
 library(mosaic); library(Stat2Data); data("Titanic")
+str(Titanic)
 ```
 
 ### 9.17: Survival and age.
@@ -13,37 +14,96 @@ library(mosaic); library(Stat2Data); data("Titanic")
 ## a. Use a plot to explore whether there is a relationship between survival and the passenger’s age. What do you conclude from this graph alone?
 
 ```{r}
-
+bwplot(Survived ~ Age, groups=Survived, auto.key=TRUE, data=Titanic)
 ```
 
+- The boxplot shows a normal distribution among ages. There exists a slight relationship between age and survival chance, however, this boxplot implies no major differences. 
 
 ## b. Use software to fit a logistic model to the survival and age variables to decide whether there is a statistically significant relationship between age and survival, and if there is, what its direction and magnitude are. Write the estimated logistic model using the output and interpret the output in light of the question.
 
 
+```{r}
+age.sur = glm(Survived ~ Age, data=Titanic, family=binomial)
+summary(age.sur)
+```
 
+- Model: logit(ˆπ) =−0.0814−0.008795 · Age
+- pvalue = 0.0928 ( > 0.05 ), do not reject $H_0$ .
+- This model shows a slight negative relationship between age and survival. With increasing every one unit of age, the chance of survival of a passenger will be decreased by 0.875%. However, this doesn't show significant. 
 
 ### 9.18: Survival and sex.
 ## a. Use a two-way table to explore whether survival is related to the sex of the passenger. What do you conclude from this table alone? Write a summary statement that interprets Sex as the explanatory variable and Survived as the response variable, and that uses simple comparisons of conditional proportions or percentages.
 
+```{r}
+tab = tally(~ Sex+Survived, data=Titanic)
+tab;
+female_rate = 308/(154+308)
+male_rate = 142/(709+142)
+female_rate/male_rate
+```
+
+- Women are almost 4 times more likely to survive than men.
 
 ## b. Use software to fit a logistic model to the survival and sex variables to decide whether there is a statistically significant relationship between sex and survival. If there is, what are the nature and magnitude of the relationship? Does the relationship found by the logistic model confirm the descriptive analysis? (Note: You will actually use SexCode as the predictor in the logistic model.)
+```{r}
+gender.sur = glm(Survived ~ Sex, data=Titanic, family=binomial)
+summary(gender.sur)
+```
+
+If there is, what are the nature and magnitude of the relationship? Does the relationship found by the logistic model confirm the descriptive analysis? 
+
+- The small p-value < 2e-16 (~0) gives strong evidence that there is a log-linear relationship between gender and the survival response. 
+- G-statistic: 1688.1 - 1355.5 = 332.6/1 unit, which shows the high significant. 
+- -2.30118: negative male ( less chance to live)
 
 
-### 9.19
+### 9.19 Sexcode
+
 ## a. Present a calculation that compares the estimated slope coefficient of the model with SexCode as a predictor to the estimated odds ratio. Then give a sentence that interprets the odds ratio in the context of the Titanic tragedy. 
 
+```{r}
+oddsRatio(tab)
+exp(-2.30118)
+```
+
+- The odds of a female passenger surviving is 998.6% of the odds of a male passenger surviving. 
+- According to the estimated slope coeefficient, the odds of a female passenger surviving is 100.1% of the odds of a male passenger surviving. 
 
 ## b. Write a sentence that interprets a 95% CI for the odds ratio discussed in (a). 
+```{r}
+exp(confint(gender.sur))
+```
+
+- We are 95% confident that the odd ratios of picking a male passenger surviving  is (7.67%, 13.01%) of the odd of the female passenger surviving.
 
 ## c. Present a calculation from the two-way table that leads to an estimated coefficient from the output for the model found in (b).
+```{r}
+oddsRatio(tab)
+```
+
+
+- OR = 9.986, log(9.986) = 2.301
+
 
 ## d. Use the model to estimate the probability that a female would have survived the sinking of the Titanic. 
+```{r}
+x = (exp(0.69315+-2.30118*0))/(1+exp(0.69315+-2.30118*0)) #With 0 is represent for Female
+x
+```
+- The probability that a female would have survived in the sinking of Titanic is 66.67%. 
+
 
 ## e.Assess the model conditions for the model relating Survival to SexCode. Write a short summary of the assessment.
 
+- Linearity: Yes, since the responvariable is binary (1-0), which is always linear
+- Independence and random are problematic: All passengers are in the same ship and they maybe have family relationship. This dataset is not random. 
 
 
 ### 9.20
 
 Write a short paragraph that summarizes your analysis of the relationships between the Sex and Age of a passenger and the passenger’s Survival.
+
+- The purpose of these exercises is to use the existing features of passengers onboard Titanic such as Age and Gender as predictors to predict their survival outcome, for 0 being dead and 1 being survived from the tragic ship crash. The binary logistic regression is performed with the glm. 
+- The relationship between the Age of a passenger and the passenger's survival is not significant. According to age.sur model, with increasing every one unit of age, the chance of survival of a passenger will be decreased by 0.875%. It was suprised, since as expected, child should have more chances of survive than other ages. 
+- The relationship between gender and the passenger's survival is significant. Based only on the dataset, women are almost 4 times more likely to survive than men. Otherwise, according to gender.sur model, the probability that a female would have survived in the sinking of Titanic is 66.67%. 
 

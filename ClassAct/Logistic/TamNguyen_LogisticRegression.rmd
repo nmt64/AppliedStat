@@ -28,7 +28,7 @@ b.	Based on this sample of 55 students, what are the odds of a man getting accep
 
 c.	What is the odds ratio of women to men?  
 
-- 0.8/1.8 = 2.25
+- 1.8/0.8 = 2.25
 
 d.	Interpret the odds ratio.
 

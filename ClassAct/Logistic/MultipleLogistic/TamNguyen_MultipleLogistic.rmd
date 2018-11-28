@@ -1,0 +1,410 @@
+---
+title: "Multiple Logistic Regression Practice"
+author: Tam Nguyen
+output: html_document
+---
+
+A. Research Question
+------------------------------------
+Students at a small liberal arts college took a placement exam prior to entry in order to provide them guidance when selecting their first math course.  The dataset **MathPlacement** (in Stat2Data) contains the placement scores for 2696 students, along with whether they took the recommended course, and several admissions variables (GPA, SAT score, etc.).  We want to use this data to decide how well the math placement process is working.  If they take the recommended course, do they succeed (where "success" is defined as a grade of "B" or above)?  
+
+
+B. Exploratory Data Analysis -- Simple Logistic Regression
+------------------------------------
+**1.** Load the `mosaic` and `Stat2Data` packages.  Load the data set and look in the manual (or Help menu) to see what variables are contained within it.
+```{r}
+library(mosaic); library(Stat2Data); library(dplyr); data("MathPlacement")
+```
+
+
+**2.** EDA of Response Variable.
+Investigate the response variable, `CourseSuccess`.  What percentage of students got a "B" or better?  How many students are missing this variable?
+```{r}
+tab = tally (~Grade+CourseSuccess,data = MathPlacement)
+tab
+
+```
+- 52% students got a B or better
+- 5 students are missing grade variable
+
+**3.** EDA of First Explanatory Variable.
+First we will try to predict course success using `RecTaken`.  What type of variable is `RecTaken` (binary, categorical, numerical)?  What percentage of students took the recommended course?  How many students are missing this variable?
+```{r}
+summary(MathPlacement$RecTaken>0)
+1848/(848+1848)
+```
+
+- RecTaken: Binary
+- 68.55% students took the recommeded course.
+
+
+
+C. Analysis of the relationship -- Simple Logistic Regression
+----------------------------
+**1.** Make a two-way table of `CourseSuccess` and `RecTaken`.  Of those who did take the recommendation, what percentage were successful?  Of those who didn't take the recommendation, what percentage were successful?
+
+```{r}
+tab = tally (~RecTaken+CourseSuccess, data = MathPlacement)
+tab
+396/(247+396)
+1045/(1045+441)
+```
+
+- Of those who did take the recommendation, 70.32% were successful.
+- Of those who didn't take the recommended course, 61.58% were successful. 
+
+**2.** Fit the logistic regression to predict `CourseSuccess` from `RecTaken`, and call this `model1`.
+
+```{r}
+model1 = glm(CourseSuccess ~ RecTaken, data=MathPlacement, family=binomial)
+
+```
+
+
+
+**3.** Write out the fitted model.
+
+- logit(CourseSuccess) = 0.47203 + 0.39070*RecTaken
+
+**4.** Interpret the slope coefficient (in terms of an odds ratio), in the context of this situation.
+```{r}
+exp(0.39070)
+```
+
+
+- The odds of success of a student who took recommended course is 148% the odds of success of a student who didn't take the recommended course. 
+
+
+**5.** Use the fitted logistic model to predict the *probability* of success for a student who took the recommended course, and the *probability* of success for a student who didn't take the recommended course.  What do you notice about these values?
+
+
+```{r}
+x = (exp(0.47203+0.39070 *0))/(1+exp(0.47203+0.39070 *0))
+x
+
+```
+- The probability of success for a student who didn't take the recommended course is 0.6158
+```{r}
+y = (exp(0.47203+0.39070 *1))/(1+exp(0.47203+0.39070 *1))
+y
+```
+
+- The probability of success for a student who took the recommended course is 0.7032307
+
+
+D. Inference -- Simple Logistic Regression
+----------------------------
+For significance tests, be sure to state the hypotheses, give the values of the test statistic and the p-value, and state your conclusion in context.
+
+**1. Checking conditions**
+
+Are the conditions of linearity, randomness, and independence met in this situation?  Make sure you discuss each condition.
+
+- Linearity: RecTaken is binary variables so it is always linear
+- Randomness: No, since this dataset is results from a Math Placement exam at only one liberal art colelge. 
+- Independence: This might be problematic since students in the same class maybe friends can have similar grades. Additionally, their decision to take recommended course might be affected by their friends' decision. 
+
+**2.** Use the code below to compute a 95% confidence interval for your slope and use it to find a confidence interval for the odds ratio. Does your interval include the value 1? Why does that matter?
+```{r}
+confint(model1) #CI for the slope
+exp(cbind("Odds ratio" = coef(model1),confint(model1) ))
+```
+
+- If a 95% CI for the relative risk includes the null value of 1, then there is insufficient evidence to conclude that the groups are statistically significantly different.  
+- It doens't include 1 in the CI, so the variable recommended course is useful in the model. 
+#oddsratio = 1, which means it doesn affect ..
+
+**3.** Test the claim that the slope is 0.
+```{r}
+summary(model1)
+```
+
+- p-value ~ 0, which means the slope is significant.
+
+
+**4.** Use the G-test to test the overall effectiveness of the model.
+```{r}
+anova(model1, test = "Chisq")
+```
+
+- G-test with a very small p-value shows the model is significant
+
+
+E. Exploratory Data Analysis -- Other Potential Predictors
+--------------------------------------------------------
+Other variables that may be useful in predicting course success are gender, ACT math score, and GPA.  (You may feel there are other possibilities, but let's focus on these three.)
+
+**1.** Calculate summary statistics for the 3 potential predictor variables.
+```{r}
+summary(MathPlacement$ACTM)
+```
+
+```{r}
+summary(MathPlacement$GPAadj)
+```
+
+```{r}
+summary(MathPlacement$Gender)
+```
+
+**2.** Use *appropriate* graphs and/or tables to investigate the relationship between each potential predictor and the response variable.  Write a sentence for each predictor, summarizing what you see.
+
+```{r}
+xtabs(~Gender+CourseSuccess, data = MathPlacement)
+```
+
+- According to the table, we can see that woman are more likely successed in the course than man. 
+
+#boxplot: for categorical and binary respons
+#table: two binary var
+
+```{r}
+boxplot(ACTM~CourseSuccess, data = MathPlacement)
+```
+- According to the boxplot above, students who succeeded in the course have higher median ACT scores than those who did not successed. 
+
+```{r}
+boxplot(GPAadj~CourseSuccess, data = MathPlacement)
+```
+
+- According to the boxplot above, students who successed in the course have higher median adjusted GPA than those who did not succeed. 
+
+
+**3. Checking conditions - Linearity**
+
+We need to check that the relationship between the log odds (logits) and each predictor is approximately linear.  (We've already discussed randomness and independence above.)
+
+**a. ACT math score**
+
+We could use the "grouping" technique discussed in Chapter 9, and used in the "Logistic Regression Practice" activity.  Recall that in this technique, we create similarly-sized groups of ACT scores and plot the mean score of each group against the log odds of success in each group.  A more "quick-and-dirty" method is to use code similar to that used at the very end of the "Logistic Regression Practice" activity to calculate log odds for each ACT score, and plot this against ACT.  (Make sure you understand what *every line* of code below is doing!)
+
+```{r fig.height=4, fig.width=4}
+tab.ACT <- xtabs(~ACTM+CourseSuccess,data=MathPlacement)
+prop.ACT <- tab.ACT[,2]/(tab.ACT[,2] + tab.ACT[,1])
+plot(log(prop.ACT/(1-prop.ACT))~sort(unique(MathPlacement$ACTM)),xlab="ACT math",ylab="log(odds) of success")
+```
+
+Based on the plot above, do you think that linearity of the logits is a reasonable assumption for this variable?
+
+- Linearity : Looks ok since most of the points are likely compacted into the line. There are some outliners but look not significant. 
+
+
+**b. adjusted GPA**
+
+Follow the method in part (a) to plot the logits against adjusted GPA.  Based on that plot, do you think that linearity of the logits is a reasonable assumption for this variable?  (Notice that there is one group of data points that needs to be deleted from the data set because they don't make any sense!)
+```{r}
+tab.GPAadj <- xtabs(~GPAadj+CourseSuccess,data=MathPlacement)
+prop.GPAadj <- tab.GPAadj[,2]/(tab.GPAadj[,2] + tab.GPAadj[,1])
+plot(log(prop.GPAadj/(1-prop.GPAadj))~sort(unique(MathPlacement$GPAadj)),xlab="adjusted GPA",ylab="log(odds) of success")
+```
+
+- The group of data points that needs to be deleted from the dataset affects the linear trends of the graph. At the graph above, all points seems compacted as a line. If we delete all the data point with adjusted GPA zero, this line might be go through the origins. 
+- There is a point that we should ignore because their failure in the course seems impossible. According to the graph, their GPA = 0 and it doesn't make sense. 
+
+**c. Gender**
+
+Is linearity a reasonable assumption for the gender variable?
+
+```{r}
+tab.Gender <- xtabs(~Gender+CourseSuccess,data=MathPlacement)
+prop.Gender <- tab.Gender[,2]/(tab.Gender[,2] + tab.Gender[,1])
+plot(log(prop.Gender/(1-prop.Gender))~sort(unique(MathPlacement$Gender)),xlab="Gender",ylab="log(odds) of success")
+```
+
+- Gender is a binomial variable, so it is always linear. 
+
+
+F. Multiple Logistic Regression -- 2 variables
+----------------------------
+**Model 2**: For the math professors, GPA is the easiest information to get, so let's start with a model that adds GPA to the existing model with `RecTaken`.
+
+**1.** Fit the logistic regression to predict course success from `RecTaken` and GPA and call this `model2`.  (Make sure you use the version of GPA that you created in #E3b, which has had the incorrect values removed.)
+```{r}
+gparemoved <- subset(MathPlacement, GPAadj > 0)
+model2 <- glm(CourseSuccess~RecTaken+GPAadj, data=gparemoved, family=binomial)
+model2
+```
+
+
+**2.** Write out the fitted model.
+logit(CourseSuccess)=-7.02145+ -0.04418(RecTaken)+0.21970(GPAadj)
+
+**3.** Comment on the effectiveness of each predictor in the model as well as the overall fit. Be sure to indicate what value(s) from the output lead to your conclusions.
+
+```{r}
+summary(model2)
+anova(model2, test = "Chisq")
+```
+
+- Rectaken is not a good variable since p-value of Rectaken is 0.679 > 0.05. On the other hand, p-value of GPAadj is ~ 0, which is significant. 
+
+- Overall, the model is significant based on the G-test from anova table. 
+
+**4.** Find and interpret the slope coefficient (in terms of an odds ratio) of GPA, in the context of this situation.
+
+- Slope coefficient (in terms of an odds ratio) of GPA: 0.2197 
+- When adjusted GPA increases by one, the CourseSuccess increases by 0.2197 holding other variables constant.
+
+**5.** Find the confidence interval for slope coefficient of `RecTaken`.  Interpret this CI in terms of odds ratios, in the context of this situation.
+
+```{r}
+exp(confint(model2))
+```
+
+- The odds of a student taking the recommended courses and succeeding are between 76.5% and 119% of the odds of a student not taking the recommended course and succeeding. 
+
+**6.** Use the fitted logistic model to predict the *probability* of success for a student who took the recommended course and had a GPA of 3.0, and the *probability* of success for a student who didn't take the recommended course and had a GPA of 3.0.  Then use the model to predict the *probability* of success for a student who took the recommended course and had a GPA of 3.9, and the *probability* of success for a student who didn't take the recommended course and had a GPA of 3.9.  Comment on what you see.
+
+```{r}
+exp(-7.02145-0.04418*1+0.21970*30)/(1+exp(-7.02145-0.04418*1+0.21970*30))
+```
+
+- The probability of success for a student who took the recommeded course and had a GPA of 3.0 is 0.384 
+
+```{r}
+exp(-7.02145-0.04418*0+0.21970*30)/(1+exp(-7.02145-0.04418*0+0.21970*30))
+```
+
+- The probability of success for a student who did not take the recommeded course and had a GPA of 3.0 is 0.394
+```{r}
+exp(-7.02145-0.04418*1+0.21970*39)/(1+exp(-7.02145-0.04418*1+0.21970*39))
+```
+
+- The probability of success for a student who took the recommended course and had a GPA of 3.9 is 0.818 
+
+```{r}
+exp(-7.02145-0.04418*0+0.21970*39)/(1+exp(-7.02145-0.04418*0+0.21970*39))
+
+```
+
+- The probability of success for a student who didn’t take the recommended course and had a GPA of 3.9 is 0.824
+
+
+- Obersvation: Having higher GPA has higher positive impact in the probability of success rather than taking the recommended courses. 
+
+G. Multiple Logistic Regression -- 3 variables
+----------------------------
+**Model 3**: 
+
+**1.** Fit the logistic regression to predict course success from `RecTaken`, GPA, and gender and call this `model3`.
+```{r}
+model3 <- glm(CourseSuccess~RecTaken+GPAadj+Gender, data=gparemoved, family=binomial)
+```
+
+
+
+**2.** Write out the fitted model.
+```{r}
+summary(model3)
+```
+
+logit(oddsofgettingaBorbetter)=−7.54206+0.06142RecTaken+0.23688GPAadj−0.13828Gender
+
+**3.** Comment on the effectiveness of each predictor in the model as well as the overall fit. Be sure to indicate what value(s) from the output lead to your conclusions.
+
+```{r}
+anova(model3, test = "Chisq")
+```
+
+- p-value of RecTaken is 0.783 > 0.05: really high so we accept the null
+- p-value of GPA adj ~ 0: we reject the null
+- p-value of Gender is 0.501 > 0.05: really high so we accept the null
+H. Multiple Logistic Regression -- 4 variables
+----------------------------
+**Model 4**: 
+
+**1.** Fit the logistic regression to predict course success from `RecTaken`, GPA, gender, and ACT math score and call this `model4`.
+
+```{r}
+model4 <- glm(CourseSuccess~RecTaken+GPAadj+Gender+ACTM, data=gparemoved, family=binomial)
+model4
+```
+
+**2.** Write out the fitted model.
+
+log(oddsofgettingaBorbetter)=-9.44573+0.09007RecTaken+0.19636GPAadj - 0.36512Gender+0.12819ATCM
+
+**3.** Comment on the effectiveness of each predictor in the model as well as the overall fit. Be sure to indicate what value(s) from the output lead to your conclusions.
+
+```{r}
+summary(model4)
+anova(model4, test = "Chisq")
+```
+
+- p-value of RecTaken is 0.711 > 0.05: accept the null
+- p-value of GPA adj ~ 0: reject the null
+- p-value of Gender is 0.110 > 0.05: accept the null and this factor is significant
+- p-value of ACTM ~ 0: accept the null and this factor is significant
+
+I. Multiple Logistic Regression -- with Interaction
+----------------------------
+**Model 5**: 
+
+**1.** Add the following interactions to `model4`: ACTxGender and GPAxGender.  Call this `model5`.
+```{r}
+model5 <- glm(CourseSuccess~RecTaken+GPAadj*Gender+ACTM*Gender , data=gparemoved, family=binomial)
+model5
+```
+
+
+**2.** Comment on the effectiveness of the interaction terms based on their Wald test results.
+
+```{r}
+summary(model5)
+```
+
+- p-value of ACTxGender is 0.1093 (> 0.05)and p-value of GPAxGender is 0.764(0.05): accept the null, two interaction factors are not significant. 
+
+**3.** Conduct a nested drop-in-deviance test (LRT) to make a conclusion about whether the interaction terms are useful.
+
+$H_0$: reduced model is sufficient $H_a$: reduced model is not sufficient
+```{r}
+anova(model4, model5, test = "Chisq")
+```
+- p-value of both model > 0.05, we accept the null and the interaction terms are not useful.
+
+J. Comparison of models
+----------------------------
+**1.** Compare and contrast models 1 - 5. 
+
+
+**2.** Are there any additional changes or different models you'd like to investigate?  For example: deleting an existing term, trying a different interaction, or a squared term?  If so, fit that model below.
+
+- I will make a new model that include adjusted GPA and ACTM since these are two most significant variables that we investigated above. 
+```{r}
+model6 <- glm(CourseSuccess ~ GPAadj + ACTM, data= gparemoved, family = "binomial")
+summary(model6)
+```
+
+**3.** Which model (of all the ones you've fit) do you prefer?  Explain why.
+
+- In my new model (model6), p-value of all variables ~ 0, which means that all variables are significant. 
+- It keeps the model simple. 
+
+
+K. Prediction/Misclassification Table
+----------------------------
+Using *your* preferred model from J3...
+
+**1.** The predicted probabilities for all of the data cases can be accessed through `fitted(model)`.  Classify each data point as being a predicted "success" (1) if the predicted probability is greater than 0.5, and a predicted "failure" (0) if the predicted probability is less than 0.5. (Hint: You can do this fairly easily in R. Think about how we created the indicator variables.)
+```{r}
+pred = fitted(model6)
+fitted<- ifelse(pred > 0.5,1,0)
+```
+
+
+**2.** Look at the classifications for each of the data points and create a 2 x 2 table showing counts of how the data are classified (predicted success or predicted failure) versus their *actual* response values. (Hint: The `table()` command in R should be useful here.)
+
+```{r}
+
+tally(~fitted+model6$y, format = "proportion")
+```
+
+**3.** Comment on the accuracy of the classifications for your model. What percentage of cases were  "misclassified" (i.e., predicted to be success when actually a failure or vice versa)?  
+```{r}
+0.07560322 + 0.19839142
+```
+
+
+- 27.39% of cases were misclassified in my model. 
+

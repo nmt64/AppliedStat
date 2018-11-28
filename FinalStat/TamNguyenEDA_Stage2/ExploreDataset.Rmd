@@ -1,0 +1,388 @@
+---
+title: "Final Project Report Appendix"
+author: "Tam Nguyen"
+date: "October 28th, 2018"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+always_allow_html: yes
+---
+```{r include=FALSE}
+library(mosaic); library(readr);
+library(doMC)
+library(dplyr)
+library(purrr)
+library(caret)
+library(corrplot)
+library(knitr)
+library(plotly)
+train = read_csv("/Users/Tam/Documents/Junior1819/Fall2018/Stat/AppliedStat/FinalStat/TamNguyen DataSet_Stage1/train.csv");
+```
+
+```{r}
+library(caret)
+library(Metrics)
+```
+
+
+
+```{r include = FALSE}
+str(train)
+train = train[ -c(524 , 692, 1183, 1299),]
+#340,250,335,264,333,266,796,891,186) : residuals vs leverage
+```
+
+
+### Exploring missing value
+
+```{r}
+nrows <- nrow(train) #Numer of rows in train dataset
+missing <- sort(map_dbl(train, function(x) sum(is.na(x)) / nrows), decreasing = TRUE)
+names_missing <- names(missing[missing > 0])
+head(missing, 20)
+```
+```{r}
+train$MasVnrType[966] #Checking the NA in MasAreaType
+train$MasVnrArea[966] #Checking the coressponding value of MasArea
+```
+
+```{r}
+summary(missing)
+plot(missing)
+```
+
+- Nineteen (19) of the original 80 variables have some degree of missing values. To begin addressing this problem we work on x_data for this analysis.
+
+```{r}
+#Make an copy of train dataset to work on 19 variables seprately 
+x_data <- train
+names_missing_del <- names(missing[missing > 0.8])
+x_data <- select(x_data, one_of(setdiff(names(x_data),names_missing_del ))) #new training dataset without 4 highest missing predictors
+```
+
+
+```{r}
+sum(is.na(train)) #how many data is missing
+sum(is.na(train))/(1460*80) #missing value percentage
+```
+```{r}
+hist(train$SalePrice)
+```
+
+
+### Continuous predictor
+
+For the initial iteration of the problem we first focus on those continuous predictor values. An investigation will be carried out to find good performing models with a focus on identifying (if any) the gap between simple explainable models and the more complex predictive models.
+
+```{r}
+num_data <- select_if(x_data, is.numeric); 
+summary(num_data)
+nrow(num_data); ncol(num_data)
+```
+
+### Low variance variables
+
+Max Kuhn (2016):
+Given this, a rule of thumb for detecting near-zero variance predictors is:
+- The fraction of unique values over the sample size is low (say 10 %).
+- The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say around 20).
+
+```{r}
+#Function calculating the fraction of unique values over the sample size and the ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value
+condition <- function(x) {
+  checking = list()  #emty list
+  tbl = sort(table(x), decreasing = TRUE) #Sorting table decreasing
+  checking[["unique_to_samp"]] = length(tbl) / sum(tbl) # Get the variance by                                         divide the length of table to sum of the table
+  checking[["most_prev_to_2nd_prev"]] = (tbl[[1]] / tbl[[2]]) #get ratio
+  checking
+}
+
+#Function checking if unique_to_samp < 0.1 and                                  most_prev_to_2nd_prev >= 20  
+low_var <- function(x) {
+  low_var_vec = vector("character", ncol(x))
+  i = 1
+  for (nme in names(x)) {
+    obs = condition(x[[nme]])
+    #print(obs)  #test by printing value
+    if (obs[[1]] <= 0.1 & obs[[2]] >= 20) { 
+      low_var_vec[i] = nme
+      i = i + 1
+    }
+  }
+  low_var_vec[low_var_vec != ""]
+}
+
+degen_vec <- low_var(num_data); degen_vec
+num_data <- select(num_data, one_of(setdiff(names(num_data), degen_vec))) #make a new dataset without low variance variables
+```
+```{r}
+pairs(~SalePrice + BsmtFinSF2+LowQualFinSF + KitchenAbvGr + EnclosedPorch+ ScreenPorch+PoolArea+MiscVal,data=train)
+```
+
+
+### Multicolinear
+The idea is to first remove the predictors that have the most correlated relationships.
+- Calculate the correlation matrix of the predictors
+- Determine the two predictors associated with the largest absolute pairwise correlation (call them predictors A and B).
+- Determine the average correlation between A and the other variables. Do the same for predictor B.
+- If A has a larger average correlation, remove it; otherwise, remove predictor B.
+- Repeat Steps 2–4 until no absolute correlations are above the threshold.
+
+```{r}
+get_collinear <- function(x) {
+  # Expects data dataframe
+  num_cols = ncol(x)
+  collinear_vec = vector("character", num_cols) 
+  index = 1
+  
+  for (i in seq(1:num_cols)) {
+    corMat = cor(x)
+    diag(corMat) = 0  #set diagonal = 0
+    df_cols = names(x)
+    #Determine the two predictors associated with the largest absolute pairwise     correlation (call them predictors A and B).
+    AB = which(corMat == max(abs(corMat), na.rm=TRUE), arr.ind = TRUE)
+    if (corMat[AB][[1]] > 0.75) {
+      names_AB = rownames(AB)
+      
+      if (sum(abs(corMat[names_AB[1], ]),na.rm=TRUE) > sum(abs(corMat[names_AB[2],  ]),na.rm=TRUE)) {
+        
+        collinear_vec[index] = names_AB[1]
+        index = index + 1
+      } 
+      # if pairwise correlations less than 0.75
+      else {collinear_vec[index] = names_AB[2]
+            index = index + 1}
+      
+      x = select(x, one_of(setdiff(df_cols, collinear_vec[index - 1])))
+    }
+    else{break} 
+  }
+  collinear_vec[collinear_vec != ""]
+}
+mul_col = get_collinear(num_data); mul_col
+```
+```{r}
+plot(train$GrLivArea, train$SalePrice)
+```
+
+```{r}
+#Correlation matrix for 26 continuous variables
+num_data <- select(num_data, one_of(setdiff(names(num_data), mul_col)))
+corrplot(cor(num_data, use = "pairwise.complete.obs"), method = "ellipse", tl.col = "black", na.label = T)
+```
+
+### Decode variables: 
+
+```{r}
+copy_cont_var = num_data  #copy the continuous dataset to add more variables
+
+#Checking if having lotshape condition is useable or not
+copy_cont_var$LotShape_new <- ifelse(train$LotShape == 'IR3',0,1)
+
+#Checking if having basement exposure or not
+copy_cont_var$BsmtExposure_new <- ifelse(train$BsmtExposure == 'No',0,1)
+copy_cont_var$BsmtExposure_new[is.na(copy_cont_var$BsmtExposure_new)] = 0 #Change NA value = 0
+
+```
+
+```{r}
+#Checking if having full bath or halfbath
+copy_cont_var$FullBath <- ifelse(train$BsmtFullBath > 0,1,0)
+copy_cont_var$HalfBath <- ifelse(train$BsmtHalfBath > 0,1,0)
+
+#Checking if having other Miscellaneous or not
+copy_cont_var$MiscFeature_new = ifelse(train$MiscFeature == 'NA',0,1)
+copy_cont_var$MiscFeature_new[is.na(copy_cont_var$MiscFeature_new)] = 0 #Change NA value = 0
+
+#Checking if having fireplace or not
+copy_cont_var$Fireplace = ifelse(train$Fireplaces > 0,1,0)
+
+#Checking if having garage or not
+copy_cont_var$GarageYrBlt = ifelse(copy_cont_var$GarageYrBlt == 'NA',0,1)
+copy_cont_var$GarageYrBlt[is.na(copy_cont_var$GarageYrBlt)] = 0 #Change NA value = 0
+
+#Checking if having porch/wood desk ...
+copy_cont_var$WoodDeckSF <- as.numeric(copy_cont_var$WoodDeckSF)
+copy_cont_var$OpenPorchSF <- as.numeric(copy_cont_var$OpenPorchSF)
+copy_cont_var$Porch = copy_cont_var$WoodDeckSF + copy_cont_var$OpenPorchSF
+copy_cont_var$Porch = ifelse(copy_cont_var$Porch > 0, 1, 0)  #Change to binary var
+
+#Deleting var
+copy_cont_var$WoodDeckSF = NULL
+copy_cont_var$OpenPorchSF = NULL
+copy_cont_var$Id = NULL
+copy_cont_var$LotFrontage = NULL
+copy_cont_var$YearBuilt = NULL
+copy_cont_var$MoSold = NULL
+copy_cont_var$GarageYrBlt = NULL
+copy_cont_var$MasVnrArea = NULL
+
+copy_cont_var$OverallQual = NULL
+
+#Adding t as new variable for Yearbuild and YearremodAdd
+t = abs(train$YearBuilt - train$YearRemodAdd)
+copy_cont_var$YearRebuilt = ifelse(t > 0,1,0)
+copy_cont_var$YearRemodAdd = NULL
+
+#Adding Sale Price back to the dataset
+copy_cont_var$Price = train$SalePrice
+```
+
+```{r}
+#Relationship between OverallCond vs SalePrice and Overall Quality Condition vs Sale Price
+qual.df <- x_data[ ,c("OverallQual","OverallCond","SalePrice")]
+pl.q <- plot_ly(qual.df, y = ~SalePrice, x = ~OverallQual, 
+                type = "box", name = "Overall Quality")
+pl.c <- plot_ly(qual.df, y = ~SalePrice, x = ~OverallCond, 
+                type = "box", name = "Overall Condition")
+subplot(pl.q, pl.c)
+```
+```{r}
+
+```
+
+```{r}
+
+plot(~ log(Price)+ YearRebuilt, data= copy_cont_var) 
+
+```
+
+
+```{r}
+#Correlation matrix
+cor(copy_cont_var[,unlist(lapply(copy_cont_var, is.numeric))])
+```
+
+```{r}
+#Continuing deleting variable by intuition
+copy_2 = copy_cont_var
+copy_2$Porch = NULL
+copy_2$MiscFeature_new = NULL
+copy_2$GrLivArea = NULL
+copy_2$YrSold = NULL
+copy_2$GarageYrBlt = NULL
+copy_2$BsmtHalfBath = NULL
+copy_2$HalfBath = NULL
+copy_2$Fireplaces = NULL
+copy_2$BsmtFullBath = NULL
+copy_2$TotRmsAbvGrd = NULL
+copy_2$YearRemod = NULL
+copy_2$BedroomAbvGr = NULL 
+copy_2$LotShape_new = NULL
+copy_2$MasVnrArea = NULL
+
+copy_2$MSSubClass = as.factor(copy_2$MSSubClass) #Add MSSubClass as an indicator to the dataset
+
+#copy_2$MasVnrArea = as.factor(ifelse(train$MasVnrArea >0,1,0))
+#copy_2$newTotalArea = copy_cont_var$GrLivArea + train$TotalBsmtSF
+```
+
+### Building Model 
+
+```{r}
+#Base line model with all variables (housing assesment and location)
+baseline = lm(copy_2$Price~. +train$Neighborhood, data = copy_2);
+summary(baseline); anova(baseline)
+```
+
+- With all variables related to housing assesment and housing location, the baseline model was created with an ajusted R-squared is 85.51%
+
+## Model with housing assesment only
+
+# Model with Year Built
+
+```{r}
+#Adding t as new variable for Yearbuild and YearremodAdd
+t = abs(train$YearBuilt - train$YearRemodAdd)
+copy_2$YearRebuilt = ifelse(t>0,1,0)
+model1.1 = lm(log(copy_2$Price) ~., data = copy_2); summary(model1.1); plot(model1.1); anova(model1.1)
+```
+
+- Adjusted R-squared: 0.8224
+- MSE: 0.028  
+- Year rebuilt is not significant
+
+# Recode basement area var 
+
+```{r}
+newbsmt = train$TotalBsmtSF - train$BsmtUnfSF
+model.nbsmt = lm(Price ~  newbsmt+ LotArea+ `1stFlrSF`+ `2ndFlrSF`+ FullBath+GarageArea+BsmtExposure_new+Fireplace +OverallCond+MSSubClass + YearRebuilt,data = copy_2 ); summary(model.nbsmt)
+```
+- Reduce the adjusted R-square
+
+# Recode total area
+```{r}
+newtotalArea = train$`1stFlrSF` + train$`2ndFlrSF`
+model.area = lm(Price ~ newtotalArea + FullBath+GarageArea+BsmtExposure_new+Fireplace + OverallCond + MSSubClass + YearRebuilt + copy_2$BsmtFinSF1 + copy_2$BsmtUnfSF, data = copy_2); summary(model.area)
+```
+
+- Reduce the adjusted R-square
+
+# Model without Year Built
+```{r}
+copy_2$YearRebuilt = NULL
+model1 = lm(log(copy_2$Price) ~., data = copy_2); summary(model1); plot(model1); 
+```
+
+
+
+
+```{r} 
+#Confident interval
+confint(model1)
+```
+
+```{r}
+#Vif test to see the significant of each factors in the model 
+car::vif(model1)
+```
+
+- All VIF's values are smaller than 5 and greater than 1. They also almost close to 1. 
+- No multicolinearity 
+
+```{r}
+anova(model1)
+```
+
+- MSE model 1: 0.028
+- All explanatory is significant
+
+
+### Model with Neighboor indicator
+
+```{r} 
+train_model2 = copy_2
+train_model2$Neighboor = train$Neighborhood
+train_model2$MSSubClass = as.factor(copy_2$MSSubClass)
+
+model2 = lm(log(train_model2$Price) ~.,data = train_model2); summary(model2); plot(model2);
+anova(model2)
+```
+- Adjusted R-square: 0.8762 
+- MSE: 0.019
+
+
+```{r}
+#Checking outliner
+train_model2[967,]
+```
+
+```{r}
+#Vif test to see the significant of each factors in the model 
+car::vif(model2)
+```
+- All factors has VIF < 5 and VIF > 1. 
+
+```{r}
+confint(model2)
+```
+
+
+### Citation 
+De Cock, Dean. “Ames, Iowa: Alternative to the Boston Housing Data as an End of Semester Regression Project.” Journal of Statistics Education 19, no. 3 (November 2011). https://doi.org/10.1080/10691898.2011.11889627.
+ 
+Kuhn, Max, and Kjell Johnson. “Data Pre-Processing.” In Applied Predictive Modeling, edited by Max Kuhn and Kjell Johnson, 27–59. New York, NY: Springer New York, 2013. https://doi.org/10.1007/978-1-4614-6849-3_3.
+
+“Information About Factors That Determine Property Prices - HomeGuru.” Accessed October 18, 2018. http://www.homeguru.com.au/house-prices/.
